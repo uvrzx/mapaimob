@@ -415,6 +415,73 @@ function initMap() {
 
 window.addEventListener('DOMContentLoaded', initMap);
 
+function buildMarkerIcon(status) {
+  const color = STATUS_COLORS[status] || '#999';
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:16px;height:16px;border-radius:50%;background:${color};border:2px solid #04121f;"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
+  });
+}
+
+function buildPopupHtml(property) {
+  const price = property.dealType === 'aluguel' ? property.rentPrice : property.salePrice;
+  const priceLabel = property.dealType === 'aluguel' ? formatCurrency(price) + '/mês' : formatCurrency(price);
+  const addr = property.address || {};
+  return `
+    <div style="min-width:200px;">
+      <strong>${priceLabel}</strong><br>
+      ${UNIT_TYPE_LABELS[property.unitType] || property.unitType} · ${STATUS_LABELS[property.status] || property.status}<br>
+      ${addr.street || ''} ${addr.number || ''} - ${addr.neighborhood || ''}<br>
+      <div style="margin-top:8px; display:flex; gap:6px;">
+        <button type="button" onclick="openPropertyForm(null, appState.properties.find(p => p.id === '${property.id}'))">Editar</button>
+        <button type="button" onclick="deleteProperty('${property.id}')">Excluir</button>
+      </div>
+    </div>`;
+}
+
+function upsertMarker(property) {
+  const existing = markersById[property.id];
+  if (existing) markersLayer.removeLayer(existing);
+  const marker = L.marker(property.coordinates, { draggable: true, icon: buildMarkerIcon(property.status) });
+  marker.bindPopup(() => buildPopupHtml(property));
+  marker.on('dragend', async () => {
+    const pos = marker.getLatLng();
+    property.coordinates = [pos.lat, pos.lng];
+    await dbPut('properties', property);
+  });
+  marker.addTo(markersLayer);
+  markersById[property.id] = marker;
+}
+
+function removeMarker(id) {
+  const marker = markersById[id];
+  if (marker) { markersLayer.removeLayer(marker); delete markersById[id]; }
+}
+
+async function deleteProperty(id) {
+  if (!confirm('Excluir este imóvel?')) return;
+  await dbDelete('properties', id);
+  appState.properties = appState.properties.filter(p => p.id !== id);
+  removeMarker(id);
+  window.dispatchEvent(new CustomEvent('properties-updated'));
+}
+
+async function loadAllProperties() {
+  appState.condos = await dbGetAll('condos');
+  appState.condosById = Object.fromEntries(appState.condos.map(c => [c.id, c]));
+  appState.properties = await dbGetAll('properties');
+  // ponytail: dbGetAll('properties') pode capturar em corrida o registro
+  // transitório '__selfcheck__' do self-check de IndexedDB (sem coordinates),
+  // que quebraria L.marker(undefined). Guarda evita abortar o forEach inteiro.
+  appState.properties.forEach(p => { if (Array.isArray(p.coordinates)) upsertMarker(p); });
+  refreshCondoSelect();
+  window.dispatchEvent(new CustomEvent('properties-updated'));
+}
+
+window.addEventListener('DOMContentLoaded', loadAllProperties);
+
 /* === SECTION: FORM === */
 function openPropertyForm(coords, existingProperty) {
   appState.editingPropertyId = existingProperty ? existingProperty.id : null;
@@ -544,6 +611,7 @@ async function savePropertyForm(event) {
   await dbPut('properties', property);
   const idx = appState.properties.findIndex(p => p.id === property.id);
   if (idx >= 0) appState.properties[idx] = property; else appState.properties.push(property);
+  upsertMarker(property);
   window.dispatchEvent(new CustomEvent('properties-updated'));
   closePropertyForm();
 }
