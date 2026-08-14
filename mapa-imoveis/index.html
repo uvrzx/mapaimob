@@ -567,7 +567,15 @@ async function loadAllProperties() {
   window.dispatchEvent(new CustomEvent('properties-updated'));
 }
 
-window.addEventListener('DOMContentLoaded', loadAllProperties);
+window.addEventListener('DOMContentLoaded', () => {
+  loadAllProperties().catch(err => {
+    console.error(err);
+    const banner = document.createElement('div');
+    banner.textContent = 'Este navegador não suporta o armazenamento necessário (IndexedDB). Use um navegador atualizado (Chrome, Firefox, Edge).';
+    banner.style.cssText = 'background:var(--warn-bg);color:var(--warn-fg);border-bottom:1px solid var(--warn-line);padding:10px 20px;text-align:center;';
+    document.body.prepend(banner);
+  });
+});
 
 /* === SECTION: FORM === */
 function openPropertyForm(coords, existingProperty) {
@@ -843,6 +851,60 @@ function renderList(properties) {
 window.addEventListener('filters-applied', (e) => renderList(e.detail.filtered));
 
 /* === SECTION: BACKUP === */
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+function base64ToBlob(dataUrl) {
+  return fetch(dataUrl).then(r => r.blob());
+}
+
+async function exportBackup() {
+  const properties = await dbGetAll('properties');
+  const condos = await dbGetAll('condos');
+  const propertiesOut = [];
+  for (const p of properties) {
+    const photos = [];
+    for (const blob of (p.photos || [])) photos.push(await blobToBase64(blob));
+    propertiesOut.push({ ...p, photos });
+  }
+  const payload = { version: 1, exportedAt: new Date().toISOString(), properties: propertiesOut, condos };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'mapa-imoveis-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function importBackup(file) {
+  const text = await file.text();
+  const payload = JSON.parse(text);
+  for (const condo of (payload.condos || [])) await dbPut('condos', condo);
+  for (const p of (payload.properties || [])) {
+    const photos = [];
+    for (const dataUrl of (p.photos || [])) photos.push(await base64ToBlob(dataUrl));
+    await dbPut('properties', { ...p, photos });
+  }
+  await loadAllProperties();
+  alert('Importação concluída.');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnExport').addEventListener('click', exportBackup);
+  document.getElementById('btnImport').addEventListener('click', () => document.getElementById('importFileInput').click());
+  document.getElementById('importFileInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) importBackup(file);
+    e.target.value = '';
+  });
+});
 </script>
 </body>
 </html>
