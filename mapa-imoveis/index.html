@@ -442,9 +442,13 @@ function matchesFilters(property, condosById, filters) {
   if (filters.dealType !== 'ambos' && property.dealType !== 'venda_e_aluguel' && property.dealType !== filters.dealType) return false;
   if (filters.unitTypes.length && !filters.unitTypes.includes(property.unitType)) return false;
   if (filters.status.length && !filters.status.includes(property.status)) return false;
-  const price = filters.dealType === 'aluguel' ? property.rentPrice : property.salePrice;
-  if (filters.priceMin != null && price < filters.priceMin) return false;
-  if (filters.priceMax != null && price > filters.priceMax) return false;
+  if (filters.priceMin != null || filters.priceMax != null) {
+    const inRange = (price) => price > 0 && (filters.priceMin == null || price >= filters.priceMin) && (filters.priceMax == null || price <= filters.priceMax);
+    const relevantPrices = filters.dealType === 'aluguel' ? [property.rentPrice]
+      : filters.dealType === 'venda' ? [property.salePrice]
+      : [property.salePrice, property.rentPrice];
+    if (!relevantPrices.some(inRange)) return false;
+  }
   if (filters.roomsMin != null && (property.rooms || 0) < filters.roomsMin) return false;
   if (filters.suitesMin != null && (property.suites || 0) < filters.suitesMin) return false;
   if (filters.bathroomsMin != null && (property.bathrooms || 0) < filters.bathroomsMin) return false;
@@ -454,7 +458,7 @@ function matchesFilters(property, condosById, filters) {
   if (filters.furnished !== 'qualquer' && property.furnished !== filters.furnished) return false;
   if (filters.petsAllowed !== 'qualquer' && String(property.petsAllowed) !== filters.petsAllowed) return false;
   if (filters.neighborhood && !(property.address.neighborhood || '').toLowerCase().includes(filters.neighborhood.toLowerCase())) return false;
-  if (filters.agentResponsible && property.agentResponsible !== filters.agentResponsible) return false;
+  if (filters.agentResponsible && !(property.agentResponsible || '').toLowerCase().includes(filters.agentResponsible.toLowerCase())) return false;
   if (filters.amenities.length) {
     const condo = property.condoId ? condosById[property.condoId] : null;
     if (!condo) return false;
@@ -478,6 +482,12 @@ function matchesFilters(property, condosById, filters) {
   console.assert(matchesFilters(propA, {}, { ...baseFilters, unitTypes: ['apartamento'] }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar tipo diferente');
   console.assert(matchesFilters(propA, {}, { ...baseFilters, priceMin: 600000 }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar preço abaixo do mínimo');
   console.assert(matchesFilters(propA, {}, { ...baseFilters, roomsMin: 2 }) === true, 'ASSERT FAIL: matchesFilters deveria aceitar quartos suficientes');
+
+  const propRental = { ...propA, dealType: 'aluguel', salePrice: 0, rentPrice: 2500 };
+  console.assert(matchesFilters(propRental, {}, { ...baseFilters, priceMin: 2000, priceMax: 3000 }) === true, 'ASSERT FAIL: matchesFilters (ambos) deveria aceitar aluguel dentro da faixa de preço via rentPrice');
+  console.assert(matchesFilters(propRental, {}, { ...baseFilters, priceMin: 2000, priceMax: 3000, dealType: 'venda' }) === false, 'ASSERT FAIL: matchesFilters (venda) não deveria considerar rentPrice');
+  const propAgent = { ...propA, agentResponsible: 'Ana Paula' };
+  console.assert(matchesFilters(propAgent, {}, { ...baseFilters, agentResponsible: 'ana' }) === true, 'ASSERT FAIL: matchesFilters agentResponsible deveria ser case-insensitive e parcial');
 
   const condosById = { condo1: { pool: true, gym: false } };
   const propB = { ...propA, condoId: 'condo1' };
@@ -538,8 +548,16 @@ function upsertMarker(property) {
   marker.bindPopup(() => buildPopupHtml(property));
   marker.on('dragend', async () => {
     const pos = marker.getLatLng();
+    const previousCoordinates = property.coordinates;
     property.coordinates = [pos.lat, pos.lng];
-    await dbPut('properties', property);
+    try {
+      await dbPut('properties', property);
+    } catch (err) {
+      console.error(err);
+      property.coordinates = previousCoordinates;
+      marker.setLatLng(previousCoordinates);
+      alert('Não foi possível salvar a nova posição do imóvel. A posição foi revertida.');
+    }
   });
   marker.addTo(markersLayer);
   markersById[property.id] = marker;
@@ -562,7 +580,10 @@ async function loadAllProperties() {
   appState.condos = await dbGetAll('condos');
   appState.condosById = Object.fromEntries(appState.condos.map(c => [c.id, c]));
   appState.properties = await dbGetAll('properties');
-  appState.properties.forEach(upsertMarker);
+  // ponytail: dbGetAll('properties') pode trazer um registro malformado
+  // (import parcial, edição manual do IndexedDB) sem coordinates válidas,
+  // que quebraria L.marker(undefined). Guarda evita abortar o forEach inteiro.
+  appState.properties.forEach(p => { if (Array.isArray(p.coordinates)) upsertMarker(p); });
   refreshCondoSelect();
   window.dispatchEvent(new CustomEvent('properties-updated'));
 }
@@ -570,8 +591,11 @@ async function loadAllProperties() {
 window.addEventListener('DOMContentLoaded', () => {
   loadAllProperties().catch(err => {
     console.error(err);
+    const message = window.indexedDB
+      ? 'Não foi possível carregar os dados salvos. Veja o console para detalhes.'
+      : 'Este navegador não suporta o armazenamento necessário (IndexedDB). Use um navegador atualizado (Chrome, Firefox, Edge).';
     const banner = document.createElement('div');
-    banner.textContent = 'Este navegador não suporta o armazenamento necessário (IndexedDB). Use um navegador atualizado (Chrome, Firefox, Edge).';
+    banner.textContent = message;
     banner.style.cssText = 'background:var(--warn-bg);color:var(--warn-fg);border-bottom:1px solid var(--warn-line);padding:10px 20px;text-align:center;';
     document.body.prepend(banner);
   });
@@ -694,8 +718,6 @@ function refreshCondoSelect() {
 
 async function savePropertyForm(event) {
   event.preventDefault();
-  const newCondoId = await handleCondoCreateIfNeeded();
-  if (newCondoId) document.getElementById('f_condoId').value = newCondoId;
   const property = readPropertyForm();
   const errors = validateProperty(property);
   const errorsEl = document.getElementById('formErrors');
@@ -705,7 +727,16 @@ async function savePropertyForm(event) {
     return;
   }
   errorsEl.classList.remove('show');
-  await dbPut('properties', property);
+  const newCondoId = await handleCondoCreateIfNeeded();
+  if (newCondoId) property.condoId = newCondoId;
+  try {
+    await dbPut('properties', property);
+  } catch (err) {
+    console.error(err);
+    errorsEl.innerHTML = '• Não foi possível salvar o imóvel. Veja o console para detalhes.';
+    errorsEl.classList.add('show');
+    return;
+  }
   const idx = appState.properties.findIndex(p => p.id === property.id);
   if (idx >= 0) appState.properties[idx] = property; else appState.properties.push(property);
   upsertMarker(property);
@@ -884,16 +915,32 @@ async function exportBackup() {
 }
 
 async function importBackup(file) {
-  const text = await file.text();
-  const payload = JSON.parse(text);
-  for (const condo of (payload.condos || [])) await dbPut('condos', condo);
-  for (const p of (payload.properties || [])) {
-    const photos = [];
-    for (const dataUrl of (p.photos || [])) photos.push(await base64ToBlob(dataUrl));
-    await dbPut('properties', { ...p, photos });
+  let payload;
+  try {
+    const text = await file.text();
+    payload = JSON.parse(text);
+  } catch (err) {
+    console.error(err);
+    alert('Arquivo de backup inválido ou corrompido.');
+    return;
   }
-  await loadAllProperties();
-  alert('Importação concluída.');
+  if (!payload || !Array.isArray(payload.properties) || !Array.isArray(payload.condos)) {
+    alert('Arquivo de backup em formato inesperado (faltam properties/condos).');
+    return;
+  }
+  try {
+    for (const condo of payload.condos) await dbPut('condos', condo);
+    for (const p of payload.properties) {
+      const photos = [];
+      for (const dataUrl of (p.photos || [])) photos.push(await base64ToBlob(dataUrl));
+      await dbPut('properties', { ...p, photos });
+    }
+    await loadAllProperties();
+    alert('Importação concluída.');
+  } catch (err) {
+    console.error(err);
+    alert('Erro ao importar backup — parte dos dados pode não ter sido restaurada. Veja o console.');
+  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
