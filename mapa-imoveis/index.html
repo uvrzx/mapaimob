@@ -168,6 +168,70 @@ async function dbDelete(storeName, id) {
 })();
 
 /* === SECTION: LOGIC === */
+function formatCurrency(value) {
+  if (value == null || isNaN(value)) return 'R$ 0,00';
+  return 'R$ ' + Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function validateProperty(property) {
+  const errors = [];
+  if (!property.unitType) errors.push('Tipo de imóvel é obrigatório.');
+  if (!property.dealType) errors.push('Negócio (venda/aluguel) é obrigatório.');
+  if (property.dealType !== 'aluguel' && !(property.salePrice > 0)) errors.push('Preço de venda é obrigatório.');
+  if (property.dealType !== 'venda' && !(property.rentPrice > 0)) errors.push('Preço de aluguel é obrigatório.');
+  if (!property.address || !property.address.street) errors.push('Endereço é obrigatório.');
+  if (!Array.isArray(property.coordinates) || property.coordinates.length !== 2) errors.push('Coordenadas são obrigatórias (clique no mapa).');
+  return errors;
+}
+
+function matchesFilters(property, condosById, filters) {
+  if (filters.dealType !== 'ambos' && property.dealType !== 'venda_e_aluguel' && property.dealType !== filters.dealType) return false;
+  if (filters.unitTypes.length && !filters.unitTypes.includes(property.unitType)) return false;
+  if (filters.status.length && !filters.status.includes(property.status)) return false;
+  const price = filters.dealType === 'aluguel' ? property.rentPrice : property.salePrice;
+  if (filters.priceMin != null && price < filters.priceMin) return false;
+  if (filters.priceMax != null && price > filters.priceMax) return false;
+  if (filters.roomsMin != null && (property.rooms || 0) < filters.roomsMin) return false;
+  if (filters.suitesMin != null && (property.suites || 0) < filters.suitesMin) return false;
+  if (filters.bathroomsMin != null && (property.bathrooms || 0) < filters.bathroomsMin) return false;
+  if (filters.parkingMin != null && (property.parkingSpaces || 0) < filters.parkingMin) return false;
+  if (filters.areaMin != null && (property.constructedArea || 0) < filters.areaMin) return false;
+  if (filters.areaMax != null && (property.constructedArea || 0) > filters.areaMax) return false;
+  if (filters.furnished !== 'qualquer' && property.furnished !== filters.furnished) return false;
+  if (filters.petsAllowed !== 'qualquer' && String(property.petsAllowed) !== filters.petsAllowed) return false;
+  if (filters.neighborhood && !(property.address.neighborhood || '').toLowerCase().includes(filters.neighborhood.toLowerCase())) return false;
+  if (filters.agentResponsible && property.agentResponsible !== filters.agentResponsible) return false;
+  if (filters.amenities.length) {
+    const condo = property.condoId ? condosById[property.condoId] : null;
+    if (!condo) return false;
+    for (const amenity of filters.amenities) if (!condo[amenity]) return false;
+  }
+  return true;
+}
+
+(function selfCheckLogic() {
+  console.assert(formatCurrency(1200000) === 'R$ 1.200.000,00', 'ASSERT FAIL: formatCurrency básico');
+  console.assert(formatCurrency(null) === 'R$ 0,00', 'ASSERT FAIL: formatCurrency null');
+
+  const okProp = { unitType: 'casa', dealType: 'venda', salePrice: 500000, address: { street: 'Rua X' }, coordinates: [-27.6, -48.6] };
+  console.assert(validateProperty(okProp).length === 0, 'ASSERT FAIL: validateProperty deveria aceitar imóvel válido');
+  const badProp = { unitType: '', dealType: '', salePrice: 0, address: {}, coordinates: null };
+  console.assert(validateProperty(badProp).length === 6, 'ASSERT FAIL: validateProperty deveria acusar 6 erros, achou ' + validateProperty(badProp).length);
+
+  const baseFilters = { dealType: 'ambos', unitTypes: [], status: [], priceMin: null, priceMax: null, roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null, areaMin: null, areaMax: null, furnished: 'qualquer', petsAllowed: 'qualquer', neighborhood: '', agentResponsible: '', amenities: [] };
+  const propA = { dealType: 'venda', unitType: 'casa', status: 'disponivel', salePrice: 500000, rentPrice: 0, rooms: 3, suites: 1, bathrooms: 2, parkingSpaces: 2, constructedArea: 120, furnished: 'não', petsAllowed: true, address: { neighborhood: 'Capoeiras' }, agentResponsible: 'Ana', condoId: null };
+  console.assert(matchesFilters(propA, {}, baseFilters) === true, 'ASSERT FAIL: matchesFilters deveria aceitar sem filtros ativos');
+  console.assert(matchesFilters(propA, {}, { ...baseFilters, unitTypes: ['apartamento'] }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar tipo diferente');
+  console.assert(matchesFilters(propA, {}, { ...baseFilters, priceMin: 600000 }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar preço abaixo do mínimo');
+  console.assert(matchesFilters(propA, {}, { ...baseFilters, roomsMin: 2 }) === true, 'ASSERT FAIL: matchesFilters deveria aceitar quartos suficientes');
+
+  const condosById = { condo1: { pool: true, gym: false } };
+  const propB = { ...propA, condoId: 'condo1' };
+  console.assert(matchesFilters(propB, condosById, { ...baseFilters, amenities: ['pool'] }) === true, 'ASSERT FAIL: matchesFilters deveria aceitar amenidade presente');
+  console.assert(matchesFilters(propB, condosById, { ...baseFilters, amenities: ['gym'] }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar amenidade ausente');
+
+  console.log('[self-check] Lógica de negócio OK');
+})();
 
 /* === SECTION: STATE === */
 const appState = { properties: [], condos: [], condosById: {}, addMode: false, editingPropertyId: null };
