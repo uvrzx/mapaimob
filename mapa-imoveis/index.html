@@ -58,6 +58,13 @@
   #formErrors.show { display: block; }
   .btn-row { display: flex; gap: 10px; margin-top: 16px; }
   .btn-row button { flex: 1; }
+  #filterPanel label, #listPanel label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; text-transform:none; }
+  #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] {
+    width:100%; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
+    padding:6px 8px; border-radius:6px; font-size:13px;
+  }
+  #filterPanel label.checkbox-label { display:block; font-size:13px; font-weight:normal; color:var(--text); margin:2px 0; }
+  .list-item:hover { background: var(--panel-2); }
 </style>
 </head>
 <body>
@@ -70,7 +77,79 @@
 </header>
 <div class="app">
   <aside id="sidebar">
-    <div id="filterPanel"><h2>Filtros</h2></div>
+    <div id="filterPanel" x-data="filterApp()" x-init="init()">
+      <h2>Filtros</h2>
+
+      <label>Negócio</label>
+      <select x-model="filters.dealType" @change="apply()">
+        <option value="ambos">Ambos</option>
+        <option value="venda">Venda</option>
+        <option value="aluguel">Aluguel</option>
+      </select>
+
+      <label>Tipo de imóvel</label>
+      <template x-for="ut in unitTypeOptions" :key="ut.value">
+        <label class="checkbox-label">
+          <input type="checkbox" :value="ut.value" x-model="filters.unitTypes" @change="apply()"> <span x-text="ut.label"></span>
+        </label>
+      </template>
+
+      <label>Status</label>
+      <template x-for="st in statusOptions" :key="st.value">
+        <label class="checkbox-label">
+          <input type="checkbox" :value="st.value" x-model="filters.status" @change="apply()"> <span x-text="st.label"></span>
+        </label>
+      </template>
+
+      <label>Preço mín / máx</label>
+      <div class="row">
+        <input type="number" x-model.number="filters.priceMin" @input="apply()" placeholder="mín">
+        <input type="number" x-model.number="filters.priceMax" @input="apply()" placeholder="máx">
+      </div>
+
+      <label>Quartos mín</label>
+      <input type="number" x-model.number="filters.roomsMin" @input="apply()">
+      <label>Suítes mín</label>
+      <input type="number" x-model.number="filters.suitesMin" @input="apply()">
+      <label>Banheiros mín</label>
+      <input type="number" x-model.number="filters.bathroomsMin" @input="apply()">
+      <label>Vagas mín</label>
+      <input type="number" x-model.number="filters.parkingMin" @input="apply()">
+
+      <label>Área mín / máx (m²)</label>
+      <div class="row">
+        <input type="number" x-model.number="filters.areaMin" @input="apply()" placeholder="mín">
+        <input type="number" x-model.number="filters.areaMax" @input="apply()" placeholder="máx">
+      </div>
+
+      <label>Mobiliado</label>
+      <select x-model="filters.furnished" @change="apply()">
+        <option value="qualquer">Qualquer</option>
+        <option value="sim">Sim</option>
+        <option value="não">Não</option>
+        <option value="parcial">Parcial</option>
+      </select>
+
+      <label>Aceita pet</label>
+      <select x-model="filters.petsAllowed" @change="apply()">
+        <option value="qualquer">Qualquer</option>
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+      </select>
+
+      <label>Bairro</label>
+      <input type="text" x-model="filters.neighborhood" @input="apply()">
+
+      <label>Corretor</label>
+      <input type="text" x-model="filters.agentResponsible" @input="apply()">
+
+      <label>Amenidades do condomínio</label>
+      <template x-for="am in amenityOptions" :key="am.value">
+        <label class="checkbox-label">
+          <input type="checkbox" :value="am.value" x-model="filters.amenities" @change="apply()"> <span x-text="am.label"></span>
+        </label>
+      </template>
+    </div>
     <div id="listPanel"><h2>Imóveis (<span id="resultCount">0</span>)</h2><div id="listItems"></div></div>
   </aside>
   <div id="mapWrap"><div id="map"></div></div>
@@ -697,6 +776,45 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* === SECTION: FILTERS === */
+function filterApp() {
+  return {
+    filters: {
+      dealType: 'ambos', unitTypes: [], status: STATUS_OPTIONS.slice(),
+      priceMin: null, priceMax: null,
+      roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null,
+      areaMin: null, areaMax: null,
+      furnished: 'qualquer', petsAllowed: 'qualquer',
+      neighborhood: '', agentResponsible: '', amenities: []
+    },
+    unitTypeOptions: UNIT_TYPES.map(v => ({ value: v, label: UNIT_TYPE_LABELS[v] })),
+    statusOptions: STATUS_OPTIONS.map(v => ({ value: v, label: STATUS_LABELS[v] })),
+    amenityOptions: [
+      { value: 'pool', label: 'Piscina' }, { value: 'gym', label: 'Academia' },
+      { value: 'partyRoom', label: 'Salão de festas' }, { value: 'playground', label: 'Playground' },
+      { value: 'petArea', label: 'Área pet' }, { value: 'security24h', label: 'Portaria 24h' },
+      { value: 'elevator', label: 'Elevador' }, { value: 'gatedCommunity', label: 'Condomínio fechado' }
+    ],
+    init() {
+      window.addEventListener('properties-updated', () => this.apply());
+      this.apply();
+    },
+    apply() {
+      const filtered = appState.properties.filter(p => matchesFilters(p, appState.condosById, this.filters));
+      window.dispatchEvent(new CustomEvent('filters-applied', { detail: { filtered } }));
+    }
+  };
+}
+
+window.addEventListener('filters-applied', (e) => {
+  document.getElementById('resultCount').textContent = e.detail.filtered.length;
+  const filteredIds = new Set(e.detail.filtered.map(p => p.id));
+  Object.entries(markersById).forEach(([id, marker]) => {
+    const shouldShow = filteredIds.has(id);
+    const isShown = markersLayer.hasLayer(marker);
+    if (shouldShow && !isShown) marker.addTo(markersLayer);
+    if (!shouldShow && isShown) markersLayer.removeLayer(marker);
+  });
+});
 
 /* === SECTION: LIST === */
 
