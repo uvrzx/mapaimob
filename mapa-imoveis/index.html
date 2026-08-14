@@ -819,6 +819,28 @@ window.addEventListener('filters-applied', (e) => {
 });
 
 /* === SECTION: LIST === */
+function renderList(properties) {
+  const wrap = document.getElementById('listItems');
+  wrap.innerHTML = properties.map(p => {
+    const price = p.dealType === 'aluguel' ? p.rentPrice : p.salePrice;
+    const addr = p.address || {};
+    return `<div class="list-item" data-id="${p.id}" style="padding:8px;border-bottom:1px solid var(--line);cursor:pointer;">
+      <div style="font-weight:600;">${formatCurrency(price)}</div>
+      <div style="font-size:12px;color:var(--muted);">${UNIT_TYPE_LABELS[p.unitType] || p.unitType} · ${addr.neighborhood || ''}</div>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.list-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.id;
+      const marker = markersById[id];
+      if (!marker) return;
+      map.setView(marker.getLatLng(), 16);
+      marker.openPopup();
+    });
+  });
+}
+
+window.addEventListener('filters-applied', (e) => renderList(e.detail.filtered));
 
 /* === SECTION: BACKUP === */
 </script>
