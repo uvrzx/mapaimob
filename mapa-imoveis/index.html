@@ -258,7 +258,7 @@ const STATUS_OPTIONS = ['disponivel','reservado','vendido','alugado'];
 
 /* === SECTION: INDEXEDDB === */
 const DB_NAME = 'mapaImoveisDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 let dbInstance = null;
 
 function dbOpen() {
@@ -270,6 +270,11 @@ function dbOpen() {
       const db = e.target.result;
       if (!db.objectStoreNames.contains('properties')) db.createObjectStore('properties', { keyPath: 'id' });
       if (!db.objectStoreNames.contains('condos')) db.createObjectStore('condos', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('_selfcheck')) db.createObjectStore('_selfcheck', { keyPath: 'id' });
+      if (e.oldVersion < 2) {
+        // migração: versões antigas gravavam o registro de self-check direto em 'properties'
+        e.target.transaction.objectStore('properties').delete('__selfcheck__');
+      }
     };
     req.onsuccess = (e) => { dbInstance = e.target.result; resolve(dbInstance); };
     req.onerror = (e) => reject(e.target.error);
@@ -319,11 +324,11 @@ async function dbDelete(storeName, id) {
 (async function selfCheckDb() {
   try {
     const testRecord = { id: '__selfcheck__', value: 42 };
-    await dbPut('properties', testRecord);
-    const read = await dbGet('properties', '__selfcheck__');
+    await dbPut('_selfcheck', testRecord);
+    const read = await dbGet('_selfcheck', '__selfcheck__');
     console.assert(read && read.value === 42, 'ASSERT FAIL: dbPut/dbGet roundtrip');
-    await dbDelete('properties', '__selfcheck__');
-    const afterDelete = await dbGet('properties', '__selfcheck__');
+    await dbDelete('_selfcheck', '__selfcheck__');
+    const afterDelete = await dbGet('_selfcheck', '__selfcheck__');
     console.assert(afterDelete === null, 'ASSERT FAIL: dbDelete não removeu o registro');
     console.log('[self-check] IndexedDB OK');
   } catch (err) {
@@ -472,10 +477,7 @@ async function loadAllProperties() {
   appState.condos = await dbGetAll('condos');
   appState.condosById = Object.fromEntries(appState.condos.map(c => [c.id, c]));
   appState.properties = await dbGetAll('properties');
-  // ponytail: dbGetAll('properties') pode capturar em corrida o registro
-  // transitório '__selfcheck__' do self-check de IndexedDB (sem coordinates),
-  // que quebraria L.marker(undefined). Guarda evita abortar o forEach inteiro.
-  appState.properties.forEach(p => { if (Array.isArray(p.coordinates)) upsertMarker(p); });
+  appState.properties.forEach(upsertMarker);
   refreshCondoSelect();
   window.dispatchEvent(new CustomEvent('properties-updated'));
 }
