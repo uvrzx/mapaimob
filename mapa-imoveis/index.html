@@ -77,7 +77,171 @@
 </div>
 <div id="propertyForm">
   <h2 id="formTitle">Novo imóvel</h2>
-  <form id="propertyFormEl"></form>
+  <form id="propertyFormEl">
+    <input type="hidden" id="f_id">
+    <input type="hidden" id="f_lat">
+    <input type="hidden" id="f_lng">
+
+    <label for="f_label">Apelido (opcional)</label>
+    <input id="f_label" type="text" placeholder="Ex: Casa Capoeiras 296">
+
+    <div class="row">
+      <div>
+        <label for="f_status">Status</label>
+        <select id="f_status">
+          <option value="disponivel">Disponível</option>
+          <option value="reservado">Reservado</option>
+          <option value="vendido">Vendido</option>
+          <option value="alugado">Alugado</option>
+        </select>
+      </div>
+      <div>
+        <label for="f_dealType">Negócio</label>
+        <select id="f_dealType">
+          <option value="venda">Venda</option>
+          <option value="aluguel">Aluguel</option>
+          <option value="venda_e_aluguel">Venda e aluguel</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="f_unitType">Tipo de imóvel</label>
+    <select id="f_unitType">
+      <option value="casa">Casa</option>
+      <option value="apartamento">Apartamento</option>
+      <option value="comercial">Comercial</option>
+      <option value="terreno">Terreno</option>
+      <option value="cobertura">Cobertura</option>
+      <option value="sobrado">Sobrado</option>
+    </select>
+
+    <div class="row">
+      <div>
+        <label for="f_salePrice">Preço de venda (R$)</label>
+        <input id="f_salePrice" type="number" min="0" step="1000">
+      </div>
+      <div>
+        <label for="f_rentPrice">Preço de aluguel (R$)</label>
+        <input id="f_rentPrice" type="number" min="0" step="50">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f_constructedArea">Área construída (m²)</label>
+        <input id="f_constructedArea" type="number" min="0" step="0.01">
+      </div>
+      <div>
+        <label for="f_landArea">Área do lote (m²)</label>
+        <input id="f_landArea" type="number" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f_rooms">Quartos</label>
+        <input id="f_rooms" type="number" min="0" step="1">
+      </div>
+      <div>
+        <label for="f_suites">Suítes</label>
+        <input id="f_suites" type="number" min="0" step="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f_bathrooms">Banheiros</label>
+        <input id="f_bathrooms" type="number" min="0" step="1">
+      </div>
+      <div>
+        <label for="f_parkingSpaces">Vagas</label>
+        <input id="f_parkingSpaces" type="number" min="0" step="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="f_floor">Andar</label>
+        <input id="f_floor" type="number" step="1">
+      </div>
+      <div>
+        <label for="f_furnished">Mobiliado</label>
+        <select id="f_furnished">
+          <option value="não">Não</option>
+          <option value="sim">Sim</option>
+          <option value="parcial">Parcial</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="f_petsAllowed">Aceita pet</label>
+    <select id="f_petsAllowed">
+      <option value="false">Não</option>
+      <option value="true">Sim</option>
+    </select>
+
+    <label for="f_street">Rua</label>
+    <input id="f_street" type="text">
+    <div class="row">
+      <div>
+        <label for="f_number">Número</label>
+        <input id="f_number" type="text">
+      </div>
+      <div>
+        <label for="f_neighborhood">Bairro</label>
+        <input id="f_neighborhood" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="f_city">Cidade</label>
+        <input id="f_city" type="text" value="Florianópolis">
+      </div>
+      <div>
+        <label for="f_complement">Complemento</label>
+        <input id="f_complement" type="text">
+      </div>
+    </div>
+
+    <label for="f_agentResponsible">Corretor responsável</label>
+    <input id="f_agentResponsible" type="text">
+
+    <label for="f_condoId">Condomínio</label>
+    <select id="f_condoId">
+      <option value="">Nenhum</option>
+    </select>
+    <button type="button" id="btnNewCondo" class="ghost" style="margin-top:6px;">+ Novo condomínio</button>
+    <div id="newCondoFields" style="display:none; margin-top:10px; padding:10px; background:var(--panel-2); border-radius:8px;">
+      <label for="c_name">Nome do condomínio</label>
+      <input id="c_name" type="text">
+      <div class="row" style="margin-top:8px; flex-wrap: wrap;">
+        <label><input type="checkbox" id="c_pool"> Piscina</label>
+        <label><input type="checkbox" id="c_gym"> Academia</label>
+        <label><input type="checkbox" id="c_partyRoom"> Salão de festas</label>
+      </div>
+      <div class="row" style="margin-top:4px; flex-wrap: wrap;">
+        <label><input type="checkbox" id="c_playground"> Playground</label>
+        <label><input type="checkbox" id="c_petArea"> Área pet</label>
+        <label><input type="checkbox" id="c_security24h"> Portaria 24h</label>
+      </div>
+      <div class="row" style="margin-top:4px; flex-wrap: wrap;">
+        <label><input type="checkbox" id="c_elevator"> Elevador</label>
+        <label><input type="checkbox" id="c_gatedCommunity"> Condomínio fechado</label>
+      </div>
+      <label for="c_monthlyFee">Valor do condomínio (R$)</label>
+      <input id="c_monthlyFee" type="number" min="0" step="10">
+    </div>
+
+    <label for="f_notes">Observações</label>
+    <textarea id="f_notes" rows="3"></textarea>
+
+    <div id="formErrors"></div>
+
+    <div class="btn-row">
+      <button type="submit">Salvar</button>
+      <button type="button" id="btnCancelForm" class="ghost">Cancelar</button>
+    </div>
+  </form>
 </div>
 
 <script src="https://unpkg.com/leaflet@1/dist/leaflet.js"></script>
@@ -252,6 +416,156 @@ function initMap() {
 window.addEventListener('DOMContentLoaded', initMap);
 
 /* === SECTION: FORM === */
+function openPropertyForm(coords, existingProperty) {
+  appState.editingPropertyId = existingProperty ? existingProperty.id : null;
+  document.getElementById('formTitle').textContent = existingProperty ? 'Editar imóvel' : 'Novo imóvel';
+  const p = existingProperty || {
+    address: {}, status: 'disponivel', dealType: 'venda', unitType: 'casa',
+    furnished: 'não', petsAllowed: false, coordinates: coords
+  };
+  document.getElementById('f_id').value = p.id || '';
+  document.getElementById('f_lat').value = p.coordinates[0];
+  document.getElementById('f_lng').value = p.coordinates[1];
+  document.getElementById('f_label').value = p.label || '';
+  document.getElementById('f_status').value = p.status;
+  document.getElementById('f_dealType').value = p.dealType;
+  document.getElementById('f_unitType').value = p.unitType;
+  document.getElementById('f_salePrice').value = p.salePrice || '';
+  document.getElementById('f_rentPrice').value = p.rentPrice || '';
+  document.getElementById('f_constructedArea').value = p.constructedArea || '';
+  document.getElementById('f_landArea').value = p.landArea || '';
+  document.getElementById('f_rooms').value = p.rooms || '';
+  document.getElementById('f_suites').value = p.suites || '';
+  document.getElementById('f_bathrooms').value = p.bathrooms || '';
+  document.getElementById('f_parkingSpaces').value = p.parkingSpaces || '';
+  document.getElementById('f_floor').value = p.floor || '';
+  document.getElementById('f_furnished').value = p.furnished || 'não';
+  document.getElementById('f_petsAllowed').value = String(!!p.petsAllowed);
+  document.getElementById('f_street').value = (p.address && p.address.street) || '';
+  document.getElementById('f_number').value = (p.address && p.address.number) || '';
+  document.getElementById('f_neighborhood').value = (p.address && p.address.neighborhood) || '';
+  document.getElementById('f_city').value = (p.address && p.address.city) || 'Florianópolis';
+  document.getElementById('f_complement').value = (p.address && p.address.complement) || '';
+  document.getElementById('f_agentResponsible').value = p.agentResponsible || '';
+  document.getElementById('f_condoId').value = p.condoId || '';
+  document.getElementById('f_notes').value = p.notes || '';
+  document.getElementById('newCondoFields').style.display = 'none';
+  document.getElementById('formErrors').classList.remove('show');
+  document.getElementById('propertyForm').classList.add('open');
+}
+
+function closePropertyForm() {
+  document.getElementById('propertyForm').classList.remove('open');
+  appState.addMode = false;
+  appState.editingPropertyId = null;
+  document.getElementById('btnAddProperty').classList.remove('active');
+}
+
+function readPropertyForm() {
+  const existing = appState.editingPropertyId ? appState.properties.find(p => p.id === appState.editingPropertyId) : null;
+  return {
+    id: document.getElementById('f_id').value || 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+    label: document.getElementById('f_label').value.trim(),
+    status: document.getElementById('f_status').value,
+    dealType: document.getElementById('f_dealType').value,
+    unitType: document.getElementById('f_unitType').value,
+    salePrice: Number(document.getElementById('f_salePrice').value) || 0,
+    rentPrice: Number(document.getElementById('f_rentPrice').value) || 0,
+    constructedArea: Number(document.getElementById('f_constructedArea').value) || 0,
+    landArea: Number(document.getElementById('f_landArea').value) || 0,
+    rooms: Number(document.getElementById('f_rooms').value) || 0,
+    suites: Number(document.getElementById('f_suites').value) || 0,
+    bathrooms: Number(document.getElementById('f_bathrooms').value) || 0,
+    parkingSpaces: Number(document.getElementById('f_parkingSpaces').value) || 0,
+    floor: document.getElementById('f_floor').value ? Number(document.getElementById('f_floor').value) : null,
+    furnished: document.getElementById('f_furnished').value,
+    petsAllowed: document.getElementById('f_petsAllowed').value === 'true',
+    address: {
+      street: document.getElementById('f_street').value.trim(),
+      number: document.getElementById('f_number').value.trim(),
+      neighborhood: document.getElementById('f_neighborhood').value.trim(),
+      city: document.getElementById('f_city').value.trim(),
+      complement: document.getElementById('f_complement').value.trim()
+    },
+    coordinates: [Number(document.getElementById('f_lat').value), Number(document.getElementById('f_lng').value)],
+    agentResponsible: document.getElementById('f_agentResponsible').value.trim(),
+    condoId: document.getElementById('f_condoId').value || null,
+    notes: document.getElementById('f_notes').value.trim(),
+    photos: existing && existing.photos ? existing.photos : [],
+    createdAt: existing ? existing.createdAt : Date.now(),
+    updatedAt: Date.now()
+  };
+}
+
+async function handleCondoCreateIfNeeded() {
+  const nameField = document.getElementById('c_name');
+  if (document.getElementById('newCondoFields').style.display === 'none' || !nameField.value.trim()) return null;
+  const condo = {
+    id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+    name: nameField.value.trim(),
+    pool: document.getElementById('c_pool').checked,
+    gym: document.getElementById('c_gym').checked,
+    partyRoom: document.getElementById('c_partyRoom').checked,
+    playground: document.getElementById('c_playground').checked,
+    petArea: document.getElementById('c_petArea').checked,
+    security24h: document.getElementById('c_security24h').checked,
+    elevator: document.getElementById('c_elevator').checked,
+    gatedCommunity: document.getElementById('c_gatedCommunity').checked,
+    monthlyFee: Number(document.getElementById('c_monthlyFee').value) || 0
+  };
+  await dbPut('condos', condo);
+  appState.condos.push(condo);
+  appState.condosById[condo.id] = condo;
+  refreshCondoSelect();
+  return condo.id;
+}
+
+function refreshCondoSelect() {
+  const select = document.getElementById('f_condoId');
+  const current = select.value;
+  select.innerHTML = '<option value="">Nenhum</option>' +
+    appState.condos.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  select.value = current;
+}
+
+async function savePropertyForm(event) {
+  event.preventDefault();
+  const newCondoId = await handleCondoCreateIfNeeded();
+  if (newCondoId) document.getElementById('f_condoId').value = newCondoId;
+  const property = readPropertyForm();
+  const errors = validateProperty(property);
+  const errorsEl = document.getElementById('formErrors');
+  if (errors.length) {
+    errorsEl.innerHTML = errors.map(e => '• ' + e).join('<br>');
+    errorsEl.classList.add('show');
+    return;
+  }
+  errorsEl.classList.remove('show');
+  await dbPut('properties', property);
+  const idx = appState.properties.findIndex(p => p.id === property.id);
+  if (idx >= 0) appState.properties[idx] = property; else appState.properties.push(property);
+  window.dispatchEvent(new CustomEvent('properties-updated'));
+  closePropertyForm();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('propertyFormEl').addEventListener('submit', savePropertyForm);
+  document.getElementById('btnCancelForm').addEventListener('click', closePropertyForm);
+  document.getElementById('btnNewCondo').addEventListener('click', () => {
+    const el = document.getElementById('newCondoFields');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  });
+  document.getElementById('btnAddProperty').addEventListener('click', () => {
+    appState.addMode = !appState.addMode;
+    document.getElementById('btnAddProperty').classList.toggle('active', appState.addMode);
+  });
+  map.on('click', (e) => {
+    if (!appState.addMode) return;
+    openPropertyForm([e.latlng.lat, e.latlng.lng], null);
+    appState.addMode = false;
+    document.getElementById('btnAddProperty').classList.remove('active');
+  });
+});
 
 /* === SECTION: PHOTOS === */
 
