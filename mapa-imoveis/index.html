@@ -38,7 +38,9 @@
   #filterPanel { padding: 14px; border-bottom: 1px solid var(--line); overflow-y: auto; max-height: 55%; }
   #filterPanel h2, #listPanel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin: 0 0 10px; }
   #listPanel { flex: 1; overflow-y: auto; padding: 14px; }
-  #mapWrap { flex: 1; position: relative; }
+  #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: var(--line); }
+  #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: var(--accent); }
+  #mapWrap { flex: 1; position: relative; isolation: isolate; }
   #map { position: absolute; inset: 0; }
   #propertyForm {
     position: fixed; top: 0; right: 0; height: 100%; width: 380px; max-width: 100vw;
@@ -154,6 +156,7 @@
     </div>
     <div id="listPanel"><h2>Imóveis (<span id="resultCount">0</span>)</h2><div id="listItems"></div></div>
   </aside>
+  <div id="sidebarResizeHandle"></div>
   <div id="mapWrap"><div id="map"></div></div>
 </div>
 <div id="propertyForm">
@@ -950,6 +953,29 @@ window.addEventListener('DOMContentLoaded', () => {
     const file = e.target.files[0];
     if (file) importBackup(file);
     e.target.value = '';
+  });
+});
+
+/* === SECTION: LAYOUT === */
+window.addEventListener('DOMContentLoaded', () => {
+  const handle = document.getElementById('sidebarResizeHandle');
+  const sidebar = document.getElementById('sidebar');
+  let dragging = false;
+  handle.addEventListener('mousedown', (e) => {
+    dragging = true;
+    handle.classList.add('dragging');
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const newWidth = Math.min(600, Math.max(220, e.clientX));
+    sidebar.style.width = newWidth + 'px';
+    if (map) map.invalidateSize();
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
   });
 });
 </script>
