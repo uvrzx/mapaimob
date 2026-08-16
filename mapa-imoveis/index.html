@@ -514,6 +514,15 @@ function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 19
   }).addTo(map);
+  const satelliteLayer = L.tileLayer.wms('https://geofloripa.pmf.sc.gov.br/geoserver/Geoportal/ows', {
+    layers: '201601MUN',
+    format: 'image/png',
+    transparent: true,
+    version: '1.3.0',
+    attribution: 'Ortomosaico 2016 &copy; IPUF/PMF Florianópolis',
+    maxZoom: 19
+  });
+  L.control.layers(null, { 'Satélite (2016)': satelliteLayer }).addTo(map);
   markersLayer = L.layerGroup().addTo(map);
 }
 
