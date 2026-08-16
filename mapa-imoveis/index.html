@@ -286,6 +286,7 @@
         <input id="f_complement" type="text">
       </div>
     </div>
+    <button type="button" id="btnGeocodeAddress" class="ghost" style="width:100%;margin-top:6px;">🔍 Localizar endereço no mapa</button>
 
     <label for="f_agentResponsible">Corretor responsável</label>
     <input id="f_agentResponsible" type="text">
@@ -645,11 +646,52 @@ function openPropertyForm(coords, existingProperty) {
   document.getElementById('propertyForm').classList.add('open');
 }
 
+let geocodePreviewMarker = null;
+
+function clearGeocodePreview() {
+  if (geocodePreviewMarker) { markersLayer.removeLayer(geocodePreviewMarker); geocodePreviewMarker = null; }
+}
+
+async function geocodeAddress() {
+  const street = document.getElementById('f_street').value.trim();
+  const number = document.getElementById('f_number').value.trim();
+  const neighborhood = document.getElementById('f_neighborhood').value.trim();
+  const city = document.getElementById('f_city').value.trim() || 'Florianópolis';
+  if (!street) { alert('Preencha ao menos a rua antes de localizar.'); return; }
+  const query = [street, number, neighborhood, city, 'SC', 'Brasil'].filter(Boolean).join(', ');
+  const btn = document.getElementById('btnGeocodeAddress');
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Buscando...';
+  try {
+    const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query);
+    const res = await fetch(url, { headers: { 'Accept-Language': 'pt-BR' } });
+    const results = await res.json();
+    if (!results.length) {
+      alert('Endereço não encontrado. Ajuste manualmente clicando no mapa.');
+      return;
+    }
+    const lat = parseFloat(results[0].lat), lng = parseFloat(results[0].lon);
+    document.getElementById('f_lat').value = lat;
+    document.getElementById('f_lng').value = lng;
+    map.setView([lat, lng], 17);
+    clearGeocodePreview();
+    geocodePreviewMarker = L.marker([lat, lng], { icon: buildMarkerIcon('disponivel') }).addTo(markersLayer);
+  } catch (err) {
+    console.error(err);
+    alert('Erro ao buscar endereço. Tente novamente.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
+
 function closePropertyForm() {
   document.getElementById('propertyForm').classList.remove('open');
   appState.addMode = false;
   appState.editingPropertyId = null;
   document.getElementById('btnAddProperty').classList.remove('active');
+  clearGeocodePreview();
 }
 
 function readPropertyForm() {
@@ -750,6 +792,7 @@ async function savePropertyForm(event) {
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('propertyFormEl').addEventListener('submit', savePropertyForm);
   document.getElementById('btnCancelForm').addEventListener('click', closePropertyForm);
+  document.getElementById('btnGeocodeAddress').addEventListener('click', geocodeAddress);
   document.getElementById('btnNewCondo').addEventListener('click', () => {
     const el = document.getElementById('newCondoFields');
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
