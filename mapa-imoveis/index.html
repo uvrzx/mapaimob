@@ -7,10 +7,10 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1/dist/leaflet.css">
 <style>
   :root {
-    --bg: #0f1720; --panel: #17212b; --panel-2: #1e2c38; --line: #2a3a49;
-    --text: #e6edf3; --muted: #8b9bab; --accent: #3ea6ff;
-    --ok-bg: #10361f; --ok-fg: #4ade80; --ok-line: #1f6b3a;
-    --warn-bg: #3a1717; --warn-fg: #ff6b6b; --warn-line: #7a2a2a;
+    --bg: #f2f3f7; --panel: #ffffff; --panel-2: #f4f5f9; --line: #e3e5ec;
+    --text: #1b2130; --muted: #6b7280; --accent: #6d5ef0;
+    --ok-bg: #e8fbf0; --ok-fg: #16a34a; --ok-line: #bbf0d0;
+    --warn-bg: #fef2f2; --warn-fg: #dc2626; --warn-line: #fbd0d0;
     --radius: 10px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -120,6 +120,22 @@
   .list-item-specs { display: flex; gap: 8px; margin-top: 4px; font-size: 11px; color: var(--text); }
   .list-item-specs span { display: flex; align-items: center; gap: 3px; fill: var(--muted); }
 
+  /* cartão de filtros flutuante sobre o mapa */
+  #mapFilterCard {
+    position: absolute; top: 14px; left: 14px; z-index: 800; width: 250px;
+    background: var(--panel); border-radius: 12px; box-shadow: 0 8px 24px rgba(20,20,40,.15);
+    padding: 14px; max-height: calc(100% - 28px); overflow-y: auto;
+  }
+  #mapFilterCard label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .type-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 6px; font-size: 11px; color: var(--text); cursor: pointer; transition: all .15s; fill: var(--muted);
+  }
+  .type-btn:hover { border-color: var(--accent); }
+  .type-btn.active { border-color: var(--accent); background: #efebff; color: var(--accent); fill: var(--accent); font-weight: 600; }
+
   /* backdrop do formulário */
   #formBackdrop { position: fixed; inset: 0; background: rgba(4,18,31,.6); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
   #formBackdrop.show { opacity: 1; pointer-events: auto; }
@@ -133,25 +149,10 @@
   <button id="btnImport" class="ghost" type="button">Importar</button>
   <input id="importFileInput" type="file" accept="application/json" style="display:none">
 </header>
-<div class="app">
+<div class="app" x-data="filterApp()" x-init="init()">
   <aside id="sidebar">
-    <div id="filterPanel" x-data="filterApp()" x-init="init()">
+    <div id="filterPanel">
       <h2>Filtros</h2>
-
-      <label>Negócio</label>
-      <div class="seg-group">
-        <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Venda'},{v:'aluguel',l:'Aluguel'}]" :key="opt.v">
-          <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
-        </template>
-      </div>
-
-      <label>Tipo de imóvel</label>
-      <div class="chip-group">
-        <template x-for="ut in unitTypeOptions" :key="ut.value">
-          <button type="button" class="chip" :class="{active: filters.unitTypes.includes(ut.value)}" x-text="ut.label"
-            @click="filters.unitTypes = filters.unitTypes.includes(ut.value) ? filters.unitTypes.filter(v => v !== ut.value) : [...filters.unitTypes, ut.value]; apply()"></button>
-        </template>
-      </div>
 
       <label>Status</label>
       <div class="chip-group">
@@ -165,22 +166,6 @@
       <div class="row">
         <input type="number" x-model.number="filters.priceMin" @input="apply()" placeholder="mín">
         <input type="number" x-model.number="filters.priceMax" @input="apply()" placeholder="máx">
-      </div>
-
-      <label>Quartos mín</label>
-      <div class="stepper-group">
-        <button type="button" class="chip" :class="{active: filters.roomsMin===null}" @click="filters.roomsMin=null; apply()">Todos</button>
-        <template x-for="n in [1,2,3,4]" :key="n">
-          <button type="button" class="chip" :class="{active: filters.roomsMin===n}" @click="filters.roomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
-        </template>
-      </div>
-
-      <label>Banheiros mín</label>
-      <div class="stepper-group">
-        <button type="button" class="chip" :class="{active: filters.bathroomsMin===null}" @click="filters.bathroomsMin=null; apply()">Todos</button>
-        <template x-for="n in [1,2,3,4]" :key="n">
-          <button type="button" class="chip" :class="{active: filters.bathroomsMin===n}" @click="filters.bathroomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
-        </template>
       </div>
 
       <label>Vagas mín</label>
@@ -231,7 +216,43 @@
     <div id="listPanel"><h2>Imóveis (<span id="resultCount">0</span>)</h2><div id="listItems"></div></div>
   </aside>
   <div id="sidebarResizeHandle"></div>
-  <div id="mapWrap"><div id="map"></div></div>
+  <div id="mapWrap">
+    <div id="mapFilterCard">
+      <div class="seg-group">
+        <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Comprar'},{v:'aluguel',l:'Alugar'}]" :key="opt.v">
+          <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
+        </template>
+      </div>
+
+      <label>Tipo de imóvel</label>
+      <div class="type-grid">
+        <template x-for="ut in unitTypeOptions" :key="ut.value">
+          <button type="button" class="type-btn" :class="{active: filters.unitTypes.includes(ut.value)}"
+            @click="filters.unitTypes = filters.unitTypes.includes(ut.value) ? filters.unitTypes.filter(v => v !== ut.value) : [...filters.unitTypes, ut.value]; apply()">
+            <span x-html="typeIcons[ut.value]"></span>
+            <span x-text="ut.label"></span>
+          </button>
+        </template>
+      </div>
+
+      <label>Quartos mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.roomsMin===null}" @click="filters.roomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.roomsMin===n}" @click="filters.roomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+
+      <label>Banheiros mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.bathroomsMin===null}" @click="filters.bathroomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.bathroomsMin===n}" @click="filters.bathroomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
 </div>
 <div id="formBackdrop"></div>
 <div id="propertyForm">
@@ -421,7 +442,9 @@ const ICONS = {
   bath: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2a1 1 0 0 1 1-1z"/><path d="M7 12V6a2 2 0 0 1 2-2c1 0 1.5.5 2 1M4 20v1M18 20v1"/></svg>',
   area: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h6M3 3v6M21 3h-6M21 3v6M3 21h6M3 21v-6M21 21h-6M21 21v-6"/></svg>',
   car: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM19 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5 17l1.5-5h11L19 17M6.5 12l1-3h9l1 3"/></svg>',
-  house: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z"/></svg>'
+  house: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z"/></svg>',
+  building: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 3h16v18H4V3zm3 3v2h2V6H7zm4 0v2h2V6h-2zm4 0v2h2V6h-2zM7 10v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM7 14v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM10 18v3h4v-3h-4z"/></svg>',
+  store: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 4h18l1 5H2l1-5zM4 10v10h6v-6h4v6h6V10H4z"/></svg>'
 };
 const STATUS_LABELS = { disponivel: 'Disponível', reservado: 'Reservado', vendido: 'Vendido', alugado: 'Alugado' };
 const UNIT_TYPES = ['casa','apartamento','comercial','terreno','cobertura','sobrado'];
@@ -988,7 +1011,7 @@ window.addEventListener('DOMContentLoaded', () => {
 function filterApp() {
   return {
     filters: {
-      dealType: 'ambos', unitTypes: [], status: STATUS_OPTIONS.slice(),
+      dealType: 'ambos', unitTypes: [], status: [],
       priceMin: null, priceMax: null,
       roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null,
       areaMin: null, areaMax: null,
@@ -997,6 +1020,11 @@ function filterApp() {
     },
     unitTypeOptions: UNIT_TYPES.map(v => ({ value: v, label: UNIT_TYPE_LABELS[v] })),
     statusOptions: STATUS_OPTIONS.map(v => ({ value: v, label: STATUS_LABELS[v] })),
+    typeIcons: {
+      casa: ICONS.house, sobrado: ICONS.house,
+      apartamento: ICONS.building, cobertura: ICONS.building,
+      comercial: ICONS.store, terreno: ICONS.area
+    },
     amenityOptions: [
       { value: 'pool', label: 'Piscina' }, { value: 'gym', label: 'Academia' },
       { value: 'partyRoom', label: 'Salão de festas' }, { value: 'playground', label: 'Playground' },
