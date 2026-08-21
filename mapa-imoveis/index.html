@@ -41,6 +41,11 @@
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
   header button.active { background: var(--ok-fg); color: #04121f; }
+  .view-tabs { display: flex; gap: 2px; background: var(--panel-2); border-radius: 20px; padding: 3px; }
+  .view-tab { background: transparent; border: 0; color: var(--muted); padding: 7px 16px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .view-tab.active { background: var(--accent); color: #fff; }
+  #financingView { flex: 1; min-height: 0; display: none; }
+  #financingFrame { width: 100%; height: 100%; border: 0; display: block; }
   .layout-body { flex: 1; display: flex; min-height: 0; }
   #sidebar {
     width: 300px; flex-shrink: 0; display: flex; flex-direction: column;
@@ -52,7 +57,10 @@
   #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: transparent; }
   #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: var(--accent); }
   #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-  .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+  .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+  .content-head button { background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; }
+  .content-head button:hover { border-color: var(--accent); color: var(--text); }
+  #listPanel.hidden { display: none; }
   #mapWrap {
     flex: 1; min-height: 0; position: relative; isolation: isolate;
     margin: 14px 20px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
@@ -167,13 +175,17 @@
 <div class="shell" x-data="filterApp()" x-init="init()">
   <header>
     <h1>🏠 Mapa de Imóveis</h1>
+    <div class="view-tabs">
+      <button type="button" id="tabMap" class="view-tab active">Mapa</button>
+      <button type="button" id="tabFinancing" class="view-tab">Financiamento</button>
+    </div>
     <input id="quickSearch" class="quick-search" type="text" placeholder="Buscar por endereço, bairro ou apelido..." x-model="filters.query" @input="apply()">
     <button id="btnAddProperty" type="button">+ Adicionar imóvel</button>
     <button id="btnExport" class="ghost" type="button">Exportar</button>
     <button id="btnImport" class="ghost" type="button">Importar</button>
     <input id="importFileInput" type="file" accept="application/json" style="display:none">
   </header>
-  <div class="layout-body">
+  <div class="layout-body" id="mapView">
   <aside id="sidebar">
     <div class="sidebar-head">
       <h2>Filtros</h2>
@@ -242,7 +254,10 @@
   </aside>
   <div id="sidebarResizeHandle"></div>
   <main id="contentPanel">
-    <div class="content-head"><span id="resultCount">0</span> imóveis encontrados</div>
+    <div class="content-head">
+      <span><span id="resultCount">0</span> imóveis encontrados</span>
+      <button type="button" id="btnToggleList" class="ghost">Ocultar lista</button>
+    </div>
     <div id="mapWrap">
     <div id="mapFilterCard">
       <div class="seg-group">
@@ -282,6 +297,9 @@
     </div>
     <div id="listPanel"><div id="listItems"></div></div>
   </main>
+  </div>
+  <div id="financingView">
+    <iframe id="financingFrame" title="Simulador de financiamento"></iframe>
   </div>
 </div>
 <div id="formBackdrop"></div>
@@ -673,7 +691,14 @@ function initMap() {
   markersLayer = L.layerGroup().addTo(map);
 }
 
-window.addEventListener('DOMContentLoaded', initMap);
+window.addEventListener('DOMContentLoaded', () => {
+  initMap();
+  // ponytail: Leaflet mede o container no momento do L.map(); se o layout
+  // flex/vh ainda não assentou nesse instante, o mapa fica com escala/
+  // proporção erradas até um resize manual. invalidateSize corrige.
+  setTimeout(() => map.invalidateSize(), 50);
+  window.addEventListener('resize', () => map.invalidateSize());
+});
 
 function buildMarkerIcon(status) {
   const color = STATUS_COLORS[status] || '#8b9bab';
@@ -1233,6 +1258,27 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!dragging) return;
     dragging = false;
     handle.classList.remove('dragging');
+  });
+
+  $('btnToggleList').addEventListener('click', () => {
+    const hidden = $('listPanel').classList.toggle('hidden');
+    $('btnToggleList').textContent = hidden ? 'Mostrar lista' : 'Ocultar lista';
+    map.invalidateSize();
+  });
+
+  $('tabMap').addEventListener('click', () => {
+    $('mapView').style.display = '';
+    $('financingView').style.display = 'none';
+    $('tabMap').classList.add('active');
+    $('tabFinancing').classList.remove('active');
+    map.invalidateSize();
+  });
+  $('tabFinancing').addEventListener('click', () => {
+    $('mapView').style.display = 'none';
+    $('financingView').style.display = 'flex';
+    $('tabFinancing').classList.add('active');
+    $('tabMap').classList.remove('active');
+    if (!$('financingFrame').src) $('financingFrame').src = 'financiamento.html';
   });
 });
 </script>

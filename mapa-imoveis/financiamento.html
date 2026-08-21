@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Proposta — Corretor GV</title>
+<style>
+  /* Paleta alinhada ao mapa-imoveis/index.html (preto/azul/amarelo, dark). */
+  :root {
+    --bg: #050609;
+    --panel: #12141c;
+    --panel-2: #1b1e29;
+    --line: #2a2e3d;
+    --text: #eef0f5;
+    --muted: #8b92a5;
+    --accent: #2f6fed;
+    --accent-2: #facc15;
+    --ok-bg: #10361f; --ok-fg: #4ade80; --ok-line:#1f6b3a;
+    --warn-bg: #3a1717; --warn-fg: #ff6b6b; --warn-line:#7a2a2a;
+    --radius: 10px;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--sans); background: var(--bg); color: var(--text);
+    font-size: 15px; line-height: 1.4;
+  }
+  header {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 20;
+  }
+  header h1 { font-size: 17px; margin: 0; font-weight: 600; letter-spacing: .2px; }
+  header .cliente { flex: 1; min-width: 200px; }
+  header input {
+    width: 100%; max-width: 320px; background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 15px;
+  }
+  header .vi-top { text-align: right; }
+  header .vi-top .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  header .vi-top .val { font-size: 22px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
+  header button {
+    background: var(--accent-2); color: #161300; border: 0; padding: 9px 16px;
+    border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 14px;
+  }
+  header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; font-weight: 600; }
+
+  /* ---- Layout principal: inputs à esquerda, resultado vivo à direita ---- */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 380px; gap: 24px; padding: 24px; align-items: start; }
+  @media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } }
+
+  .blocks { display: flex; flex-direction: column; gap: 18px; }
+
+  .block { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .block > h2 {
+    margin: 0; padding: 12px 16px; font-size: 13px; font-weight: 600; letter-spacing: .5px;
+    text-transform: uppercase; color: var(--muted); background: var(--panel-2); border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .block > h2 .step { background: var(--accent); color:#fff; width:20px;height:20px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700; }
+  .block-body { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .block-body.one { grid-template-columns: 1fr; }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; color: var(--muted); }
+  .field .hint { font-size: 11px; color: var(--muted); opacity: .8; }
+  .field input {
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    padding: 9px 11px; border-radius: 8px; font-size: 15px; font-family: var(--mono); width: 100%;
+  }
+  .field input:focus { outline: none; border-color: var(--accent); }
+  .field .prefix-wrap { position: relative; }
+  .field .prefix-wrap input { padding-left: 34px; }
+  .field .prefix-wrap::before {
+    content: attr(data-prefix); position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 13px; font-family: var(--mono); pointer-events: none;
+  }
+
+  /* inline partial result inside a block */
+  .partial { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 2px;
+    display: flex; flex-wrap: wrap; gap: 16px; }
+  .partial .p { display: flex; flex-direction: column; }
+  .partial .p .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .partial .p .v { font-size: 16px; font-weight: 600; font-family: var(--mono); }
+
+  /* ---- Painel de resultado vivo (sticky) ---- */
+  .live { position: sticky; top: 84px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .live h3 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+  .live .row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .live .row:last-child { border-bottom: 0; }
+  .live .row .k { font-size: 13px; color: var(--muted); }
+  .live .row .v { font-size: 16px; font-weight: 600; font-family: var(--mono); }
+  .live .row.big .v { font-size: 20px; color: var(--accent-2); }
+
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 8px;
+    font-weight: 600; font-size: 13px; border: 1px solid; width: 100%; justify-content: center; }
+  .badge.ok   { background: var(--ok-bg);   color: var(--ok-fg);   border-color: var(--ok-line); }
+  .badge.warn { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-line); }
+  .badge .margem { font-family: var(--mono); }
+
+  .rule { font-size: 12px; color: var(--muted); }
+  .rule strong { color: var(--text); }
+
+  /* ============================================================
+     MODO APRESENTAÇÃO — tela cheia p/ mostrar ao cliente
+     ============================================================ */
+  .present { position: fixed; inset: 0; background: var(--bg); z-index: 50; overflow: auto;
+    display: none; padding: 40px clamp(24px, 6vw, 96px); }
+  .present.show { display: block; }
+  .present .close { position: fixed; top: 20px; right: 24px; }
+  .present-head { text-align: center; margin-bottom: 32px; }
+  .present-head .cli { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+  .present-head .vi { font-size: clamp(40px, 6vw, 72px); font-weight: 800; color: var(--accent-2); font-family: var(--mono); line-height: 1.1; }
+  .present-head .vi-lbl { font-size: 14px; color: var(--muted); }
+  .present-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .pcard { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .pcard h4 { margin: 0 0 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .pcard .line { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .pcard .line:last-child { border-bottom: 0; }
+  .pcard .line .k { color: var(--muted); font-size: 15px; }
+  .pcard .line .v { font-size: 20px; font-weight: 700; font-family: var(--mono); }
+  .pcard .headline { font-size: clamp(28px, 4vw, 44px); font-weight: 800; font-family: var(--mono); text-align: center; margin: 8px 0; }
+  .pcard .headline small { display:block; font-size: 14px; color: var(--muted); font-weight: 500; font-family: var(--sans); letter-spacing: 1px; text-transform: uppercase; }
+  .present-foot { max-width: 1100px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 24px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; }
+  .present-foot .k { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .present-foot .v { font-size: clamp(28px, 4vw, 40px); font-weight: 800; font-family: var(--mono); color: var(--accent-2); }
+
+  @media print {
+    header, .layout, .present .close { display: none !important; }
+    .present { position: static; display: block !important; background: #fff; color: #000; }
+    .present .pcard, .present .present-foot { border-color:#ccc; background:#fff; }
+    .present-head .vi, .present-foot .v { color:#000; }
+    .pcard h4, .pcard .line .k, .present-foot .k, .present-head .cli, .present-head .vi-lbl { color:#444; }
+  }
+
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏢 Proposta de Financiamento</h1>
+  <div class="cliente">
+    <input id="cliente-nome" placeholder="Nome do cliente (opcional)" autocomplete="off">
+  </div>
+  <div class="vi-top">
+    <div class="lbl">Valor do imóvel</div>
+    <div class="val" data-out="VI_top">—</div>
+  </div>
+  <button id="btn-present">Apresentar ▸</button>
+  <button class="ghost" id="btn-reset">Nova proposta</button>
+</header>
+
+<div class="layout">
+  <!-- ==================== INPUTS (WIZARD EM BLOCOS) ==================== -->
+  <div class="blocks">
+
+    <!-- 1. IMÓVEL -->
+    <section class="block">
+      <h2><span class="step">1</span> Imóvel</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>Valor do imóvel (VI)</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="VI" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>Valor da avaliação (VA)</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="VA" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CLIENTE -->
+    <section class="block">
+      <h2><span class="step">2</span> Cliente</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>Renda do cliente</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="renda" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>Prazo p/ terminar a obra (meses)</label>
+          <input data-field="prazo_obra" data-type="int" inputmode="numeric" placeholder="0">
+        </div>
+        <div class="partial">
+          <div class="p"><span class="k">Regra de reforço</span><span class="v" data-out="regra_reforco">—</span></div>
+          <div class="p"><span class="k">Teto sugerido (1,2× renda)</span><span class="v" data-out="sugestao_max">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FINANCIAMENTO -->
+    <section class="block">
+      <h2><span class="step">3</span> Financiamento</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>Financiamento aprovado (banco)</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="financiamento" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>FGTS</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="fgts" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>Subsídio</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="subsidio" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="partial">
+          <div class="p"><span class="k">% financiado</span><span class="v" data-out="pct_financ">—</span></div>
+          <div class="p"><span class="k">Subtotal financiado</span><span class="v" data-out="subtotal_financ">—</span></div>
+          <div class="p"><span class="k">Sobra p/ construtora</span><span class="v" data-out="sobra_construtora">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ATO + RISCO -->
+    <section class="block">
+      <h2><span class="step">4</span> Ato &amp; Risco</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>Ato (na hora)</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="ato" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>% risco máximo aceito pela construtora</label>
+          <div class="prefix-wrap" data-prefix="%"><input data-field="risco_max" data-type="pct" inputmode="decimal" placeholder="25"></div>
+          <span class="hint">Padrão 25%. Editável — usado no cálculo (corrigido vs. Excel).</span>
+        </div>
+        <div class="partial">
+          <div class="p"><span class="k">Risco total</span><span class="v" data-out="risco_total">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PARCELAMENTO OBRA -->
+    <section class="block">
+      <h2><span class="step">5</span> Parcelamento dentro da obra</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>Qtde de parcelas dentro da obra</label>
+          <input data-field="parcelas_obra" data-type="int" inputmode="numeric" placeholder="0">
+        </div>
+        <div class="field">
+          <label>Parcela das chaves</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="chaves_parcela" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="field">
+          <label>Qtde de reforços anuais</label>
+          <input data-field="reforcos_qtd" data-type="int" inputmode="numeric" placeholder="0">
+          <span class="hint" data-out="regra_reforco_hint">—</span>
+        </div>
+        <div class="field">
+          <label>Valor de cada reforço</label>
+          <div class="prefix-wrap" data-prefix="R$"><input data-field="reforco_parcela" data-type="money" inputmode="decimal" placeholder="0,00"></div>
+        </div>
+        <div class="partial">
+          <div class="p"><span class="k">Total reforços</span><span class="v" data-out="reforco_total">—</span></div>
+          <div class="p"><span class="k">Carteira dentro da obra</span><span class="v" data-out="carteira_obra">—</span></div>
+          <div class="p"><span class="k">Parcela mensal da obra</span><span class="v" data-out="parcela_mensal_obra">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PÓS-CHAVE -->
+    <section class="block">
+      <h2><span class="step">6</span> Pós-chave</h2>
+      <div class="block-body">
+        <div class="field">
+          <label>% pós-chave permitido</label>
+          <div class="prefix-wrap" data-prefix="%"><input data-field="pos_chave_pct" data-type="pct" inputmode="decimal" placeholder="0"></div>
+        </div>
+        <div class="field">
+          <label>Qtde de parcelas pós-chave</label>
+          <input data-field="parcelas_pos_chave" data-type="int" inputmode="numeric" placeholder="0">
+        </div>
+        <div class="partial">
+          <div class="p"><span class="k">Total pós-chave</span><span class="v" data-out="pos_chave_total">—</span></div>
+          <div class="p"><span class="k">Parcela mensal pós-chave</span><span class="v" data-out="parcela_pos_chave">—</span></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== PAINEL VIVO ==================== -->
+  <aside class="live">
+    <h3>Resumo em tempo real</h3>
+    <div class="badge ok" data-badge="status_risco">RISCO OK</div>
+    <div class="row"><span class="k">Subtotal financiado</span><span class="v" data-out="subtotal_financ">—</span></div>
+    <div class="row"><span class="k">Sobra p/ construtora</span><span class="v" data-out="sobra_construtora">—</span></div>
+    <div class="row"><span class="k">Ato</span><span class="v" data-out="ato_out">—</span></div>
+    <div class="row"><span class="k">Carteira na obra</span><span class="v" data-out="carteira_obra">—</span></div>
+    <div class="row big"><span class="k">Parcela mensal obra</span><span class="v" data-out="parcela_mensal_obra">—</span></div>
+    <div class="row"><span class="k">Reforços (total)</span><span class="v" data-out="reforco_total">—</span></div>
+    <div class="row"><span class="k">Chaves</span><span class="v" data-out="chaves_out">—</span></div>
+    <div class="row"><span class="k">Pós-chave (total)</span><span class="v" data-out="pos_chave_total">—</span></div>
+    <div class="row big"><span class="k">Parcela pós-chave</span><span class="v" data-out="parcela_pos_chave">—</span></div>
+    <div class="row"><span class="k">Soma paga (= imóvel?)</span><span class="v" data-out="total_pago">—</span></div>
+    <div class="rule" data-out="checksum_note"></div>
+  </aside>
+</div>
+
+<!-- ==================== MODO APRESENTAÇÃO ==================== -->
+<div class="present" id="present">
+  <button class="ghost close" id="btn-close-present">✕ Fechar</button>
+  <div class="present-head">
+    <div class="cli" data-out="cli_present">&nbsp;</div>
+    <div class="vi-lbl">Valor do imóvel</div>
+    <div class="vi" data-out="VI_present">—</div>
+  </div>
+  <div class="present-grid">
+    <div class="pcard">
+      <h4>Financiamento</h4>
+      <div class="line"><span class="k">Banco</span><span class="v" data-out="financiamento_out">—</span></div>
+      <div class="line"><span class="k">FGTS</span><span class="v" data-out="fgts_out">—</span></div>
+      <div class="line"><span class="k">Subsídio</span><span class="v" data-out="subsidio_out">—</span></div>
+      <div class="line"><span class="k">Subtotal</span><span class="v" data-out="subtotal_financ">—</span></div>
+    </div>
+    <div class="pcard">
+      <h4>Entrada</h4>
+      <div class="headline" data-out="ato_out">—<small>Ato na hora</small></div>
+      <div style="margin-top:12px"><div class="badge ok" data-badge="status_risco">RISCO OK</div></div>
+    </div>
+    <div class="pcard">
+      <h4>Durante a obra</h4>
+      <div class="headline" data-out="parcela_mensal_obra">—<small data-out="parcelas_obra_lbl">parcela mensal</small></div>
+      <div class="line"><span class="k">Reforços anuais</span><span class="v" data-out="reforco_desc">—</span></div>
+      <div class="line"><span class="k">Chaves</span><span class="v" data-out="chaves_out">—</span></div>
+    </div>
+    <div class="pcard">
+      <h4>Pós-chave</h4>
+      <div class="headline" data-out="parcela_pos_chave">—<small data-out="parcelas_pos_lbl">parcela mensal</small></div>
+    </div>
+  </div>
+  <div class="present-foot">
+    <span class="k">Total pago</span>
+    <span class="v" data-out="total_pago">—</span>
+  </div>
+  <div style="text-align:center; margin-top:24px;">
+    <button id="btn-print">🖨 Imprimir</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  // ======================================================================
+  // 1. ESTADO — fonte única. Inputs escrevem aqui; nada mais guarda valor.
+  // ======================================================================
+  const state = {
+    VI: 0, VA: 0, renda: 0, prazo_obra: 0,
+    financiamento: 0, fgts: 0, subsidio: 0,
+    ato: 0, risco_max: 0.25,
+    parcelas_obra: 0, chaves_parcela: 0,
+    reforcos_qtd: 0, reforco_parcela: 0,
+    pos_chave_pct: 0, parcelas_pos_chave: 0,
+    cliente: '',
+  };
+
+  // ======================================================================
+  // 2. UTILS — parse pt-BR e formatação BRL / %
+  // ======================================================================
+  const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+  const fmtMoney = n => (Number.isFinite(n) ? brl.format(n) : '—');
+  const fmtPct = n => (Number.isFinite(n) ? (n * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + '%' : '—');
+  const fmtInt = n => (Number.isFinite(n) ? String(Math.round(n)) : '—');
+
+  // "1.234,56" | "1234,56" | "1234.56" -> 1234.56
+  function parseMoney(str) {
+    if (typeof str !== 'string') return 0;
+    let s = str.trim().replace(/[^\d.,-]/g, '');
+    if (!s) return 0;
+    // remove separador de milhar (.) e usa , como decimal, se houver ,
+    if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+    const n = parseFloat(s);
+    return Number.isFinite(n) ? n : 0;
+  }
+  // "25,001" (percent) -> 0.25001
+  function parsePct(str) { return parseMoney(str) / 100; }
+  function parseInt10(str) {
+    const n = parseInt(String(str).replace(/\D/g, ''), 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  const PARSERS = { money: parseMoney, pct: parsePct, int: parseInt10 };
+
+  // ======================================================================
+  // 3. ENGINE — função pura. Fórmulas EXATAS do XLSX (ordem preservada).
+  //    Correção aplicada: risco usa campo editável risco_max (não 0.25 fixo).
+  // ======================================================================
+  function compute(s) {
+    const VI = s.VI, VA = s.VA;
+    // base = MIN(VI, VA), ignorando zeros (campo não preenchido)
+    const nums = [VI, VA].filter(x => x > 0);
+    const base = nums.length ? Math.min(...nums) : 0;
+
+    const pct_financ = base > 0 ? s.financiamento / base : NaN;
+    const subtotal_financ = s.financiamento + s.fgts + s.subsidio;
+    const sobra_construtora = VI - subtotal_financ;
+    const status_proposta = 'PROPOSTA CERTA!'; // verdadeiro por construção
+
+    const pos_chave_total = VI * s.pos_chave_pct;
+    const reforco_total = s.reforcos_qtd > 0 ? s.reforco_parcela * s.reforcos_qtd : 0;
+    const carteira_obra = sobra_construtora - pos_chave_total - reforco_total - s.chaves_parcela - s.ato;
+    const parcela_mensal_obra = s.parcelas_obra > 0 ? carteira_obra / s.parcelas_obra : NaN;
+    const parcela_pos_chave = s.parcelas_pos_chave > 0 ? pos_chave_total / s.parcelas_pos_chave : NaN;
+
+    const risco_max = s.risco_max > 0 ? s.risco_max : 0.25;
+    const risco_total = VI > 0 ? (sobra_construtora - s.ato) / VI : NaN;
+    const risco_ok = Number.isFinite(risco_total) ? risco_total <= risco_max : true;
+    const status_risco = risco_ok ? 'RISCO OK' : 'ATENÇÃO! AUMENTAR ATO!';
+    const margem_risco = risco_ok || !Number.isFinite(risco_total) ? NaN : (risco_total - risco_max) * VI;
+
+    const sugestao_max = s.renda * 1.2;
+
+    const p = s.prazo_obra;
+    let regra_reforco;
+    if (p >= 36) regra_reforco = 'PODE ATÉ 3 REFORÇOS';
+    else if (p >= 22) regra_reforco = 'PODE ATÉ 2 REFORÇOS';
+    else if (p >= 12) regra_reforco = 'PODE 1 REFORÇO';
+    else if (p > 0) regra_reforco = 'NÃO PODE REFORÇO';
+    else regra_reforco = '—';
+
+    // checksum: soma de tudo que o cliente paga deve fechar em VI
+    const total_pago = subtotal_financ + s.ato + carteira_obra + reforco_total + s.chaves_parcela + pos_chave_total;
+
+    return {
+      pct_financ, subtotal_financ, sobra_construtora, status_proposta,
+      pos_chave_total, reforco_total, carteira_obra, parcela_mensal_obra, parcela_pos_chave,
+      risco_total, risco_ok, status_risco, margem_risco, sugestao_max, regra_reforco, total_pago,
+    };
+  }
+
+  // ======================================================================
+  // 4. RENDER — pinta [data-out] e [data-badge] a partir do resultado.
+  //    Mapa declara como formatar cada saída.
+  // ======================================================================
+  const OUT = {
+    // engine
+    pct_financ:        r => fmtPct(r.pct_financ),
+    subtotal_financ:   r => fmtMoney(r.subtotal_financ),
+    sobra_construtora: r => fmtMoney(r.sobra_construtora),
+    pos_chave_total:   r => fmtMoney(r.pos_chave_total),
+    reforco_total:     r => fmtMoney(r.reforco_total),
+    carteira_obra:     r => fmtMoney(r.carteira_obra),
+    parcela_mensal_obra: r => fmtMoney(r.parcela_mensal_obra),
+    parcela_pos_chave: r => fmtMoney(r.parcela_pos_chave),
+    risco_total:       r => fmtPct(r.risco_total),
+    regra_reforco:     r => r.regra_reforco,
+    total_pago:        r => fmtMoney(r.total_pago),
+    // espelhos de inputs (para painel/apresentação)
+    VI_top:      (r, s) => s.VI > 0 ? fmtMoney(s.VI) : '—',
+    VI_present:  (r, s) => fmtMoney(s.VI),
+    ato_out:     (r, s) => fmtMoney(s.ato),
+    chaves_out:  (r, s) => fmtMoney(s.chaves_parcela),
+    financiamento_out: (r, s) => fmtMoney(s.financiamento),
+    fgts_out:    (r, s) => fmtMoney(s.fgts),
+    subsidio_out:(r, s) => fmtMoney(s.subsidio),
+    sugestao_max:(r, s) => fmtMoney(r.sugestao_max),
+    cli_present: (r, s) => s.cliente || ' ',
+  };
+
+  const outEls = Array.from(document.querySelectorAll('[data-out]'));
+  const badgeEls = Array.from(document.querySelectorAll('[data-badge]'));
+
+  function render() {
+    const r = compute(state);
+
+    outEls.forEach(el => {
+      const key = el.dataset.out;
+      // saídas com <small> embutido (apresentação): só troca o nó de texto principal
+      const smallHtml = el.querySelector('small')?.outerHTML || '';
+      if (OUT[key]) {
+        el.innerHTML = OUT[key](r, state) + smallHtml;
+      }
+    });
+
+    // dica de regra de reforço reaproveitada no bloco 5 e no hint
+    const hint = document.querySelector('[data-out="regra_reforco_hint"]');
+    if (hint) hint.textContent = r.regra_reforco;
+
+    // labels dinâmicas de apresentação (qtde de parcelas)
+    setSmall('parcelas_obra_lbl', state.parcelas_obra > 0 ? `× ${state.parcelas_obra} meses` : 'parcela mensal');
+    setSmall('parcelas_pos_lbl', state.parcelas_pos_chave > 0 ? `× ${state.parcelas_pos_chave} meses` : 'parcela mensal');
+    const rd = document.querySelector('[data-out="reforco_desc"]');
+    if (rd) rd.textContent = state.reforcos_qtd > 0
+      ? `${state.reforcos_qtd}× ${fmtMoney(state.reforco_parcela)}` : '—';
+
+    // badge de risco (verde/vermelho + margem)
+    badgeEls.forEach(el => {
+      el.classList.toggle('ok', r.risco_ok);
+      el.classList.toggle('warn', !r.risco_ok);
+      el.textContent = r.status_risco;
+      if (!r.risco_ok && Number.isFinite(r.margem_risco)) {
+        el.textContent = `${r.status_risco}  +${fmtMoney(r.margem_risco)}`;
+      }
+    });
+
+    // nota do checksum
+    const note = document.querySelector('[data-out="checksum_note"]');
+    if (note) {
+      if (state.VI <= 0) { note.textContent = ''; }
+      else {
+        const diff = r.total_pago - state.VI;
+        note.innerHTML = Math.abs(diff) < 0.01
+          ? '✅ Fecha exatamente com o valor do imóvel.'
+          : `⚠️ Diferença de ${fmtMoney(diff)} — revisar.`;
+      }
+    }
+  }
+
+  function setSmall(key, txt) {
+    const el = document.querySelector(`[data-out="${key}"]`);
+    if (el) el.textContent = txt;
+  }
+
+  // ======================================================================
+  // 5. BINDING — um listener delegado. data-field + data-type -> state.
+  // ======================================================================
+  document.addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset.field) {
+      const parse = PARSERS[el.dataset.type] || parseMoney;
+      state[el.dataset.field] = parse(el.value);
+      render();
+    }
+  });
+
+  document.getElementById('cliente-nome').addEventListener('input', e => {
+    state.cliente = e.target.value;
+    render();
+  });
+
+  // formata campos de dinheiro ao sair (blur) — não interfere na digitação
+  document.addEventListener('blur', e => {
+    const el = e.target;
+    if (el.dataset && el.dataset.field && el.dataset.type === 'money' && el.value.trim()) {
+      const n = parseMoney(el.value);
+      el.value = n ? n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
+    }
+  }, true);
+
+  // ======================================================================
+  // 6. AÇÕES — apresentar / fechar / imprimir / reset
+  // ======================================================================
+  const present = document.getElementById('present');
+  document.getElementById('btn-present').onclick = () => { render(); present.classList.add('show'); };
+  document.getElementById('btn-close-present').onclick = () => present.classList.remove('show');
+  document.getElementById('btn-print').onclick = () => window.print();
+  document.getElementById('btn-reset').onclick = () => {
+    if (!confirm('Limpar tudo e começar nova proposta?')) return;
+    Object.keys(state).forEach(k => { state[k] = (k === 'risco_max') ? 0.25 : (k === 'cliente' ? '' : 0); });
+    document.querySelectorAll('input[data-field]').forEach(i => i.value = '');
+    document.getElementById('cliente-nome').value = '';
+    render();
+  };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') present.classList.remove('show'); });
+
+  // primeira pintura
+  render();
+})();
+</script>
+</body>
+</html>
