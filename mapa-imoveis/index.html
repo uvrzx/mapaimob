@@ -42,10 +42,11 @@
   #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: var(--accent); }
   #mapWrap { flex: 1; position: relative; isolation: isolate; }
   #map { position: absolute; inset: 0; }
+  #map.add-mode, #map.add-mode .leaflet-container { cursor: crosshair; }
   #propertyForm {
     position: fixed; top: 0; right: 0; height: 100%; width: 380px; max-width: 100vw;
     background: var(--panel); border-left: 1px solid var(--line); z-index: 40;
-    transform: translateX(100%); transition: transform .2s ease; overflow-y: auto; padding: 18px;
+    transform: translateX(100%); transition: transform .25s cubic-bezier(.16,1,.3,1); overflow-y: auto; padding: 18px;
   }
   #propertyForm.open { transform: translateX(0); }
   #propertyForm h2 { font-size: 15px; margin: 0 0 14px; }
@@ -65,10 +66,63 @@
     width:100%; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
     padding:6px 8px; border-radius:6px; font-size:13px;
   }
-  #filterPanel label.checkbox-label { display:block; font-size:13px; font-weight:normal; color:var(--text); margin:2px 0; }
   #filterPanel .row { display: flex; gap: 10px; }
   #filterPanel .row > * { flex: 1; }
+
+  /* pin */
+  .property-pin { animation: pin-pop .3s cubic-bezier(.34,1.56,.64,1); transform-origin: bottom center; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); transition: transform .12s ease; }
+  .property-pin:hover { transform: scale(1.12) translateY(-2px); }
+  @keyframes pin-pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+  /* popup card */
+  .leaflet-popup-content-wrapper { padding: 0; border-radius: 12px; overflow: hidden; background: var(--panel); color: var(--text); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .leaflet-popup-content { margin: 0; width: 260px !important; }
+  .leaflet-popup-tip { background: var(--panel); }
+  .leaflet-popup-close-button { color: var(--muted) !important; }
+  .property-popup-photo { width: 100%; height: 130px; object-fit: cover; display: block; background: var(--panel-2); }
+  .property-popup-photo-empty { display: flex; align-items: center; justify-content: center; fill: var(--muted); }
+  .property-popup-body { padding: 12px 14px; }
+  .property-popup-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .property-popup-price { font-size: 17px; }
+  .property-popup-status { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; letter-spacing: .4px; white-space: nowrap; }
+  .property-popup-type { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .property-popup-addr { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.35; }
+  .property-popup-specs { display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--text); }
+  .property-popup-specs span { display: flex; align-items: center; gap: 4px; fill: var(--muted); }
+  .property-popup-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .property-popup-actions button { flex: 1; padding: 7px; font-size: 12px; border-radius: 7px; }
+
+  /* chips / segmented controls (filtros) */
+  .chip-group, .stepper-group { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 2px; }
+  .chip {
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all .15s;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #04121f; font-weight: 600; }
+  .seg-group { display: flex; background: var(--panel-2); border-radius: 8px; padding: 3px; gap: 2px; margin: 4px 0 2px; }
+  .seg-group button {
+    flex: 1; background: transparent; border: 0; color: var(--muted); padding: 7px 8px;
+    border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s;
+  }
+  .seg-group button.active { background: var(--accent); color: #04121f; }
+
+  /* lista de imóveis (cards) */
+  .list-item { display: flex; gap: 10px; padding: 8px; border-radius: 10px; cursor: pointer; transition: background .15s; margin-bottom: 2px; }
   .list-item:hover { background: var(--panel-2); }
+  .list-item-photo { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: var(--panel-2); }
+  .list-item-photo-empty { display: flex; align-items: center; justify-content: center; fill: var(--muted); }
+  .list-item-body { min-width: 0; flex: 1; }
+  .list-item-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .list-item-top strong { font-size: 13px; }
+  .list-item-status { font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
+  .list-item-addr { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .list-item-specs { display: flex; gap: 8px; margin-top: 4px; font-size: 11px; color: var(--text); }
+  .list-item-specs span { display: flex; align-items: center; gap: 3px; fill: var(--muted); }
+
+  /* backdrop do formulário */
+  #formBackdrop { position: fixed; inset: 0; background: rgba(4,18,31,.6); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  #formBackdrop.show { opacity: 1; pointer-events: auto; }
 </style>
 </head>
 <body>
@@ -85,25 +139,27 @@
       <h2>Filtros</h2>
 
       <label>Negócio</label>
-      <select x-model="filters.dealType" @change="apply()">
-        <option value="ambos">Ambos</option>
-        <option value="venda">Venda</option>
-        <option value="aluguel">Aluguel</option>
-      </select>
+      <div class="seg-group">
+        <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Venda'},{v:'aluguel',l:'Aluguel'}]" :key="opt.v">
+          <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
+        </template>
+      </div>
 
       <label>Tipo de imóvel</label>
-      <template x-for="ut in unitTypeOptions" :key="ut.value">
-        <label class="checkbox-label">
-          <input type="checkbox" :value="ut.value" x-model="filters.unitTypes" @change="apply()"> <span x-text="ut.label"></span>
-        </label>
-      </template>
+      <div class="chip-group">
+        <template x-for="ut in unitTypeOptions" :key="ut.value">
+          <button type="button" class="chip" :class="{active: filters.unitTypes.includes(ut.value)}" x-text="ut.label"
+            @click="filters.unitTypes = filters.unitTypes.includes(ut.value) ? filters.unitTypes.filter(v => v !== ut.value) : [...filters.unitTypes, ut.value]; apply()"></button>
+        </template>
+      </div>
 
       <label>Status</label>
-      <template x-for="st in statusOptions" :key="st.value">
-        <label class="checkbox-label">
-          <input type="checkbox" :value="st.value" x-model="filters.status" @change="apply()"> <span x-text="st.label"></span>
-        </label>
-      </template>
+      <div class="chip-group">
+        <template x-for="st in statusOptions" :key="st.value">
+          <button type="button" class="chip" :class="{active: filters.status.includes(st.value)}" x-text="st.label"
+            @click="filters.status = filters.status.includes(st.value) ? filters.status.filter(v => v !== st.value) : [...filters.status, st.value]; apply()"></button>
+        </template>
+      </div>
 
       <label>Preço mín / máx</label>
       <div class="row">
@@ -112,13 +168,31 @@
       </div>
 
       <label>Quartos mín</label>
-      <input type="number" x-model.number="filters.roomsMin" @input="apply()">
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.roomsMin===null}" @click="filters.roomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.roomsMin===n}" @click="filters.roomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+
+      <label>Banheiros mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.bathroomsMin===null}" @click="filters.bathroomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.bathroomsMin===n}" @click="filters.bathroomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+
+      <label>Vagas mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.parkingMin===null}" @click="filters.parkingMin=null; apply()">Todas</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.parkingMin===n}" @click="filters.parkingMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+
       <label>Suítes mín</label>
       <input type="number" x-model.number="filters.suitesMin" @input="apply()">
-      <label>Banheiros mín</label>
-      <input type="number" x-model.number="filters.bathroomsMin" @input="apply()">
-      <label>Vagas mín</label>
-      <input type="number" x-model.number="filters.parkingMin" @input="apply()">
 
       <label>Área mín / máx (m²)</label>
       <div class="row">
@@ -127,19 +201,18 @@
       </div>
 
       <label>Mobiliado</label>
-      <select x-model="filters.furnished" @change="apply()">
-        <option value="qualquer">Qualquer</option>
-        <option value="sim">Sim</option>
-        <option value="não">Não</option>
-        <option value="parcial">Parcial</option>
-      </select>
+      <div class="seg-group">
+        <template x-for="opt in [{v:'qualquer',l:'Qualquer'},{v:'sim',l:'Sim'},{v:'não',l:'Não'},{v:'parcial',l:'Parcial'}]" :key="opt.v">
+          <button type="button" :class="{active: filters.furnished===opt.v}" @click="filters.furnished=opt.v; apply()" x-text="opt.l"></button>
+        </template>
+      </div>
 
       <label>Aceita pet</label>
-      <select x-model="filters.petsAllowed" @change="apply()">
-        <option value="qualquer">Qualquer</option>
-        <option value="true">Sim</option>
-        <option value="false">Não</option>
-      </select>
+      <div class="seg-group">
+        <template x-for="opt in [{v:'qualquer',l:'Qualquer'},{v:'true',l:'Sim'},{v:'false',l:'Não'}]" :key="opt.v">
+          <button type="button" :class="{active: filters.petsAllowed===opt.v}" @click="filters.petsAllowed=opt.v; apply()" x-text="opt.l"></button>
+        </template>
+      </div>
 
       <label>Bairro</label>
       <input type="text" x-model="filters.neighborhood" @input="apply()">
@@ -148,17 +221,19 @@
       <input type="text" x-model="filters.agentResponsible" @input="apply()">
 
       <label>Amenidades do condomínio</label>
-      <template x-for="am in amenityOptions" :key="am.value">
-        <label class="checkbox-label">
-          <input type="checkbox" :value="am.value" x-model="filters.amenities" @change="apply()"> <span x-text="am.label"></span>
-        </label>
-      </template>
+      <div class="chip-group">
+        <template x-for="am in amenityOptions" :key="am.value">
+          <button type="button" class="chip" :class="{active: filters.amenities.includes(am.value)}" x-text="am.label"
+            @click="filters.amenities = filters.amenities.includes(am.value) ? filters.amenities.filter(v => v !== am.value) : [...filters.amenities, am.value]; apply()"></button>
+        </template>
+      </div>
     </div>
     <div id="listPanel"><h2>Imóveis (<span id="resultCount">0</span>)</h2><div id="listItems"></div></div>
   </aside>
   <div id="sidebarResizeHandle"></div>
   <div id="mapWrap"><div id="map"></div></div>
 </div>
+<div id="formBackdrop"></div>
 <div id="propertyForm">
   <h2 id="formTitle">Novo imóvel</h2>
   <form id="propertyFormEl">
@@ -337,9 +412,17 @@
 <script defer src="https://unpkg.com/alpinejs@3/dist/cdn.min.js"></script>
 <script>
 /* === SECTION: CONFIG === */
+const $ = (id) => document.getElementById(id);
 const MAP_CENTER = [-27.5966, -48.6084];
 const MAP_ZOOM = 13;
-const STATUS_COLORS = { disponivel: '#4ade80', reservado: '#facc15', vendido: '#ff6b6b', alugado: '#ff6b6b' };
+const STATUS_COLORS = { disponivel: '#4ade80', reservado: '#facc15', vendido: '#ff6b6b', alugado: '#3ea6ff' };
+const ICONS = {
+  bed: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18v2M21 18v2M3 12V8a2 2 0 0 1 2-2h4M3 12h18"/></svg>',
+  bath: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2a1 1 0 0 1 1-1z"/><path d="M7 12V6a2 2 0 0 1 2-2c1 0 1.5.5 2 1M4 20v1M18 20v1"/></svg>',
+  area: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h6M3 3v6M21 3h-6M21 3v6M3 21h6M3 21v-6M21 21h-6M21 21v-6"/></svg>',
+  car: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM19 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5 17l1.5-5h11L19 17M6.5 12l1-3h9l1 3"/></svg>',
+  house: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z"/></svg>'
+};
 const STATUS_LABELS = { disponivel: 'Disponível', reservado: 'Reservado', vendido: 'Vendido', alugado: 'Alugado' };
 const UNIT_TYPES = ['casa','apartamento','comercial','terreno','cobertura','sobrado'];
 const UNIT_TYPE_LABELS = { casa:'Casa', apartamento:'Apartamento', comercial:'Comercial', terreno:'Terreno', cobertura:'Cobertura', sobrado:'Sobrado' };
@@ -529,12 +612,19 @@ function initMap() {
 window.addEventListener('DOMContentLoaded', initMap);
 
 function buildMarkerIcon(status) {
-  const color = STATUS_COLORS[status] || '#999';
+  const color = STATUS_COLORS[status] || '#8b9bab';
+  const svg = `<svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 0C6.7 0 0 6.7 0 15c0 11 15 25 15 25s15-14 15-25C30 6.7 23.3 0 15 0z" fill="${color}"/>
+      <circle cx="15" cy="15" r="10" fill="#04121f" fill-opacity=".25"/>
+      <circle cx="15" cy="15" r="9" fill="#0f1720"/>
+      <g transform="translate(7,7)" fill="${color}">${ICONS.house}</g>
+    </svg>`;
   return L.divIcon({
-    className: '',
-    html: `<div style="width:16px;height:16px;border-radius:50%;background:${color};border:2px solid #04121f;"></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8]
+    className: 'property-pin',
+    html: svg,
+    iconSize: [30, 40],
+    iconAnchor: [15, 40],
+    popupAnchor: [0, -36]
   });
 }
 
@@ -542,14 +632,29 @@ function buildPopupHtml(property) {
   const price = property.dealType === 'aluguel' ? property.rentPrice : property.salePrice;
   const priceLabel = property.dealType === 'aluguel' ? formatCurrency(price) + '/mês' : formatCurrency(price);
   const addr = property.address || {};
+  const statusColor = STATUS_COLORS[property.status] || '#8b9bab';
+  const photoUrl = property.photos && property.photos.length ? URL.createObjectURL(property.photos[0]) : null;
+  const specs = [
+    property.rooms ? `<span>${ICONS.bed}${property.rooms}</span>` : '',
+    property.bathrooms ? `<span>${ICONS.bath}${property.bathrooms}</span>` : '',
+    property.parkingSpaces ? `<span>${ICONS.car}${property.parkingSpaces}</span>` : '',
+    property.constructedArea ? `<span>${ICONS.area}${property.constructedArea}m²</span>` : ''
+  ].join('');
   return `
-    <div style="min-width:200px;">
-      <strong>${priceLabel}</strong><br>
-      ${UNIT_TYPE_LABELS[property.unitType] || property.unitType} · ${STATUS_LABELS[property.status] || property.status}<br>
-      ${addr.street || ''} ${addr.number || ''} - ${addr.neighborhood || ''}<br>
-      <div style="margin-top:8px; display:flex; gap:6px;">
-        <button type="button" onclick="openPropertyForm(null, appState.properties.find(p => p.id === '${property.id}'))">Editar</button>
-        <button type="button" onclick="deleteProperty('${property.id}')">Excluir</button>
+    <div class="property-popup">
+      ${photoUrl ? `<img src="${photoUrl}" class="property-popup-photo">` : `<div class="property-popup-photo property-popup-photo-empty">${ICONS.house}</div>`}
+      <div class="property-popup-body">
+        <div class="property-popup-top">
+          <strong class="property-popup-price">${priceLabel}</strong>
+          <span class="property-popup-status" style="background:${statusColor}22;color:${statusColor};">${STATUS_LABELS[property.status] || property.status}</span>
+        </div>
+        <div class="property-popup-type">${UNIT_TYPE_LABELS[property.unitType] || property.unitType}</div>
+        <div class="property-popup-addr">${addr.street || ''} ${addr.number || ''} — ${addr.neighborhood || ''}</div>
+        ${specs ? `<div class="property-popup-specs">${specs}</div>` : ''}
+        <div class="property-popup-actions">
+          <button type="button" onclick="openPropertyForm(null, appState.properties.find(p => p.id === '${property.id}'))">Editar</button>
+          <button type="button" class="ghost" onclick="deleteProperty('${property.id}')">Excluir</button>
+        </div>
       </div>
     </div>`;
 }
@@ -617,42 +722,43 @@ window.addEventListener('DOMContentLoaded', () => {
 /* === SECTION: FORM === */
 function openPropertyForm(coords, existingProperty) {
   appState.editingPropertyId = existingProperty ? existingProperty.id : null;
-  document.getElementById('formTitle').textContent = existingProperty ? 'Editar imóvel' : 'Novo imóvel';
+  $('formTitle').textContent = existingProperty ? 'Editar imóvel' : 'Novo imóvel';
   const p = existingProperty || {
     address: {}, status: 'disponivel', dealType: 'venda', unitType: 'casa',
     furnished: 'não', petsAllowed: false, coordinates: coords
   };
-  document.getElementById('f_id').value = p.id || '';
-  document.getElementById('f_lat').value = p.coordinates[0];
-  document.getElementById('f_lng').value = p.coordinates[1];
-  document.getElementById('f_label').value = p.label || '';
-  document.getElementById('f_status').value = p.status;
-  document.getElementById('f_dealType').value = p.dealType;
-  document.getElementById('f_unitType').value = p.unitType;
-  document.getElementById('f_salePrice').value = p.salePrice || '';
-  document.getElementById('f_rentPrice').value = p.rentPrice || '';
-  document.getElementById('f_constructedArea').value = p.constructedArea || '';
-  document.getElementById('f_landArea').value = p.landArea || '';
-  document.getElementById('f_rooms').value = p.rooms || '';
-  document.getElementById('f_suites').value = p.suites || '';
-  document.getElementById('f_bathrooms').value = p.bathrooms || '';
-  document.getElementById('f_parkingSpaces').value = p.parkingSpaces || '';
-  document.getElementById('f_floor').value = p.floor || '';
-  document.getElementById('f_furnished').value = p.furnished || 'não';
-  document.getElementById('f_petsAllowed').value = String(!!p.petsAllowed);
-  document.getElementById('f_street').value = (p.address && p.address.street) || '';
-  document.getElementById('f_number').value = (p.address && p.address.number) || '';
-  document.getElementById('f_neighborhood').value = (p.address && p.address.neighborhood) || '';
-  document.getElementById('f_city').value = (p.address && p.address.city) || 'Florianópolis';
-  document.getElementById('f_complement').value = (p.address && p.address.complement) || '';
-  document.getElementById('f_agentResponsible').value = p.agentResponsible || '';
-  document.getElementById('f_condoId').value = p.condoId || '';
-  document.getElementById('f_notes').value = p.notes || '';
-  document.getElementById('newCondoFields').style.display = 'none';
-  document.getElementById('formErrors').classList.remove('show');
+  $('f_id').value = p.id || '';
+  $('f_lat').value = p.coordinates[0];
+  $('f_lng').value = p.coordinates[1];
+  $('f_label').value = p.label || '';
+  $('f_status').value = p.status;
+  $('f_dealType').value = p.dealType;
+  $('f_unitType').value = p.unitType;
+  $('f_salePrice').value = p.salePrice || '';
+  $('f_rentPrice').value = p.rentPrice || '';
+  $('f_constructedArea').value = p.constructedArea || '';
+  $('f_landArea').value = p.landArea || '';
+  $('f_rooms').value = p.rooms || '';
+  $('f_suites').value = p.suites || '';
+  $('f_bathrooms').value = p.bathrooms || '';
+  $('f_parkingSpaces').value = p.parkingSpaces || '';
+  $('f_floor').value = p.floor || '';
+  $('f_furnished').value = p.furnished || 'não';
+  $('f_petsAllowed').value = String(!!p.petsAllowed);
+  $('f_street').value = (p.address && p.address.street) || '';
+  $('f_number').value = (p.address && p.address.number) || '';
+  $('f_neighborhood').value = (p.address && p.address.neighborhood) || '';
+  $('f_city').value = (p.address && p.address.city) || 'Florianópolis';
+  $('f_complement').value = (p.address && p.address.complement) || '';
+  $('f_agentResponsible').value = p.agentResponsible || '';
+  $('f_condoId').value = p.condoId || '';
+  $('f_notes').value = p.notes || '';
+  $('newCondoFields').style.display = 'none';
+  $('formErrors').classList.remove('show');
   formPhotos = p.photos ? p.photos.slice() : [];
   renderPhotoThumbnails();
-  document.getElementById('propertyForm').classList.add('open');
+  $('propertyForm').classList.add('open');
+  $('formBackdrop').classList.add('show');
 }
 
 let geocodePreviewMarker = null;
@@ -662,13 +768,13 @@ function clearGeocodePreview() {
 }
 
 async function geocodeAddress() {
-  const street = document.getElementById('f_street').value.trim();
-  const number = document.getElementById('f_number').value.trim();
-  const neighborhood = document.getElementById('f_neighborhood').value.trim();
-  const city = document.getElementById('f_city').value.trim() || 'Florianópolis';
+  const street = $('f_street').value.trim();
+  const number = $('f_number').value.trim();
+  const neighborhood = $('f_neighborhood').value.trim();
+  const city = $('f_city').value.trim() || 'Florianópolis';
   if (!street) { alert('Preencha ao menos a rua antes de localizar.'); return; }
   const query = [street, number, neighborhood, city, 'SC', 'Brasil'].filter(Boolean).join(', ');
-  const btn = document.getElementById('btnGeocodeAddress');
+  const btn = $('btnGeocodeAddress');
   const originalLabel = btn.textContent;
   btn.disabled = true;
   btn.textContent = 'Buscando...';
@@ -681,8 +787,8 @@ async function geocodeAddress() {
       return;
     }
     const lat = parseFloat(results[0].lat), lng = parseFloat(results[0].lon);
-    document.getElementById('f_lat').value = lat;
-    document.getElementById('f_lng').value = lng;
+    $('f_lat').value = lat;
+    $('f_lng').value = lng;
     map.setView([lat, lng], 17);
     clearGeocodePreview();
     geocodePreviewMarker = L.marker([lat, lng], { icon: buildMarkerIcon('disponivel') }).addTo(markersLayer);
@@ -696,43 +802,44 @@ async function geocodeAddress() {
 }
 
 function closePropertyForm() {
-  document.getElementById('propertyForm').classList.remove('open');
+  $('propertyForm').classList.remove('open');
+  $('formBackdrop').classList.remove('show');
   appState.addMode = false;
   appState.editingPropertyId = null;
-  document.getElementById('btnAddProperty').classList.remove('active');
+  $('btnAddProperty').classList.remove('active');
   clearGeocodePreview();
 }
 
 function readPropertyForm() {
   const existing = appState.editingPropertyId ? appState.properties.find(p => p.id === appState.editingPropertyId) : null;
   return {
-    id: document.getElementById('f_id').value || 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
-    label: document.getElementById('f_label').value.trim(),
-    status: document.getElementById('f_status').value,
-    dealType: document.getElementById('f_dealType').value,
-    unitType: document.getElementById('f_unitType').value,
-    salePrice: Number(document.getElementById('f_salePrice').value) || 0,
-    rentPrice: Number(document.getElementById('f_rentPrice').value) || 0,
-    constructedArea: Number(document.getElementById('f_constructedArea').value) || 0,
-    landArea: Number(document.getElementById('f_landArea').value) || 0,
-    rooms: Number(document.getElementById('f_rooms').value) || 0,
-    suites: Number(document.getElementById('f_suites').value) || 0,
-    bathrooms: Number(document.getElementById('f_bathrooms').value) || 0,
-    parkingSpaces: Number(document.getElementById('f_parkingSpaces').value) || 0,
-    floor: document.getElementById('f_floor').value ? Number(document.getElementById('f_floor').value) : null,
-    furnished: document.getElementById('f_furnished').value,
-    petsAllowed: document.getElementById('f_petsAllowed').value === 'true',
+    id: $('f_id').value || 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+    label: $('f_label').value.trim(),
+    status: $('f_status').value,
+    dealType: $('f_dealType').value,
+    unitType: $('f_unitType').value,
+    salePrice: Number($('f_salePrice').value) || 0,
+    rentPrice: Number($('f_rentPrice').value) || 0,
+    constructedArea: Number($('f_constructedArea').value) || 0,
+    landArea: Number($('f_landArea').value) || 0,
+    rooms: Number($('f_rooms').value) || 0,
+    suites: Number($('f_suites').value) || 0,
+    bathrooms: Number($('f_bathrooms').value) || 0,
+    parkingSpaces: Number($('f_parkingSpaces').value) || 0,
+    floor: $('f_floor').value ? Number($('f_floor').value) : null,
+    furnished: $('f_furnished').value,
+    petsAllowed: $('f_petsAllowed').value === 'true',
     address: {
-      street: document.getElementById('f_street').value.trim(),
-      number: document.getElementById('f_number').value.trim(),
-      neighborhood: document.getElementById('f_neighborhood').value.trim(),
-      city: document.getElementById('f_city').value.trim(),
-      complement: document.getElementById('f_complement').value.trim()
+      street: $('f_street').value.trim(),
+      number: $('f_number').value.trim(),
+      neighborhood: $('f_neighborhood').value.trim(),
+      city: $('f_city').value.trim(),
+      complement: $('f_complement').value.trim()
     },
-    coordinates: [Number(document.getElementById('f_lat').value), Number(document.getElementById('f_lng').value)],
-    agentResponsible: document.getElementById('f_agentResponsible').value.trim(),
-    condoId: document.getElementById('f_condoId').value || null,
-    notes: document.getElementById('f_notes').value.trim(),
+    coordinates: [Number($('f_lat').value), Number($('f_lng').value)],
+    agentResponsible: $('f_agentResponsible').value.trim(),
+    condoId: $('f_condoId').value || null,
+    notes: $('f_notes').value.trim(),
     photos: formPhotos.slice(),
     createdAt: existing ? existing.createdAt : Date.now(),
     updatedAt: Date.now()
@@ -740,20 +847,20 @@ function readPropertyForm() {
 }
 
 async function handleCondoCreateIfNeeded() {
-  const nameField = document.getElementById('c_name');
-  if (document.getElementById('newCondoFields').style.display === 'none' || !nameField.value.trim()) return null;
+  const nameField = $('c_name');
+  if ($('newCondoFields').style.display === 'none' || !nameField.value.trim()) return null;
   const condo = {
     id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
     name: nameField.value.trim(),
-    pool: document.getElementById('c_pool').checked,
-    gym: document.getElementById('c_gym').checked,
-    partyRoom: document.getElementById('c_partyRoom').checked,
-    playground: document.getElementById('c_playground').checked,
-    petArea: document.getElementById('c_petArea').checked,
-    security24h: document.getElementById('c_security24h').checked,
-    elevator: document.getElementById('c_elevator').checked,
-    gatedCommunity: document.getElementById('c_gatedCommunity').checked,
-    monthlyFee: Number(document.getElementById('c_monthlyFee').value) || 0
+    pool: $('c_pool').checked,
+    gym: $('c_gym').checked,
+    partyRoom: $('c_partyRoom').checked,
+    playground: $('c_playground').checked,
+    petArea: $('c_petArea').checked,
+    security24h: $('c_security24h').checked,
+    elevator: $('c_elevator').checked,
+    gatedCommunity: $('c_gatedCommunity').checked,
+    monthlyFee: Number($('c_monthlyFee').value) || 0
   };
   await dbPut('condos', condo);
   appState.condos.push(condo);
@@ -763,7 +870,7 @@ async function handleCondoCreateIfNeeded() {
 }
 
 function refreshCondoSelect() {
-  const select = document.getElementById('f_condoId');
+  const select = $('f_condoId');
   const current = select.value;
   select.innerHTML = '<option value="">Nenhum</option>' +
     appState.condos.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
@@ -774,7 +881,7 @@ async function savePropertyForm(event) {
   event.preventDefault();
   const property = readPropertyForm();
   const errors = validateProperty(property);
-  const errorsEl = document.getElementById('formErrors');
+  const errorsEl = $('formErrors');
   if (errors.length) {
     errorsEl.innerHTML = errors.map(e => '• ' + e).join('<br>');
     errorsEl.classList.add('show');
@@ -799,22 +906,28 @@ async function savePropertyForm(event) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('propertyFormEl').addEventListener('submit', savePropertyForm);
-  document.getElementById('btnCancelForm').addEventListener('click', closePropertyForm);
-  document.getElementById('btnGeocodeAddress').addEventListener('click', geocodeAddress);
-  document.getElementById('btnNewCondo').addEventListener('click', () => {
-    const el = document.getElementById('newCondoFields');
+  $('propertyFormEl').addEventListener('submit', savePropertyForm);
+  $('btnCancelForm').addEventListener('click', closePropertyForm);
+  $('btnGeocodeAddress').addEventListener('click', geocodeAddress);
+  $('formBackdrop').addEventListener('click', closePropertyForm);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $('propertyForm').classList.contains('open')) closePropertyForm();
+  });
+  $('btnNewCondo').addEventListener('click', () => {
+    const el = $('newCondoFields');
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
   });
-  document.getElementById('btnAddProperty').addEventListener('click', () => {
+  $('btnAddProperty').addEventListener('click', () => {
     appState.addMode = !appState.addMode;
-    document.getElementById('btnAddProperty').classList.toggle('active', appState.addMode);
+    $('btnAddProperty').classList.toggle('active', appState.addMode);
+    $('map').classList.toggle('add-mode', appState.addMode);
   });
   map.on('click', (e) => {
     if (!appState.addMode) return;
     openPropertyForm([e.latlng.lat, e.latlng.lng], null);
     appState.addMode = false;
-    document.getElementById('btnAddProperty').classList.remove('active');
+    $('btnAddProperty').classList.remove('active');
+    $('map').classList.remove('add-mode');
   });
 });
 
@@ -842,7 +955,7 @@ function resizeImageToBlob(file, maxWidth) {
 }
 
 function renderPhotoThumbnails() {
-  const wrap = document.getElementById('photoThumbs');
+  const wrap = $('photoThumbs');
   wrap.innerHTML = '';
   formPhotos.forEach((blob, idx) => {
     const url = URL.createObjectURL(blob);
@@ -861,7 +974,7 @@ function renderPhotoThumbnails() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('f_photos').addEventListener('change', async (e) => {
+  $('f_photos').addEventListener('change', async (e) => {
     for (const file of e.target.files) {
       const blob = await resizeImageToBlob(file, 1600);
       formPhotos.push(blob);
@@ -902,7 +1015,7 @@ function filterApp() {
 }
 
 window.addEventListener('filters-applied', (e) => {
-  document.getElementById('resultCount').textContent = e.detail.filtered.length;
+  $('resultCount').textContent = e.detail.filtered.length;
   const filteredIds = new Set(e.detail.filtered.map(p => p.id));
   Object.entries(markersById).forEach(([id, marker]) => {
     const shouldShow = filteredIds.has(id);
@@ -914,13 +1027,28 @@ window.addEventListener('filters-applied', (e) => {
 
 /* === SECTION: LIST === */
 function renderList(properties) {
-  const wrap = document.getElementById('listItems');
+  const wrap = $('listItems');
   wrap.innerHTML = properties.map(p => {
     const price = p.dealType === 'aluguel' ? p.rentPrice : p.salePrice;
+    const priceLabel = p.dealType === 'aluguel' ? formatCurrency(price) + '/mês' : formatCurrency(price);
     const addr = p.address || {};
-    return `<div class="list-item" data-id="${p.id}" style="padding:8px;border-bottom:1px solid var(--line);cursor:pointer;">
-      <div style="font-weight:600;">${formatCurrency(price)}</div>
-      <div style="font-size:12px;color:var(--muted);">${UNIT_TYPE_LABELS[p.unitType] || p.unitType} · ${addr.neighborhood || ''}</div>
+    const statusColor = STATUS_COLORS[p.status] || '#8b9bab';
+    const photoUrl = p.photos && p.photos.length ? URL.createObjectURL(p.photos[0]) : null;
+    const specs = [
+      p.rooms ? `<span>${ICONS.bed}${p.rooms}</span>` : '',
+      p.bathrooms ? `<span>${ICONS.bath}${p.bathrooms}</span>` : '',
+      p.constructedArea ? `<span>${ICONS.area}${p.constructedArea}m²</span>` : ''
+    ].join('');
+    return `<div class="list-item" data-id="${p.id}">
+      ${photoUrl ? `<img src="${photoUrl}" class="list-item-photo">` : `<div class="list-item-photo list-item-photo-empty">${ICONS.house}</div>`}
+      <div class="list-item-body">
+        <div class="list-item-top">
+          <strong>${priceLabel}</strong>
+          <span class="list-item-status" style="background:${statusColor}22;color:${statusColor};">${STATUS_LABELS[p.status] || p.status}</span>
+        </div>
+        <div class="list-item-addr">${UNIT_TYPE_LABELS[p.unitType] || p.unitType} · ${addr.neighborhood || ''}</div>
+        ${specs ? `<div class="list-item-specs">${specs}</div>` : ''}
+      </div>
     </div>`;
   }).join('');
   wrap.querySelectorAll('.list-item').forEach(el => {
@@ -999,9 +1127,9 @@ async function importBackup(file) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btnExport').addEventListener('click', exportBackup);
-  document.getElementById('btnImport').addEventListener('click', () => document.getElementById('importFileInput').click());
-  document.getElementById('importFileInput').addEventListener('change', (e) => {
+  $('btnExport').addEventListener('click', exportBackup);
+  $('btnImport').addEventListener('click', () => $('importFileInput').click());
+  $('importFileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) importBackup(file);
     e.target.value = '';
@@ -1010,8 +1138,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* === SECTION: LAYOUT === */
 window.addEventListener('DOMContentLoaded', () => {
-  const handle = document.getElementById('sidebarResizeHandle');
-  const sidebar = document.getElementById('sidebar');
+  const handle = $('sidebarResizeHandle');
+  const sidebar = $('sidebar');
   let dragging = false;
   handle.addEventListener('mousedown', (e) => {
     dragging = true;
