@@ -7,40 +7,56 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1/dist/leaflet.css">
 <style>
   :root {
-    --bg: #f2f3f7; --panel: #ffffff; --panel-2: #f4f5f9; --line: #e3e5ec;
-    --text: #1b2130; --muted: #6b7280; --accent: #6d5ef0;
-    --ok-bg: #e8fbf0; --ok-fg: #16a34a; --ok-line: #bbf0d0;
-    --warn-bg: #fef2f2; --warn-fg: #dc2626; --warn-line: #fbd0d0;
+    --bg: #050609; --panel: #12141c; --panel-2: #1b1e29; --line: #2a2e3d;
+    --text: #eef0f5; --muted: #8b92a5; --accent: #2f6fed; --accent-2: #facc15;
+    --ok-bg: #10361f; --ok-fg: #4ade80; --ok-line: #1f6b3a;
+    --warn-bg: #3a1717; --warn-fg: #ff6b6b; --warn-line: #7a2a2a;
     --radius: 10px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
-  body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.4; display: flex; flex-direction: column; }
-  header {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    padding: 12px 20px; background: var(--panel); border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; z-index: 30;
+  body {
+    font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.4;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
   }
-  header h1 { font-size: 16px; margin: 0; font-weight: 600; flex: 1; min-width: 160px; }
-  header button {
-    background: var(--accent); color: #04121f; border: 0; padding: 8px 14px;
-    border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;
-  }
-  header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
-  header button.active { background: var(--ok-fg); }
-  .app { flex: 1; display: flex; min-height: 0; }
-  #sidebar {
-    width: 320px; flex-shrink: 0; background: var(--panel); border-right: 1px solid var(--line);
+  .shell {
+    width: 100%; max-width: 1500px; height: 92vh; background: var(--panel);
+    border-radius: 24px; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(0,0,0,.55);
     display: flex; flex-direction: column; overflow: hidden;
   }
-  #filterPanel { padding: 14px; border-bottom: 1px solid var(--line); overflow-y: auto; max-height: 55%; }
-  #filterPanel h2, #listPanel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin: 0 0 10px; }
-  #listPanel { flex: 1; overflow-y: auto; padding: 14px; }
-  #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: var(--line); }
+  header {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 16px 24px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  header h1 { font-size: 17px; margin: 0; font-weight: 700; }
+  .quick-search {
+    flex: 1; max-width: 380px; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    padding: 9px 14px; border-radius: 20px; font-size: 13px;
+  }
+  header button {
+    background: var(--accent-2); color: #161300; border: 0; padding: 8px 16px;
+    border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 13px;
+  }
+  header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
+  header button.active { background: var(--ok-fg); color: #04121f; }
+  .layout-body { flex: 1; display: flex; min-height: 0; }
+  #sidebar {
+    width: 300px; flex-shrink: 0; display: flex; flex-direction: column;
+    overflow-y: auto; padding: 20px; border-right: 1px solid var(--line);
+  }
+  .sidebar-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .sidebar-head h2 { font-size: 18px; font-weight: 700; margin: 0; }
+  .reset-link { background: none; border: 0; color: var(--accent); font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; }
+  #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: transparent; }
   #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: var(--accent); }
-  #mapWrap { flex: 1; position: relative; isolation: isolate; }
+  #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+  .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+  #mapWrap {
+    flex: 1; min-height: 0; position: relative; isolation: isolate;
+    margin: 14px 20px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+  }
   #map { position: absolute; inset: 0; }
   #map.add-mode, #map.add-mode .leaflet-container { cursor: crosshair; }
   #propertyForm {
@@ -61,7 +77,7 @@
   #formErrors.show { display: block; }
   .btn-row { display: flex; gap: 10px; margin-top: 16px; }
   .btn-row button { flex: 1; }
-  #filterPanel label, #listPanel label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; text-transform:none; }
+  #filterPanel label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; text-transform:none; }
   #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] {
     width:100%; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
     padding:6px 8px; border-radius:6px; font-size:13px;
@@ -107,17 +123,23 @@
   }
   .seg-group button.active { background: var(--accent); color: #04121f; }
 
-  /* lista de imóveis (cards) */
-  .list-item { display: flex; gap: 10px; padding: 8px; border-radius: 10px; cursor: pointer; transition: background .15s; margin-bottom: 2px; }
-  .list-item:hover { background: var(--panel-2); }
-  .list-item-photo { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: var(--panel-2); }
+  /* lista de imóveis (strip horizontal de cards abaixo do mapa) */
+  #listPanel { flex-shrink: 0; padding: 0 20px 18px; }
+  #listItems { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
+  .list-item {
+    display: flex; flex-direction: column; width: 220px; flex-shrink: 0;
+    border-radius: 14px; overflow: hidden; background: var(--panel-2); border: 1px solid var(--line);
+    cursor: pointer; transition: transform .15s ease, border-color .15s ease;
+  }
+  .list-item:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .list-item-photo { width: 100%; height: 120px; object-fit: cover; flex-shrink: 0; background: var(--panel); }
   .list-item-photo-empty { display: flex; align-items: center; justify-content: center; fill: var(--muted); }
-  .list-item-body { min-width: 0; flex: 1; }
+  .list-item-body { min-width: 0; padding: 10px 12px 12px; }
   .list-item-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .list-item-top strong { font-size: 13px; }
   .list-item-status { font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
-  .list-item-addr { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .list-item-specs { display: flex; gap: 8px; margin-top: 4px; font-size: 11px; color: var(--text); }
+  .list-item-addr { font-size: 11px; color: var(--muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .list-item-specs { display: flex; gap: 8px; margin-top: 6px; font-size: 11px; color: var(--text); }
   .list-item-specs span { display: flex; align-items: center; gap: 3px; fill: var(--muted); }
 
   /* cartão de filtros flutuante sobre o mapa */
@@ -134,7 +156,7 @@
     padding: 10px 6px; font-size: 11px; color: var(--text); cursor: pointer; transition: all .15s; fill: var(--muted);
   }
   .type-btn:hover { border-color: var(--accent); }
-  .type-btn.active { border-color: var(--accent); background: #efebff; color: var(--accent); fill: var(--accent); font-weight: 600; }
+  .type-btn.active { border-color: var(--accent); background: rgba(47,111,237,.15); color: var(--accent); fill: var(--accent); font-weight: 600; }
 
   /* backdrop do formulário */
   #formBackdrop { position: fixed; inset: 0; background: rgba(4,18,31,.6); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
@@ -142,18 +164,22 @@
 </style>
 </head>
 <body>
-<header>
-  <h1>Mapa de Imóveis</h1>
-  <button id="btnAddProperty" type="button">+ Adicionar imóvel</button>
-  <button id="btnExport" class="ghost" type="button">Exportar</button>
-  <button id="btnImport" class="ghost" type="button">Importar</button>
-  <input id="importFileInput" type="file" accept="application/json" style="display:none">
-</header>
-<div class="app" x-data="filterApp()" x-init="init()">
+<div class="shell" x-data="filterApp()" x-init="init()">
+  <header>
+    <h1>🏠 Mapa de Imóveis</h1>
+    <input id="quickSearch" class="quick-search" type="text" placeholder="Buscar por endereço, bairro ou apelido..." x-model="filters.query" @input="apply()">
+    <button id="btnAddProperty" type="button">+ Adicionar imóvel</button>
+    <button id="btnExport" class="ghost" type="button">Exportar</button>
+    <button id="btnImport" class="ghost" type="button">Importar</button>
+    <input id="importFileInput" type="file" accept="application/json" style="display:none">
+  </header>
+  <div class="layout-body">
   <aside id="sidebar">
-    <div id="filterPanel">
+    <div class="sidebar-head">
       <h2>Filtros</h2>
-
+      <button type="button" class="reset-link" @click="reset()">Limpar</button>
+    </div>
+    <div id="filterPanel">
       <label>Status</label>
       <div class="chip-group">
         <template x-for="st in statusOptions" :key="st.value">
@@ -213,10 +239,11 @@
         </template>
       </div>
     </div>
-    <div id="listPanel"><h2>Imóveis (<span id="resultCount">0</span>)</h2><div id="listItems"></div></div>
   </aside>
   <div id="sidebarResizeHandle"></div>
-  <div id="mapWrap">
+  <main id="contentPanel">
+    <div class="content-head"><span id="resultCount">0</span> imóveis encontrados</div>
+    <div id="mapWrap">
     <div id="mapFilterCard">
       <div class="seg-group">
         <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Comprar'},{v:'aluguel',l:'Alugar'}]" :key="opt.v">
@@ -252,6 +279,9 @@
       </div>
     </div>
     <div id="map"></div>
+    </div>
+    <div id="listPanel"><div id="listItems"></div></div>
+  </main>
   </div>
 </div>
 <div id="formBackdrop"></div>
@@ -569,6 +599,12 @@ function matchesFilters(property, condosById, filters) {
   if (filters.petsAllowed !== 'qualquer' && String(property.petsAllowed) !== filters.petsAllowed) return false;
   if (filters.neighborhood && !(property.address.neighborhood || '').toLowerCase().includes(filters.neighborhood.toLowerCase())) return false;
   if (filters.agentResponsible && !(property.agentResponsible || '').toLowerCase().includes(filters.agentResponsible.toLowerCase())) return false;
+  if (filters.query) {
+    const q = filters.query.toLowerCase();
+    const addr = property.address || {};
+    const haystack = [property.label, addr.street, addr.neighborhood].filter(Boolean).join(' ').toLowerCase();
+    if (!haystack.includes(q)) return false;
+  }
   if (filters.amenities.length) {
     const condo = property.condoId ? condosById[property.condoId] : null;
     if (!condo) return false;
@@ -586,7 +622,7 @@ function matchesFilters(property, condosById, filters) {
   const badProp = { unitType: '', dealType: '', salePrice: 0, address: {}, coordinates: null };
   console.assert(validateProperty(badProp).length === 6, 'ASSERT FAIL: validateProperty deveria acusar 6 erros, achou ' + validateProperty(badProp).length);
 
-  const baseFilters = { dealType: 'ambos', unitTypes: [], status: [], priceMin: null, priceMax: null, roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null, areaMin: null, areaMax: null, furnished: 'qualquer', petsAllowed: 'qualquer', neighborhood: '', agentResponsible: '', amenities: [] };
+  const baseFilters = { dealType: 'ambos', unitTypes: [], status: [], priceMin: null, priceMax: null, roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null, areaMin: null, areaMax: null, furnished: 'qualquer', petsAllowed: 'qualquer', neighborhood: '', agentResponsible: '', amenities: [], query: '' };
   const propA = { dealType: 'venda', unitType: 'casa', status: 'disponivel', salePrice: 500000, rentPrice: 0, rooms: 3, suites: 1, bathrooms: 2, parkingSpaces: 2, constructedArea: 120, furnished: 'não', petsAllowed: true, address: { neighborhood: 'Capoeiras' }, agentResponsible: 'Ana', condoId: null };
   console.assert(matchesFilters(propA, {}, baseFilters) === true, 'ASSERT FAIL: matchesFilters deveria aceitar sem filtros ativos');
   console.assert(matchesFilters(propA, {}, { ...baseFilters, unitTypes: ['apartamento'] }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar tipo diferente');
@@ -598,6 +634,11 @@ function matchesFilters(property, condosById, filters) {
   console.assert(matchesFilters(propRental, {}, { ...baseFilters, priceMin: 2000, priceMax: 3000, dealType: 'venda' }) === false, 'ASSERT FAIL: matchesFilters (venda) não deveria considerar rentPrice');
   const propAgent = { ...propA, agentResponsible: 'Ana Paula' };
   console.assert(matchesFilters(propAgent, {}, { ...baseFilters, agentResponsible: 'ana' }) === true, 'ASSERT FAIL: matchesFilters agentResponsible deveria ser case-insensitive e parcial');
+
+  const propQuery = { ...propA, label: 'Casa dos Sonhos', address: { neighborhood: 'Capoeiras', street: 'Rua Alfa' } };
+  console.assert(matchesFilters(propQuery, {}, { ...baseFilters, query: 'sonhos' }) === true, 'ASSERT FAIL: matchesFilters query deveria achar por apelido');
+  console.assert(matchesFilters(propQuery, {}, { ...baseFilters, query: 'alfa' }) === true, 'ASSERT FAIL: matchesFilters query deveria achar por rua');
+  console.assert(matchesFilters(propQuery, {}, { ...baseFilters, query: 'inexistente' }) === false, 'ASSERT FAIL: matchesFilters query não deveria achar termo ausente');
 
   const condosById = { condo1: { pool: true, gym: false } };
   const propB = { ...propA, condoId: 'condo1' };
@@ -1008,16 +1049,20 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* === SECTION: FILTERS === */
+function defaultFilters() {
+  return {
+    dealType: 'ambos', unitTypes: [], status: [],
+    priceMin: null, priceMax: null,
+    roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null,
+    areaMin: null, areaMax: null,
+    furnished: 'qualquer', petsAllowed: 'qualquer',
+    neighborhood: '', agentResponsible: '', amenities: [], query: ''
+  };
+}
+
 function filterApp() {
   return {
-    filters: {
-      dealType: 'ambos', unitTypes: [], status: [],
-      priceMin: null, priceMax: null,
-      roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null,
-      areaMin: null, areaMax: null,
-      furnished: 'qualquer', petsAllowed: 'qualquer',
-      neighborhood: '', agentResponsible: '', amenities: []
-    },
+    filters: defaultFilters(),
     unitTypeOptions: UNIT_TYPES.map(v => ({ value: v, label: UNIT_TYPE_LABELS[v] })),
     statusOptions: STATUS_OPTIONS.map(v => ({ value: v, label: STATUS_LABELS[v] })),
     typeIcons: {
@@ -1038,6 +1083,10 @@ function filterApp() {
     apply() {
       const filtered = appState.properties.filter(p => matchesFilters(p, appState.condosById, this.filters));
       window.dispatchEvent(new CustomEvent('filters-applied', { detail: { filtered } }));
+    },
+    reset() {
+      this.filters = defaultFilters();
+      this.apply();
     }
   };
 }
