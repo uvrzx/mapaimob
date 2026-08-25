@@ -18,12 +18,11 @@
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
   body {
-    font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.4;
-    display: flex; align-items: center; justify-content: center; padding: 20px;
+    font-family: var(--sans); background: var(--panel); color: var(--text); font-size: 15px; line-height: 1.4;
+    display: flex;
   }
   .shell {
-    width: 100%; max-width: 1500px; height: 92vh; background: var(--panel);
-    border-radius: 24px; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(0,0,0,.55);
+    width: 100vw; height: 100vh; background: var(--panel);
     display: flex; flex-direction: column; overflow: hidden;
   }
   header {
@@ -50,12 +49,23 @@
   #sidebar {
     width: 300px; flex-shrink: 0; display: flex; flex-direction: column;
     overflow-y: auto; padding: 20px; border-right: 1px solid var(--line);
+    transition: width .2s ease, padding .2s ease;
   }
+  #sidebar.collapsed { width: 0; min-width: 0; padding: 20px 0; overflow: hidden; border-right: 0; }
+  #sidebar.collapsed > * { opacity: 0; pointer-events: none; }
   .sidebar-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .sidebar-head h2 { font-size: 18px; font-weight: 700; margin: 0; }
   .reset-link { background: none; border: 0; color: var(--accent); font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; }
-  #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: transparent; }
+  #sidebarResizeHandle { width: 6px; flex-shrink: 0; cursor: col-resize; background: transparent; position: relative; }
   #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: var(--accent); }
+  #btnCollapseSidebar {
+    position: absolute; top: 16px; left: -13px; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5;
+    transition: transform .2s ease;
+  }
+  #btnCollapseSidebar:hover { border-color: var(--accent); color: var(--accent); }
+  #btnCollapseSidebar.collapsed { transform: rotate(180deg); }
   #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
   .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
   .content-head button { background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; }
@@ -252,7 +262,11 @@
       </div>
     </div>
   </aside>
-  <div id="sidebarResizeHandle"></div>
+  <div id="sidebarResizeHandle">
+    <button type="button" id="btnCollapseSidebar" title="Ocultar filtros">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+  </div>
   <main id="contentPanel">
     <div class="content-head">
       <span><span id="resultCount">0</span> imóveis encontrados</span>
@@ -1258,6 +1272,13 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!dragging) return;
     dragging = false;
     handle.classList.remove('dragging');
+  });
+
+  $('btnCollapseSidebar').addEventListener('click', () => {
+    const collapsed = $('sidebar').classList.toggle('collapsed');
+    $('btnCollapseSidebar').classList.toggle('collapsed', collapsed);
+    $('btnCollapseSidebar').title = collapsed ? 'Mostrar filtros' : 'Ocultar filtros';
+    setTimeout(() => map.invalidateSize(), 210);
   });
 
   $('btnToggleList').addEventListener('click', () => {
