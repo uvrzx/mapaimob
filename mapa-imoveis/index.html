@@ -550,7 +550,7 @@ const $ = (id) => document.getElementById(id);
 const MAP_CENTER = [-27.5966, -48.6084];
 const MAP_ZOOM = 13;
 const STATUS_COLORS = { disponivel: '#4ade80', reservado: '#facc15', vendido: '#ff6b6b', alugado: '#3ea6ff' };
-const STATUS_TEXT_COLORS = { disponivel: '#15853c', reservado: '#966e00', vendido: '#d34247', alugado: '#197ac9' };
+const STATUS_TEXT_COLORS = { disponivel: '#137836', reservado: '#876300', vendido: '#b3383c', alugado: '#1568ab' };
 const ICONS = {
   bed: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18v2M21 18v2M3 12V8a2 2 0 0 1 2-2h4M3 12h18"/></svg>',
   bath: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2a1 1 0 0 1 1-1z"/><path d="M7 12V6a2 2 0 0 1 2-2c1 0 1.5.5 2 1M4 20v1M18 20v1"/></svg>',
@@ -1130,7 +1130,7 @@ function renderPhotoThumbnails() {
     const thumb = document.createElement('div');
     thumb.style.cssText = 'position:relative;display:inline-block;margin:4px;';
     thumb.innerHTML = `<img src="${url}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;">
-      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--warn-fg);color:#04121f;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
+      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;padding:0;border-radius:50%;background:var(--warn-fg);color:#04121f;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
     wrap.appendChild(thumb);
   });
   wrap.querySelectorAll('button[data-idx]').forEach(btn => {
