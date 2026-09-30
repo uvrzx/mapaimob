@@ -70,6 +70,8 @@
   .detail-hero { width: 100%; height: 320px; object-fit: cover; border-radius: 16px; background: var(--panel-2); display: flex; align-items: center; justify-content: center; fill: var(--muted); }
   .detail-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
   .detail-thumbs img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; }
+  .detail-amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .detail-amenities span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); fill: none; stroke: var(--accent); }
   .layout-body { flex: 1; display: flex; min-height: 0; }
   #sidebar {
     width: 300px; flex-shrink: 0; display: flex; flex-direction: column;
@@ -623,6 +625,11 @@ const TYPE_ICONS = {
   apartamento: ICONS.building, cobertura: ICONS.cobertura,
   comercial: ICONS.store, terreno: ICONS.plot
 };
+const AMENITY_CHECK_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+const AMENITY_LABELS = {
+  pool: 'Piscina', gym: 'Academia', partyRoom: 'Salão de festas', playground: 'Playground',
+  petArea: 'Área pet', security24h: 'Portaria 24h', elevator: 'Elevador', gatedCommunity: 'Condomínio fechado'
+};
 
 /* === SECTION: INDEXEDDB === */
 const DB_NAME = 'mapaImoveisDB';
@@ -885,8 +892,29 @@ function openPropertyDetail(id) {
   $('detailGallery').innerHTML = photoUrls.length
     ? `<img src="${photoUrls[0]}" class="detail-hero">` + (photoUrls.length > 1 ? `<div class="detail-thumbs">${photoUrls.slice(1, 3).map(u => `<img src="${u}">`).join('')}</div>` : '')
     : `<div class="detail-hero">${TYPE_ICONS[property.unitType] || ICONS.house}</div>`;
-  $('detailExtra').innerHTML = '';
-  $('detailFooter').innerHTML = '';
+  const notes = property.notes || '';
+  const isLongNotes = notes.length > 220;
+  const shortNotes = isLongNotes ? notes.slice(0, 220) + '…' : notes;
+  const descriptionHtml = notes
+    ? `<div class="detail-section"><h3>Descrição</h3><p id="detailDescText">${shortNotes}</p>${isLongNotes ? `<button type="button" class="ghost" id="btnDetailDescToggle">Mostrar mais</button>` : ''}</div>`
+    : '';
+  const condo = property.condoId ? appState.condosById[property.condoId] : null;
+  const activeAmenities = condo ? Object.keys(AMENITY_LABELS).filter(k => condo[k]) : [];
+  const amenitiesHtml = activeAmenities.length
+    ? `<div class="detail-section"><h3>Comodidades do condomínio</h3><div class="detail-amenities">${activeAmenities.map(k => `<span>${AMENITY_CHECK_ICON}${AMENITY_LABELS[k]}</span>`).join('')}</div></div>`
+    : '';
+  const launchHtml = property.isLaunch
+    ? `<div class="detail-section"><h3>Unidades</h3><div class="unit-stepper"><button type="button" onclick="adjustAvailableUnits('${property.id}', -1); openPropertyDetail('${property.id}')">−</button><span>${property.availableUnits} de ${property.totalUnits} disponíveis</span><button type="button" onclick="adjustAvailableUnits('${property.id}', 1); openPropertyDetail('${property.id}')">+</button></div></div>`
+    : '';
+  $('detailExtra').innerHTML = descriptionHtml + amenitiesHtml + launchHtml;
+  if (isLongNotes) {
+    $('btnDetailDescToggle').addEventListener('click', () => {
+      const expanded = $('btnDetailDescToggle').textContent === 'Mostrar menos';
+      $('detailDescText').textContent = expanded ? shortNotes : notes;
+      $('btnDetailDescToggle').textContent = expanded ? 'Mostrar mais' : 'Mostrar menos';
+    });
+  }
+  $('detailFooter').innerHTML = `<button type="button" class="ghost" onclick="deleteProperty('${property.id}').then(deleted => { if (deleted) { $('detailView').style.display = 'none'; $('mapView').style.display = ''; map.invalidateSize(); } })">Excluir imóvel</button>`;
   $('mapView').style.display = 'none';
   $('financingView').style.display = 'none';
   $('detailView').style.display = 'block';
@@ -953,11 +981,12 @@ function removeMarker(id) {
 }
 
 async function deleteProperty(id) {
-  if (!confirm('Excluir este imóvel?')) return;
+  if (!confirm('Excluir este imóvel?')) return false;
   await dbDelete('properties', id);
   appState.properties = appState.properties.filter(p => p.id !== id);
   removeMarker(id);
   window.dispatchEvent(new CustomEvent('properties-updated'));
+  return true;
 }
 
 async function adjustAvailableUnits(id, delta) {
@@ -1298,12 +1327,7 @@ function filterApp() {
     unitTypeOptions: UNIT_TYPES.map(v => ({ value: v, label: UNIT_TYPE_LABELS[v] })),
     statusOptions: STATUS_OPTIONS.map(v => ({ value: v, label: STATUS_LABELS[v] })),
     typeIcons: TYPE_ICONS,
-    amenityOptions: [
-      { value: 'pool', label: 'Piscina' }, { value: 'gym', label: 'Academia' },
-      { value: 'partyRoom', label: 'Salão de festas' }, { value: 'playground', label: 'Playground' },
-      { value: 'petArea', label: 'Área pet' }, { value: 'security24h', label: 'Portaria 24h' },
-      { value: 'elevator', label: 'Elevador' }, { value: 'gatedCommunity', label: 'Condomínio fechado' }
-    ],
+    amenityOptions: Object.entries(AMENITY_LABELS).map(([value, label]) => ({ value, label })),
     init() {
       window.addEventListener('properties-updated', () => this.apply());
       this.apply();
