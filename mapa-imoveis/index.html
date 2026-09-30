@@ -924,7 +924,9 @@ function openPropertyDetail(id) {
   const property = appState.properties.find(p => p.id === id);
   if (!property) return;
   $('detailView').dataset.id = id;
-  $('detailView').dataset.returnTo = getComputedStyle($('dashboardView')).display !== 'none' ? 'dashboard' : 'map';
+  if ($('detailView').style.display !== 'block') {
+    $('detailView').dataset.returnTo = getComputedStyle($('dashboardView')).display !== 'none' ? 'dashboard' : 'map';
+  }
   const addr = property.address || {};
   $('detailTitle').textContent = property.label || `${UNIT_TYPE_LABELS[property.unitType] || property.unitType} em ${addr.neighborhood || addr.city || ''}`;
   $('detailAddress').textContent = `${addr.street || ''} ${addr.number || ''} — ${addr.neighborhood || ''}, ${addr.city || ''}`;
@@ -1420,6 +1422,7 @@ window.addEventListener('DOMContentLoaded', () => {
     $('launchUnitsFields').style.display = $('f_isLaunch').checked ? 'block' : 'none';
   });
   $('btnAddProperty').addEventListener('click', () => {
+    if (getComputedStyle($('mapView')).display === 'none') $('tabMap').click();
     appState.addMode = !appState.addMode;
     $('btnAddProperty').classList.toggle('active', appState.addMode);
     $('map').classList.toggle('add-mode', appState.addMode);
