@@ -11,9 +11,10 @@
 <style>
   :root {
     --bg: #f5f6fa; --panel: #ffffff; --panel-2: #f0f1f6; --line: #e6e8f0;
-    --text: #14161f; --muted: #8a8f9c; --accent: #4b5fee; --accent-tint: rgba(75,95,238,.12);
-    --ok-bg: #e7f9ee; --ok-fg: #1aa34a; --ok-line: #b7ecc8;
-    --warn-bg: #fdeaea; --warn-fg: #e5484d; --warn-line: #f5c2c2;
+    --text: #14161f; --muted: #4b5563; --accent: #4b5fee; --accent-tint: rgba(75,95,238,.12);
+    --accent-2: #facc15;
+    --ok-bg: #e7f9ee; --ok-fg: #15803d; --ok-line: #b7ecc8;
+    --warn-bg: #fdeaea; --warn-fg: #b91c1c; --warn-line: #f5c2c2;
     --shadow-soft: 0 8px 24px rgba(20,24,50,.06);
     --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
@@ -49,6 +50,8 @@
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
   header button.active { background: var(--ok-fg); color: #fff; }
+  #btnAddProperty { background: var(--accent-2); color: var(--text); }
+  #btnAddProperty.active { background: var(--ok-fg); color: #fff; }
   .view-tabs { display: flex; gap: 2px; background: var(--panel-2); border-radius: 20px; padding: 3px; }
   .view-tab { background: transparent; border: 0; color: var(--muted); padding: 7px 16px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
   .view-tab.active { background: var(--accent); color: #fff; }
@@ -99,7 +102,7 @@
   .detail-amenities span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); fill: none; stroke: var(--accent); }
   .layout-body { flex: 1; display: flex; min-height: 0; }
   #sidebar {
-    width: 300px; flex-shrink: 0; display: flex; flex-direction: column;
+    width: 320px; flex-shrink: 0; display: flex; flex-direction: column;
     overflow-y: auto; padding: 20px; border-right: 1px solid var(--line);
     transition: width .2s ease, padding .2s ease;
   }
@@ -229,24 +232,6 @@
   .list-item-specs { display: flex; gap: 8px; margin-top: 6px; font-size: 11px; color: var(--text); }
   .list-item-specs span { display: flex; align-items: center; gap: 3px; fill: var(--muted); }
 
-  /* cartão de filtros flutuante sobre o mapa */
-  #mapFilterCard {
-    position: absolute; top: 14px; left: 14px; z-index: 800; width: 250px;
-    background: var(--panel); border-radius: 12px; box-shadow: var(--shadow-soft);
-    padding: 14px; max-height: calc(100% - 28px); overflow-y: auto;
-  }
-  #btnCollapseMapFilter {
-    position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
-    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
-    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
-    transition: transform .2s ease;
-  }
-  #btnCollapseMapFilter:hover { border-color: var(--accent); color: var(--accent); }
-  #btnCollapseMapFilter.collapsed { transform: rotate(180deg); }
-  #mapFilterCard > .seg-group:first-of-type { margin-top: 26px; }
-  #mapFilterCard.collapsed { width: 40px; height: 40px; padding: 0; overflow: hidden; }
-  #mapFilterCard.collapsed > *:not(#btnCollapseMapFilter) { display: none; }
-  #mapFilterCard label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
   .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
   .type-btn {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -296,6 +281,24 @@
       <button type="button" class="reset-link" @click="reset()">Limpar</button>
     </div>
     <div id="filterPanel">
+      <label>Negócio</label>
+      <div class="seg-group">
+        <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Comprar'},{v:'aluguel',l:'Alugar'}]" :key="opt.v">
+          <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
+        </template>
+      </div>
+
+      <label>Tipo de imóvel</label>
+      <div class="type-grid">
+        <template x-for="ut in unitTypeOptions" :key="ut.value">
+          <button type="button" class="type-btn" :class="{active: filters.unitTypes.includes(ut.value)}"
+            @click="filters.unitTypes = filters.unitTypes.includes(ut.value) ? filters.unitTypes.filter(v => v !== ut.value) : [...filters.unitTypes, ut.value]; apply()">
+            <span x-html="typeIcons[ut.value]"></span>
+            <span x-text="ut.label"></span>
+          </button>
+        </template>
+      </div>
+
       <label>Status</label>
       <div class="chip-group">
         <template x-for="st in statusOptions" :key="st.value">
@@ -308,6 +311,22 @@
       <div class="row">
         <input type="number" x-model.number="filters.priceMin" @input="apply()" placeholder="mín">
         <input type="number" x-model.number="filters.priceMax" @input="apply()" placeholder="máx">
+      </div>
+
+      <label>Quartos mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.roomsMin===null}" @click="filters.roomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.roomsMin===n}" @click="filters.roomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
+      </div>
+
+      <label>Banheiros mín</label>
+      <div class="stepper-group">
+        <button type="button" class="chip" :class="{active: filters.bathroomsMin===null}" @click="filters.bathroomsMin=null; apply()">Todos</button>
+        <template x-for="n in [1,2,3,4]" :key="n">
+          <button type="button" class="chip" :class="{active: filters.bathroomsMin===n}" @click="filters.bathroomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
+        </template>
       </div>
 
       <label>Vagas mín</label>
@@ -368,43 +387,6 @@
     </div>
     <div class="content-row">
     <div id="mapWrap">
-    <div id="mapFilterCard">
-      <button type="button" id="btnCollapseMapFilter" title="Ocultar filtros do mapa">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-      </button>
-      <div class="seg-group">
-        <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Comprar'},{v:'aluguel',l:'Alugar'}]" :key="opt.v">
-          <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
-        </template>
-      </div>
-
-      <label>Tipo de imóvel</label>
-      <div class="type-grid">
-        <template x-for="ut in unitTypeOptions" :key="ut.value">
-          <button type="button" class="type-btn" :class="{active: filters.unitTypes.includes(ut.value)}"
-            @click="filters.unitTypes = filters.unitTypes.includes(ut.value) ? filters.unitTypes.filter(v => v !== ut.value) : [...filters.unitTypes, ut.value]; apply()">
-            <span x-html="typeIcons[ut.value]"></span>
-            <span x-text="ut.label"></span>
-          </button>
-        </template>
-      </div>
-
-      <label>Quartos mín</label>
-      <div class="stepper-group">
-        <button type="button" class="chip" :class="{active: filters.roomsMin===null}" @click="filters.roomsMin=null; apply()">Todos</button>
-        <template x-for="n in [1,2,3,4]" :key="n">
-          <button type="button" class="chip" :class="{active: filters.roomsMin===n}" @click="filters.roomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
-        </template>
-      </div>
-
-      <label>Banheiros mín</label>
-      <div class="stepper-group">
-        <button type="button" class="chip" :class="{active: filters.bathroomsMin===null}" @click="filters.bathroomsMin=null; apply()">Todos</button>
-        <template x-for="n in [1,2,3,4]" :key="n">
-          <button type="button" class="chip" :class="{active: filters.bathroomsMin===n}" @click="filters.bathroomsMin=n; apply()" x-text="n + (n===4?'+':'')"></button>
-        </template>
-      </div>
-    </div>
     <div id="map"></div>
     </div>
     <div id="listPanel"><div id="listItems"></div></div>
@@ -1474,7 +1456,7 @@ function renderPhotoThumbnails() {
     const thumb = document.createElement('div');
     thumb.style.cssText = 'position:relative;display:inline-block;margin:4px;';
     thumb.innerHTML = `<img src="${url}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;">
-      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;padding:0;border-radius:50%;background:var(--warn-fg);color:#04121f;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
+      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;padding:0;border-radius:50%;background:var(--warn-fg);color:#fff;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
     wrap.appendChild(thumb);
   });
   wrap.querySelectorAll('button[data-idx]').forEach(btn => {
@@ -1665,7 +1647,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   window.addEventListener('mousemove', (e) => {
     if (!dragging) return;
-    const newWidth = Math.min(600, Math.max(220, e.clientX));
+    const newWidth = Math.min(600, Math.max(260, e.clientX));
     sidebar.style.width = newWidth + 'px';
     if (map) map.invalidateSize();
   });
@@ -1680,12 +1662,6 @@ window.addEventListener('DOMContentLoaded', () => {
     $('btnCollapseSidebar').classList.toggle('collapsed', collapsed);
     $('btnCollapseSidebar').title = collapsed ? 'Mostrar filtros' : 'Ocultar filtros';
     setTimeout(() => map.invalidateSize(), 210);
-  });
-
-  $('btnCollapseMapFilter').addEventListener('click', () => {
-    const collapsed = $('mapFilterCard').classList.toggle('collapsed');
-    $('btnCollapseMapFilter').classList.toggle('collapsed', collapsed);
-    $('btnCollapseMapFilter').title = collapsed ? 'Mostrar filtros do mapa' : 'Ocultar filtros do mapa';
   });
 
   $('btnToggleList').addEventListener('click', () => {

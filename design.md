@@ -2,7 +2,7 @@
 
 Fonte única de verdade pro design system do app `mapa-imoveis`. Valores
 copiados direto do `:root` e das regras de botão de
-`mapa-imoveis/index.html` (fase 1 do redesign, tema claro/indigo).
+`mapa-imoveis/index.html` (fase 2 do redesign, tema claro + azul + amarelo).
 Qualquer outro arquivo do app (`financiamento.html` incluso) deve usar
 esses mesmos valores — nunca aproximar.
 
@@ -31,16 +31,26 @@ não remover nenhum peso do `<link>` do Google Fonts achando que está sem uso.
 --panel-2: #f0f1f6;
 --line: #e6e8f0;
 --text: #14161f;
---muted: #8a8f9c;
+--muted: #4b5563;
 --accent: #4b5fee;
 --accent-tint: rgba(75,95,238,.12);
---ok-bg: #e7f9ee; --ok-fg: #1aa34a; --ok-line: #b7ecc8;
---warn-bg: #fdeaea; --warn-fg: #e5484d; --warn-line: #f5c2c2;
+--accent-2: #facc15;
+--ok-bg: #e7f9ee; --ok-fg: #15803d; --ok-line: #b7ecc8;
+--warn-bg: #fdeaea; --warn-fg: #b91c1c; --warn-line: #f5c2c2;
 ```
 
-Um único acento (`--accent`, indigo) — não existe `--accent-2` no tema
-atual. Se algum arquivo antigo ainda referenciar um segundo acento
-(amarelo/dourado), é tema pré-fase-1 e precisa ser retemado, não copiado.
+Dois acentos: `--accent` (azul, indigo) é o principal — ações, seleção,
+estado ativo. `--accent-2` (amarelo) é secundário — só pra destaque
+pontual (hoje: fundo do botão "+ Adicionar imóvel" no header). Nunca usar
+`--accent-2` pra texto sobre fundo claro (baixo contraste); sempre como
+fundo sólido com `var(--text)` por cima, ou como acento de borda/ícone.
+
+`--muted`, `--ok-fg` e `--warn-fg` foram escurecidos na fase 2 (eram
+`#8a8f9c`/`#1aa34a`/`#e5484d`) — as versões antigas ficavam abaixo de
+4.5:1 de contraste (WCAG AA) contra `--panel`/`--panel-2`/`--bg`. Não
+reverter pros valores antigos sem recalcular contraste (`--muted` em
+especial precisa passar em 4.5:1 mesmo contra `--panel-2`, que é mais
+escuro que `--panel`, não só contra branco puro).
 
 ## Radius / Shadow
 
@@ -93,6 +103,13 @@ Seletores que já seguem essa regra hoje em `mapa-imoveis/index.html`:
 **Exceção conhecida**: `.content-head button` (botão "Ocultar/Mostrar
 lista") só existe na variante ghost — não tem par primário, porque não é
 uma ação "principal" de tela. Não é bug, é intencional.
+
+**Exceção conhecida 2**: `#btnAddProperty` ("+ Adicionar imóvel" no
+header) usa `var(--accent-2)` (amarelo) + `var(--text)` em vez do par
+primário azul/branco — é o único CTA de destaque amarelo do app, de
+propósito (ver seção Cores). O estado `.active` (modo "marcar no mapa")
+continua usando `var(--ok-fg)` (verde) + branco, igual ao
+`header button.active` genérico.
 
 Qualquer botão novo do app deve usar um desses 2 padrões (ou a exceção
 ghost-only, se fizer sentido pro contexto) — nunca cor hardcoded.
