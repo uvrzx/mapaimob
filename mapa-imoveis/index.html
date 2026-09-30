@@ -4,16 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mapa de Imóveis — Uso Interno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1/dist/leaflet.css">
 <style>
   :root {
-    --bg: #050609; --panel: #12141c; --panel-2: #1b1e29; --line: #2a2e3d;
-    --text: #eef0f5; --muted: #8b92a5; --accent: #2f6fed; --accent-2: #facc15;
-    --ok-bg: #10361f; --ok-fg: #4ade80; --ok-line: #1f6b3a;
-    --warn-bg: #3a1717; --warn-fg: #ff6b6b; --warn-line: #7a2a2a;
-    --radius: 10px;
+    --bg: #f5f6fa; --panel: #ffffff; --panel-2: #f0f1f6; --line: #e6e8f0;
+    --text: #14161f; --muted: #8a8f9c; --accent: #4b5fee; --accent-tint: rgba(75,95,238,.12);
+    --ok-bg: #e7f9ee; --ok-fg: #1aa34a; --ok-line: #b7ecc8;
+    --warn-bg: #fdeaea; --warn-fg: #e5484d; --warn-line: #f5c2c2;
+    --shadow-soft: 0 8px 24px rgba(20,24,50,.08);
+    --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
@@ -40,11 +44,11 @@
     padding: 9px 14px; border-radius: 20px; font-size: 13px;
   }
   header button {
-    background: var(--accent-2); color: #161300; border: 0; padding: 8px 16px;
+    background: var(--accent); color: #fff; border: 0; padding: 8px 16px;
     border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 13px;
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
-  header button.active { background: var(--ok-fg); color: #04121f; }
+  header button.active { background: var(--ok-fg); color: #fff; }
   .view-tabs { display: flex; gap: 2px; background: var(--panel-2); border-radius: 20px; padding: 3px; }
   .view-tab { background: transparent; border: 0; color: var(--muted); padding: 7px 16px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
   .view-tab.active { background: var(--accent); color: #fff; }
@@ -116,7 +120,7 @@
   @keyframes pin-pop { from { transform: scale(0); } to { transform: scale(1); } }
 
   /* popup card */
-  .leaflet-popup-content-wrapper { padding: 0; border-radius: 12px; overflow: hidden; background: var(--panel); color: var(--text); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .leaflet-popup-content-wrapper { padding: 0; border-radius: 12px; overflow: hidden; background: var(--panel); color: var(--text); box-shadow: var(--shadow-soft); }
   .leaflet-popup-content { margin: 0; width: 260px !important; }
   .leaflet-popup-tip { background: var(--panel); }
   .leaflet-popup-close-button { color: var(--muted) !important; }
@@ -140,14 +144,14 @@
     padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all .15s;
   }
   .chip:hover { border-color: var(--accent); }
-  .chip.active { background: var(--accent); border-color: var(--accent); color: #04121f; font-weight: 600; }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
   .seg-group { display: flex; background: var(--panel-2); border-radius: 8px; padding: 3px; gap: 2px; margin: 4px 0 2px; }
   .seg-group { position: relative; }
   .seg-group button {
     flex: 1; background: transparent; border: 0; color: var(--muted); padding: 7px 8px;
     border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: color .15s, background .2s cubic-bezier(.2,.8,.2,1);
   }
-  .seg-group button.active { background: var(--accent); color: #04121f; }
+  .seg-group button.active { background: var(--accent); color: #fff; }
 
   /* lista de imóveis (strip horizontal de cards abaixo do mapa) */
   #listPanel { flex-shrink: 0; padding: 0 20px 18px; }
@@ -172,7 +176,7 @@
   /* cartão de filtros flutuante sobre o mapa */
   #mapFilterCard {
     position: absolute; top: 14px; left: 14px; z-index: 800; width: 250px;
-    background: var(--panel); border-radius: 12px; box-shadow: 0 8px 24px rgba(20,20,40,.15);
+    background: var(--panel); border-radius: 12px; box-shadow: var(--shadow-soft);
     padding: 14px; max-height: calc(100% - 28px); overflow-y: auto;
   }
   #mapFilterCard label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
@@ -183,7 +187,7 @@
     padding: 10px 6px; font-size: 11px; color: var(--text); cursor: pointer; transition: all .15s; fill: var(--muted);
   }
   .type-btn:hover { border-color: var(--accent); }
-  .type-btn.active { border-color: var(--accent); background: rgba(47,111,237,.15); color: var(--accent); fill: var(--accent); font-weight: 600; }
+  .type-btn.active { border-color: var(--accent); background: var(--accent-tint); color: var(--accent); fill: var(--accent); font-weight: 600; }
 
   /* backdrop do formulário */
   #formBackdrop { position: fixed; inset: 0; background: rgba(4,18,31,.6); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
@@ -727,8 +731,8 @@ function buildMarkerIcon(status) {
   const color = STATUS_COLORS[status] || '#8b9bab';
   const svg = `<svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 0C6.7 0 0 6.7 0 15c0 11 15 25 15 25s15-14 15-25C30 6.7 23.3 0 15 0z" fill="${color}"/>
-      <circle cx="15" cy="15" r="10" fill="#04121f" fill-opacity=".25"/>
-      <circle cx="15" cy="15" r="9" fill="#0f1720"/>
+      <circle cx="15" cy="15" r="10" fill="#ffffff" fill-opacity=".25"/>
+      <circle cx="15" cy="15" r="9" fill="#ffffff"/>
       <g transform="translate(7,7)" fill="${color}">${ICONS.house}</g>
     </svg>`;
   return L.divIcon({
@@ -1074,7 +1078,7 @@ function renderPhotoThumbnails() {
     const thumb = document.createElement('div');
     thumb.style.cssText = 'position:relative;display:inline-block;margin:4px;';
     thumb.innerHTML = `<img src="${url}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;">
-      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--warn-fg);color:#04121f;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
+      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--warn-fg);color:#ffffff;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
     wrap.appendChild(thumb);
   });
   wrap.querySelectorAll('button[data-idx]').forEach(btn => {
