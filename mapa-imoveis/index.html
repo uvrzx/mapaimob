@@ -179,6 +179,16 @@
     background: var(--panel); border-radius: 12px; box-shadow: var(--shadow-soft);
     padding: 14px; max-height: calc(100% - 28px); overflow-y: auto;
   }
+  #btnCollapseMapFilter {
+    position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
+    transition: transform .2s ease;
+  }
+  #btnCollapseMapFilter:hover { border-color: var(--accent); color: var(--accent); }
+  #btnCollapseMapFilter.collapsed { transform: rotate(180deg); }
+  #mapFilterCard.collapsed { width: 40px; height: 40px; padding: 0; overflow: hidden; }
+  #mapFilterCard.collapsed > *:not(#btnCollapseMapFilter) { display: none; }
   #mapFilterCard label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
   .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
   .type-btn {
@@ -287,6 +297,9 @@
     </div>
     <div id="mapWrap">
     <div id="mapFilterCard">
+      <button type="button" id="btnCollapseMapFilter" title="Ocultar filtros do mapa">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+      </button>
       <div class="seg-group">
         <template x-for="opt in [{v:'ambos',l:'Ambos'},{v:'venda',l:'Comprar'},{v:'aluguel',l:'Alugar'}]" :key="opt.v">
           <button type="button" :class="{active: filters.dealType===opt.v}" @click="filters.dealType=opt.v; apply()" x-text="opt.l"></button>
@@ -1300,6 +1313,12 @@ window.addEventListener('DOMContentLoaded', () => {
     $('btnCollapseSidebar').classList.toggle('collapsed', collapsed);
     $('btnCollapseSidebar').title = collapsed ? 'Mostrar filtros' : 'Ocultar filtros';
     setTimeout(() => map.invalidateSize(), 210);
+  });
+
+  $('btnCollapseMapFilter').addEventListener('click', () => {
+    const collapsed = $('mapFilterCard').classList.toggle('collapsed');
+    $('btnCollapseMapFilter').classList.toggle('collapsed', collapsed);
+    $('btnCollapseMapFilter').title = collapsed ? 'Mostrar filtros do mapa' : 'Ocultar filtros do mapa';
   });
 
   $('btnToggleList').addEventListener('click', () => {
