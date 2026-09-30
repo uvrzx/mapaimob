@@ -17,8 +17,9 @@ Inter, via Google Fonts:
 ```
 
 Pesos usados: 400 (texto), 600 (labels/botões ghost), 700 (botões
-primários, títulos pequenos). 500 e 800 são carregados mas não usados
-hoje em `index.html` — disponíveis pra destaques futuros.
+primários, títulos pequenos) em `index.html`; 500 e 800 são usados em
+`financiamento.html` (500 em textos, 800 em destaques de apresentação) —
+não remover nenhum peso do `<link>` do Google Fonts achando que está sem uso.
 
 `--sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;`
 
@@ -95,3 +96,12 @@ uma ação "principal" de tela. Não é bug, é intencional.
 
 Qualquer botão novo do app deve usar um desses 2 padrões (ou a exceção
 ghost-only, se fizer sentido pro contexto) — nunca cor hardcoded.
+
+## Estado ativo/toggle (chips, abas, segmented controls)
+
+Controles de seleção (não são "botões de ação", são toggle) usam fundo
+sólido `var(--accent)` + texto branco quando ativos: `.chip.active`,
+`.seg-group button.active`, `.view-tab.active`, `.type-btn.active`. Exceção:
+`header button.active` (usado só no botão "+ Adicionar imóvel" em modo
+de marcar no mapa) usa `var(--ok-fg)` (verde) em vez de `var(--accent)` —
+de propósito, sinaliza "ação em andamento", não seleção normal.
