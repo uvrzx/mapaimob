@@ -961,8 +961,8 @@ function openPropertyForm(coords, existingProperty) {
   $('f_furnished').value = p.furnished || 'não';
   $('f_petsAllowed').value = String(!!p.petsAllowed);
   $('f_isLaunch').checked = !!p.isLaunch;
-  $('f_totalUnits').value = p.totalUnits || '';
-  $('f_availableUnits').value = p.availableUnits || '';
+  $('f_totalUnits').value = p.totalUnits ?? '';
+  $('f_availableUnits').value = p.availableUnits ?? '';
   $('launchUnitsFields').style.display = p.isLaunch ? 'block' : 'none';
   $('f_street').value = (p.address && p.address.street) || '';
   $('f_number').value = (p.address && p.address.number) || '';
@@ -1049,8 +1049,8 @@ function readPropertyForm() {
     furnished: $('f_furnished').value,
     petsAllowed: $('f_petsAllowed').value === 'true',
     isLaunch: $('f_isLaunch').checked,
-    totalUnits: Number($('f_totalUnits').value) || 0,
-    availableUnits: Number($('f_availableUnits').value) || 0,
+    totalUnits: $('f_isLaunch').checked ? (Number($('f_totalUnits').value) || 0) : 0,
+    availableUnits: $('f_isLaunch').checked ? (Number($('f_availableUnits').value) || 0) : 0,
     address: {
       street: $('f_street').value.trim(),
       number: $('f_number').value.trim(),
