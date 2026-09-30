@@ -67,6 +67,7 @@
   .detail-specs span { display: flex; align-items: center; gap: 6px; fill: var(--muted); }
   .detail-section { margin-top: 24px; }
   .detail-section h3 { font-size: 15px; margin: 0 0 10px; }
+  #detailDescText { white-space: pre-line; }
   .detail-hero { width: 100%; height: 320px; object-fit: cover; border-radius: 16px; background: var(--panel-2); display: flex; align-items: center; justify-content: center; fill: var(--muted); }
   .detail-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
   .detail-thumbs img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; }
@@ -163,7 +164,7 @@
   .unit-stepper button { width: 22px; height: 22px; border-radius: 50%; background: var(--panel-2); border: 1px solid var(--line); color: var(--text); cursor: pointer; font-weight: 700; line-height: 1; padding: 0; flex-shrink: 0; }
   .unit-stepper button:hover { border-color: var(--accent); color: var(--accent); }
   .property-popup-actions { display: flex; gap: 8px; margin-top: 12px; }
-  .property-popup-actions button { flex: 1; padding: 7px; font-size: 12px; border-radius: 7px; background: var(--accent); color: #fff; border: 0; cursor: pointer; font-weight: 700; }
+  .property-popup-actions button { flex: 1; padding: 7px 4px; font-size: 11px; border-radius: 7px; background: var(--accent); color: #fff; border: 0; cursor: pointer; font-weight: 700; white-space: nowrap; }
   .property-popup-actions button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
 
   /* chips / segmented controls (filtros) */
@@ -870,6 +871,7 @@ function buildMarkerIcon(status, unitType) {
 function openPropertyDetail(id) {
   const property = appState.properties.find(p => p.id === id);
   if (!property) return;
+  $('detailView').dataset.id = id;
   const addr = property.address || {};
   $('detailTitle').textContent = property.label || `${UNIT_TYPE_LABELS[property.unitType] || property.unitType} em ${addr.neighborhood || addr.city || ''}`;
   $('detailAddress').textContent = `${addr.street || ''} ${addr.number || ''} — ${addr.neighborhood || ''}, ${addr.city || ''}`;
@@ -896,7 +898,7 @@ function openPropertyDetail(id) {
   const isLongNotes = notes.length > 220;
   const shortNotes = isLongNotes ? notes.slice(0, 220) + '…' : notes;
   const descriptionHtml = notes
-    ? `<div class="detail-section"><h3>Descrição</h3><p id="detailDescText">${shortNotes}</p>${isLongNotes ? `<button type="button" class="ghost" id="btnDetailDescToggle">Mostrar mais</button>` : ''}</div>`
+    ? `<div class="detail-section"><h3>Descrição</h3><p id="detailDescText"></p>${isLongNotes ? `<button type="button" class="ghost" id="btnDetailDescToggle">Mostrar mais</button>` : ''}</div>`
     : '';
   const condo = property.condoId ? appState.condosById[property.condoId] : null;
   const activeAmenities = condo ? Object.keys(AMENITY_LABELS).filter(k => condo[k]) : [];
@@ -904,9 +906,10 @@ function openPropertyDetail(id) {
     ? `<div class="detail-section"><h3>Comodidades do condomínio</h3><div class="detail-amenities">${activeAmenities.map(k => `<span>${AMENITY_CHECK_ICON}${AMENITY_LABELS[k]}</span>`).join('')}</div></div>`
     : '';
   const launchHtml = property.isLaunch
-    ? `<div class="detail-section"><h3>Unidades</h3><div class="unit-stepper"><button type="button" onclick="adjustAvailableUnits('${property.id}', -1); openPropertyDetail('${property.id}')">−</button><span>${property.availableUnits} de ${property.totalUnits} disponíveis</span><button type="button" onclick="adjustAvailableUnits('${property.id}', 1); openPropertyDetail('${property.id}')">+</button></div></div>`
+    ? `<div class="detail-section"><h3>Unidades</h3><div class="unit-stepper"><button type="button" onclick="adjustAvailableUnits('${property.id}', -1)">−</button><span>${property.availableUnits} de ${property.totalUnits} disponíveis</span><button type="button" onclick="adjustAvailableUnits('${property.id}', 1)">+</button></div></div>`
     : '';
   $('detailExtra').innerHTML = descriptionHtml + amenitiesHtml + launchHtml;
+  if (notes) $('detailDescText').textContent = shortNotes;
   if (isLongNotes) {
     $('btnDetailDescToggle').addEventListener('click', () => {
       const expanded = $('btnDetailDescToggle').textContent === 'Mostrar menos';
@@ -919,6 +922,10 @@ function openPropertyDetail(id) {
   $('financingView').style.display = 'none';
   $('detailView').style.display = 'block';
 }
+
+window.addEventListener('properties-updated', () => {
+  if ($('detailView').style.display === 'block') openPropertyDetail($('detailView').dataset.id);
+});
 
 function buildPopupHtml(property) {
   const priceLabel = priceLabelFor(property);
