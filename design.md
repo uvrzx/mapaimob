@@ -16,9 +16,9 @@ Inter, via Google Fonts:
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 ```
 
-Pesos usados: 400 (texto), 500, 600 (labels/botões ghost), 700 (botões
-primários, títulos pequenos), 800 (não usado hoje em `index.html`, mas
-carregado — disponível pra destaques futuros).
+Pesos usados: 400 (texto), 600 (labels/botões ghost), 700 (botões
+primários, títulos pequenos). 500 e 800 são carregados mas não usados
+hoje em `index.html` — disponíveis pra destaques futuros.
 
 `--sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;`
 
@@ -86,6 +86,8 @@ Seletores que já seguem essa regra hoje em `mapa-imoveis/index.html`:
 - `.property-popup-actions button` / `.property-popup-actions button.ghost`
 - `.dash-main button, .dash-side button` / `.dash-main button.ghost,
   .dash-side button.ghost`
+- `#detailView > button, .detail-main button` / `#detailView > button.ghost,
+  .detail-main button.ghost`
 
 **Exceção conhecida**: `.content-head button` (botão "Ocultar/Mostrar
 lista") só existe na variante ghost — não tem par primário, porque não é
