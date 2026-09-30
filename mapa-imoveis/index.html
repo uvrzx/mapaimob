@@ -91,10 +91,15 @@
   #propertyForm {
     position: fixed; top: 0; right: 0; height: 100%; width: 380px; max-width: 100vw;
     background: var(--panel); border-left: 1px solid var(--line); z-index: 40;
-    transform: translateX(100%); transition: transform .25s cubic-bezier(.16,1,.3,1); overflow-y: auto; padding: 18px;
+    transform: translateX(100%); transition: transform .25s cubic-bezier(.16,1,.3,1);
+    display: flex; flex-direction: column; padding: 18px 18px 0;
   }
   #propertyForm.open { transform: translateX(0); }
-  #propertyForm h2 { font-size: 15px; margin: 0 0 14px; }
+  #propertyForm h2 { font-size: 15px; margin: 0 0 14px; flex-shrink: 0; }
+  #propertyFormEl { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 4px; }
+  .form-section { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .form-section:last-of-type { border-bottom: 0; }
+  .form-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin: 0 0 4px; }
   #propertyForm label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
   #propertyForm input, #propertyForm select, #propertyForm textarea {
     width: 100%; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
@@ -102,9 +107,9 @@
   }
   #propertyForm .row { display: flex; gap: 10px; }
   #propertyForm .row > * { flex: 1; }
-  #formErrors { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-fg); padding: 8px 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; }
+  #formErrors { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-fg); padding: 8px 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; flex-shrink: 0; }
   #formErrors.show { display: block; }
-  .btn-row { display: flex; gap: 10px; margin-top: 16px; }
+  .btn-row { display: flex; gap: 10px; flex-shrink: 0; padding: 12px 0 18px; border-top: 1px solid var(--line); background: var(--panel); }
   .btn-row button { flex: 1; }
   #filterPanel label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; text-transform:none; }
   #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] {
@@ -350,171 +355,187 @@
     <input type="hidden" id="f_lat">
     <input type="hidden" id="f_lng">
 
-    <label for="f_label">Apelido (opcional)</label>
-    <input id="f_label" type="text" placeholder="Ex: Casa Capoeiras 296">
+    <div class="form-section">
+      <div class="form-section-title">Básico</div>
+      <label for="f_label">Apelido (opcional)</label>
+      <input id="f_label" type="text" placeholder="Ex: Casa Capoeiras 296">
 
-    <div class="row">
-      <div>
-        <label for="f_status">Status</label>
-        <select id="f_status">
-          <option value="disponivel">Disponível</option>
-          <option value="reservado">Reservado</option>
-          <option value="vendido">Vendido</option>
-          <option value="alugado">Alugado</option>
-        </select>
+      <div class="row">
+        <div>
+          <label for="f_status">Status</label>
+          <select id="f_status">
+            <option value="disponivel">Disponível</option>
+            <option value="reservado">Reservado</option>
+            <option value="vendido">Vendido</option>
+            <option value="alugado">Alugado</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_dealType">Negócio</label>
+          <select id="f_dealType">
+            <option value="venda">Venda</option>
+            <option value="aluguel">Aluguel</option>
+            <option value="venda_e_aluguel">Venda e aluguel</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label for="f_dealType">Negócio</label>
-        <select id="f_dealType">
-          <option value="venda">Venda</option>
-          <option value="aluguel">Aluguel</option>
-          <option value="venda_e_aluguel">Venda e aluguel</option>
-        </select>
+
+      <label for="f_unitType">Tipo de imóvel</label>
+      <select id="f_unitType">
+        <option value="casa">Casa</option>
+        <option value="apartamento">Apartamento</option>
+        <option value="comercial">Comercial</option>
+        <option value="terreno">Terreno</option>
+        <option value="cobertura">Cobertura</option>
+        <option value="sobrado">Sobrado</option>
+      </select>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Preço e área</div>
+      <div class="row">
+        <div>
+          <label for="f_salePrice">Preço de venda (R$)</label>
+          <input id="f_salePrice" type="number" min="0" step="1000">
+        </div>
+        <div>
+          <label for="f_rentPrice">Preço de aluguel (R$)</label>
+          <input id="f_rentPrice" type="number" min="0" step="50">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="f_constructedArea">Área construída (m²)</label>
+          <input id="f_constructedArea" type="number" min="0" step="0.01">
+        </div>
+        <div>
+          <label for="f_landArea">Área do lote (m²)</label>
+          <input id="f_landArea" type="number" min="0" step="0.01">
+        </div>
       </div>
     </div>
 
-    <label for="f_unitType">Tipo de imóvel</label>
-    <select id="f_unitType">
-      <option value="casa">Casa</option>
-      <option value="apartamento">Apartamento</option>
-      <option value="comercial">Comercial</option>
-      <option value="terreno">Terreno</option>
-      <option value="cobertura">Cobertura</option>
-      <option value="sobrado">Sobrado</option>
-    </select>
-
-    <div class="row">
-      <div>
-        <label for="f_salePrice">Preço de venda (R$)</label>
-        <input id="f_salePrice" type="number" min="0" step="1000">
+    <div class="form-section">
+      <div class="form-section-title">Características</div>
+      <div class="row">
+        <div>
+          <label for="f_rooms">Quartos</label>
+          <input id="f_rooms" type="number" min="0" step="1">
+        </div>
+        <div>
+          <label for="f_suites">Suítes</label>
+          <input id="f_suites" type="number" min="0" step="1">
+        </div>
       </div>
-      <div>
-        <label for="f_rentPrice">Preço de aluguel (R$)</label>
-        <input id="f_rentPrice" type="number" min="0" step="50">
+
+      <div class="row">
+        <div>
+          <label for="f_bathrooms">Banheiros</label>
+          <input id="f_bathrooms" type="number" min="0" step="1">
+        </div>
+        <div>
+          <label for="f_parkingSpaces">Vagas</label>
+          <input id="f_parkingSpaces" type="number" min="0" step="1">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="f_floor">Andar</label>
+          <input id="f_floor" type="number" step="1">
+        </div>
+        <div>
+          <label for="f_furnished">Mobiliado</label>
+          <select id="f_furnished">
+            <option value="não">Não</option>
+            <option value="sim">Sim</option>
+            <option value="parcial">Parcial</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="f_petsAllowed">Aceita pet</label>
+      <select id="f_petsAllowed">
+        <option value="false">Não</option>
+        <option value="true">Sim</option>
+      </select>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Endereço</div>
+      <label for="f_street">Rua</label>
+      <input id="f_street" type="text">
+      <div class="row">
+        <div>
+          <label for="f_number">Número</label>
+          <input id="f_number" type="text">
+        </div>
+        <div>
+          <label for="f_neighborhood">Bairro</label>
+          <input id="f_neighborhood" type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="f_city">Cidade</label>
+          <input id="f_city" type="text" value="Florianópolis">
+        </div>
+        <div>
+          <label for="f_complement">Complemento</label>
+          <input id="f_complement" type="text">
+        </div>
+      </div>
+      <button type="button" id="btnGeocodeAddress" class="ghost" style="width:100%;margin-top:6px;">🔍 Localizar endereço no mapa</button>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Condomínio</div>
+      <label for="f_agentResponsible">Corretor responsável</label>
+      <input id="f_agentResponsible" type="text">
+
+      <label for="f_condoId">Condomínio</label>
+      <select id="f_condoId">
+        <option value="">Nenhum</option>
+      </select>
+      <button type="button" id="btnNewCondo" class="ghost" style="margin-top:6px;">+ Novo condomínio</button>
+      <div id="newCondoFields" style="display:none; margin-top:10px; padding:10px; background:var(--panel-2); border-radius:8px;">
+        <label for="c_name">Nome do condomínio</label>
+        <input id="c_name" type="text">
+        <div class="row" style="margin-top:8px; flex-wrap: wrap;">
+          <label><input type="checkbox" id="c_pool"> Piscina</label>
+          <label><input type="checkbox" id="c_gym"> Academia</label>
+          <label><input type="checkbox" id="c_partyRoom"> Salão de festas</label>
+        </div>
+        <div class="row" style="margin-top:4px; flex-wrap: wrap;">
+          <label><input type="checkbox" id="c_playground"> Playground</label>
+          <label><input type="checkbox" id="c_petArea"> Área pet</label>
+          <label><input type="checkbox" id="c_security24h"> Portaria 24h</label>
+        </div>
+        <div class="row" style="margin-top:4px; flex-wrap: wrap;">
+          <label><input type="checkbox" id="c_elevator"> Elevador</label>
+          <label><input type="checkbox" id="c_gatedCommunity"> Condomínio fechado</label>
+        </div>
+        <label for="c_monthlyFee">Valor do condomínio (R$)</label>
+        <input id="c_monthlyFee" type="number" min="0" step="10">
       </div>
     </div>
 
-    <div class="row">
-      <div>
-        <label for="f_constructedArea">Área construída (m²)</label>
-        <input id="f_constructedArea" type="number" min="0" step="0.01">
-      </div>
-      <div>
-        <label for="f_landArea">Área do lote (m²)</label>
-        <input id="f_landArea" type="number" min="0" step="0.01">
-      </div>
-    </div>
+    <div class="form-section">
+      <div class="form-section-title">Fotos e observações</div>
+      <label for="f_notes">Observações</label>
+      <textarea id="f_notes" rows="3"></textarea>
 
-    <div class="row">
-      <div>
-        <label for="f_rooms">Quartos</label>
-        <input id="f_rooms" type="number" min="0" step="1">
-      </div>
-      <div>
-        <label for="f_suites">Suítes</label>
-        <input id="f_suites" type="number" min="0" step="1">
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <label for="f_bathrooms">Banheiros</label>
-        <input id="f_bathrooms" type="number" min="0" step="1">
-      </div>
-      <div>
-        <label for="f_parkingSpaces">Vagas</label>
-        <input id="f_parkingSpaces" type="number" min="0" step="1">
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <label for="f_floor">Andar</label>
-        <input id="f_floor" type="number" step="1">
-      </div>
-      <div>
-        <label for="f_furnished">Mobiliado</label>
-        <select id="f_furnished">
-          <option value="não">Não</option>
-          <option value="sim">Sim</option>
-          <option value="parcial">Parcial</option>
-        </select>
-      </div>
-    </div>
-
-    <label for="f_petsAllowed">Aceita pet</label>
-    <select id="f_petsAllowed">
-      <option value="false">Não</option>
-      <option value="true">Sim</option>
-    </select>
-
-    <label for="f_street">Rua</label>
-    <input id="f_street" type="text">
-    <div class="row">
-      <div>
-        <label for="f_number">Número</label>
-        <input id="f_number" type="text">
-      </div>
-      <div>
-        <label for="f_neighborhood">Bairro</label>
-        <input id="f_neighborhood" type="text">
-      </div>
-    </div>
-    <div class="row">
-      <div>
-        <label for="f_city">Cidade</label>
-        <input id="f_city" type="text" value="Florianópolis">
-      </div>
-      <div>
-        <label for="f_complement">Complemento</label>
-        <input id="f_complement" type="text">
-      </div>
-    </div>
-    <button type="button" id="btnGeocodeAddress" class="ghost" style="width:100%;margin-top:6px;">🔍 Localizar endereço no mapa</button>
-
-    <label for="f_agentResponsible">Corretor responsável</label>
-    <input id="f_agentResponsible" type="text">
-
-    <label for="f_condoId">Condomínio</label>
-    <select id="f_condoId">
-      <option value="">Nenhum</option>
-    </select>
-    <button type="button" id="btnNewCondo" class="ghost" style="margin-top:6px;">+ Novo condomínio</button>
-    <div id="newCondoFields" style="display:none; margin-top:10px; padding:10px; background:var(--panel-2); border-radius:8px;">
-      <label for="c_name">Nome do condomínio</label>
-      <input id="c_name" type="text">
-      <div class="row" style="margin-top:8px; flex-wrap: wrap;">
-        <label><input type="checkbox" id="c_pool"> Piscina</label>
-        <label><input type="checkbox" id="c_gym"> Academia</label>
-        <label><input type="checkbox" id="c_partyRoom"> Salão de festas</label>
-      </div>
-      <div class="row" style="margin-top:4px; flex-wrap: wrap;">
-        <label><input type="checkbox" id="c_playground"> Playground</label>
-        <label><input type="checkbox" id="c_petArea"> Área pet</label>
-        <label><input type="checkbox" id="c_security24h"> Portaria 24h</label>
-      </div>
-      <div class="row" style="margin-top:4px; flex-wrap: wrap;">
-        <label><input type="checkbox" id="c_elevator"> Elevador</label>
-        <label><input type="checkbox" id="c_gatedCommunity"> Condomínio fechado</label>
-      </div>
-      <label for="c_monthlyFee">Valor do condomínio (R$)</label>
-      <input id="c_monthlyFee" type="number" min="0" step="10">
-    </div>
-
-    <label for="f_notes">Observações</label>
-    <textarea id="f_notes" rows="3"></textarea>
-
-    <label for="f_photos">Fotos</label>
-    <input id="f_photos" type="file" accept="image/*" multiple>
-    <div id="photoThumbs" style="margin-top:8px;"></div>
-
-    <div id="formErrors"></div>
-
-    <div class="btn-row">
-      <button type="submit">Salvar</button>
-      <button type="button" id="btnCancelForm" class="ghost">Cancelar</button>
+      <label for="f_photos">Fotos</label>
+      <input id="f_photos" type="file" accept="image/*" multiple>
+      <div id="photoThumbs" style="margin-top:8px;"></div>
     </div>
   </form>
+  <div id="formErrors"></div>
+  <div class="btn-row">
+    <button type="submit" form="propertyFormEl">Salvar</button>
+    <button type="button" id="btnCancelForm" class="ghost">Cancelar</button>
+  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1/dist/leaflet.js"></script>
