@@ -731,8 +731,8 @@ function buildMarkerIcon(status) {
   const color = STATUS_COLORS[status] || '#8b9bab';
   const svg = `<svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 0C6.7 0 0 6.7 0 15c0 11 15 25 15 25s15-14 15-25C30 6.7 23.3 0 15 0z" fill="${color}"/>
-      <circle cx="15" cy="15" r="10" fill="#ffffff" fill-opacity=".25"/>
-      <circle cx="15" cy="15" r="9" fill="#ffffff"/>
+      <circle cx="15" cy="15" r="10" fill="#04121f" fill-opacity=".25"/>
+      <circle cx="15" cy="15" r="9" fill="#0f1720"/>
       <g transform="translate(7,7)" fill="${color}">${ICONS.house}</g>
     </svg>`;
   return L.divIcon({
@@ -1078,7 +1078,7 @@ function renderPhotoThumbnails() {
     const thumb = document.createElement('div');
     thumb.style.cssText = 'position:relative;display:inline-block;margin:4px;';
     thumb.innerHTML = `<img src="${url}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;">
-      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--warn-fg);color:#ffffff;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
+      <button type="button" data-idx="${idx}" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--warn-fg);color:#04121f;border:0;cursor:pointer;font-size:11px;line-height:1;">×</button>`;
     wrap.appendChild(thumb);
   });
   wrap.querySelectorAll('button[data-idx]').forEach(btn => {
