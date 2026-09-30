@@ -393,6 +393,20 @@
         <option value="cobertura">Cobertura</option>
         <option value="sobrado">Sobrado</option>
       </select>
+
+      <label><input type="checkbox" id="f_isLaunch"> É lançamento?</label>
+      <div id="launchUnitsFields" style="display:none;">
+        <div class="row">
+          <div>
+            <label for="f_totalUnits">Total de unidades</label>
+            <input id="f_totalUnits" type="number" min="0" step="1">
+          </div>
+          <div>
+            <label for="f_availableUnits">Disponíveis agora</label>
+            <input id="f_availableUnits" type="number" min="0" step="1">
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="form-section">
@@ -667,6 +681,8 @@ function validateProperty(property) {
   if (property.dealType !== 'venda' && !(property.rentPrice > 0)) errors.push('Preço de aluguel é obrigatório.');
   if (!property.address || !property.address.street) errors.push('Endereço é obrigatório.');
   if (!Array.isArray(property.coordinates) || property.coordinates.length !== 2) errors.push('Coordenadas são obrigatórias (clique no mapa).');
+  if (property.isLaunch && !(property.totalUnits > 0)) errors.push('Lançamento precisa de total de unidades maior que zero.');
+  if (property.isLaunch && (property.availableUnits < 0 || property.availableUnits > property.totalUnits)) errors.push('Unidades disponíveis deve estar entre 0 e o total.');
   return errors;
 }
 
@@ -713,6 +729,13 @@ function matchesFilters(property, condosById, filters) {
   console.assert(validateProperty(okProp).length === 0, 'ASSERT FAIL: validateProperty deveria aceitar imóvel válido');
   const badProp = { unitType: '', dealType: '', salePrice: 0, address: {}, coordinates: null };
   console.assert(validateProperty(badProp).length === 6, 'ASSERT FAIL: validateProperty deveria acusar 6 erros, achou ' + validateProperty(badProp).length);
+
+  const launchPropOk = { ...okProp, isLaunch: true, totalUnits: 40, availableUnits: 40 };
+  console.assert(validateProperty(launchPropOk).length === 0, 'ASSERT FAIL: validateProperty deveria aceitar lançamento válido');
+  const launchPropBadTotal = { ...okProp, isLaunch: true, totalUnits: 0, availableUnits: 0 };
+  console.assert(validateProperty(launchPropBadTotal).length === 1, 'ASSERT FAIL: validateProperty deveria rejeitar lançamento sem total de unidades');
+  const launchPropBadAvailable = { ...okProp, isLaunch: true, totalUnits: 10, availableUnits: 15 };
+  console.assert(validateProperty(launchPropBadAvailable).length === 1, 'ASSERT FAIL: validateProperty deveria rejeitar disponíveis maior que o total');
 
   const baseFilters = { dealType: 'ambos', unitTypes: [], status: [], priceMin: null, priceMax: null, roomsMin: null, suitesMin: null, bathroomsMin: null, parkingMin: null, areaMin: null, areaMax: null, furnished: 'qualquer', petsAllowed: 'qualquer', neighborhood: '', agentResponsible: '', amenities: [], query: '' };
   const propA = { dealType: 'venda', unitType: 'casa', status: 'disponivel', salePrice: 500000, rentPrice: 0, rooms: 3, suites: 1, bathrooms: 2, parkingSpaces: 2, constructedArea: 120, furnished: 'não', petsAllowed: true, address: { neighborhood: 'Capoeiras' }, agentResponsible: 'Ana', condoId: null };
@@ -913,6 +936,10 @@ function openPropertyForm(coords, existingProperty) {
   $('f_floor').value = p.floor || '';
   $('f_furnished').value = p.furnished || 'não';
   $('f_petsAllowed').value = String(!!p.petsAllowed);
+  $('f_isLaunch').checked = !!p.isLaunch;
+  $('f_totalUnits').value = p.totalUnits || '';
+  $('f_availableUnits').value = p.availableUnits || '';
+  $('launchUnitsFields').style.display = p.isLaunch ? 'block' : 'none';
   $('f_street').value = (p.address && p.address.street) || '';
   $('f_number').value = (p.address && p.address.number) || '';
   $('f_neighborhood').value = (p.address && p.address.neighborhood) || '';
@@ -997,6 +1024,9 @@ function readPropertyForm() {
     floor: $('f_floor').value ? Number($('f_floor').value) : null,
     furnished: $('f_furnished').value,
     petsAllowed: $('f_petsAllowed').value === 'true',
+    isLaunch: $('f_isLaunch').checked,
+    totalUnits: Number($('f_totalUnits').value) || 0,
+    availableUnits: Number($('f_availableUnits').value) || 0,
     address: {
       street: $('f_street').value.trim(),
       number: $('f_number').value.trim(),
@@ -1084,6 +1114,9 @@ window.addEventListener('DOMContentLoaded', () => {
   $('btnNewCondo').addEventListener('click', () => {
     const el = $('newCondoFields');
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  });
+  $('f_isLaunch').addEventListener('change', () => {
+    $('launchUnitsFields').style.display = $('f_isLaunch').checked ? 'block' : 'none';
   });
   $('btnAddProperty').addEventListener('click', () => {
     appState.addMode = !appState.addMode;
