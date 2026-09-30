@@ -4,22 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Proposta — Corretor GV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* Paleta alinhada ao mapa-imoveis/index.html (preto/azul/amarelo, dark). */
+  /* Paleta alinhada ao mapa-imoveis/index.html (claro/indigo — fase 1 do redesign). */
   :root {
-    --bg: #050609;
-    --panel: #12141c;
-    --panel-2: #1b1e29;
-    --line: #2a2e3d;
-    --text: #eef0f5;
-    --muted: #8b92a5;
-    --accent: #2f6fed;
-    --accent-2: #facc15;
-    --ok-bg: #10361f; --ok-fg: #4ade80; --ok-line:#1f6b3a;
-    --warn-bg: #3a1717; --warn-fg: #ff6b6b; --warn-line:#7a2a2a;
-    --radius: 10px;
+    --bg: #f5f6fa;
+    --panel: #ffffff;
+    --panel-2: #f0f1f6;
+    --line: #e6e8f0;
+    --text: #14161f;
+    --muted: #8a8f9c;
+    --accent: #4b5fee;
+    --ok-bg: #e7f9ee; --ok-fg: #1aa34a; --ok-line: #b7ecc8;
+    --warn-bg: #fdeaea; --warn-fg: #e5484d; --warn-line: #f5c2c2;
+    --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -41,7 +43,7 @@
   header .vi-top .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
   header .vi-top .val { font-size: 22px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
   header button {
-    background: var(--accent-2); color: #161300; border: 0; padding: 9px 16px;
+    background: var(--accent); color: #fff; border: 0; padding: 9px 16px;
     border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 14px;
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; font-weight: 600; }
@@ -93,7 +95,7 @@
   .live .row:last-child { border-bottom: 0; }
   .live .row .k { font-size: 13px; color: var(--muted); }
   .live .row .v { font-size: 16px; font-weight: 600; font-family: var(--mono); }
-  .live .row.big .v { font-size: 20px; color: var(--accent-2); }
+  .live .row.big .v { font-size: 20px; color: var(--accent); }
 
   .badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 8px;
     font-weight: 600; font-size: 13px; border: 1px solid; width: 100%; justify-content: center; }
@@ -113,7 +115,7 @@
   .present .close { position: fixed; top: 20px; right: 24px; }
   .present-head { text-align: center; margin-bottom: 32px; }
   .present-head .cli { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
-  .present-head .vi { font-size: clamp(40px, 6vw, 72px); font-weight: 800; color: var(--accent-2); font-family: var(--mono); line-height: 1.1; }
+  .present-head .vi { font-size: clamp(40px, 6vw, 72px); font-weight: 800; color: var(--accent); font-family: var(--mono); line-height: 1.1; }
   .present-head .vi-lbl { font-size: 14px; color: var(--muted); }
   .present-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
   .pcard { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
@@ -127,7 +129,7 @@
   .present-foot { max-width: 1100px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center;
     padding: 20px 24px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; }
   .present-foot .k { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-  .present-foot .v { font-size: clamp(28px, 4vw, 40px); font-weight: 800; font-family: var(--mono); color: var(--accent-2); }
+  .present-foot .v { font-size: clamp(28px, 4vw, 40px); font-weight: 800; font-family: var(--mono); color: var(--accent); }
 
   @media print {
     header, .layout, .present .close { display: none !important; }
