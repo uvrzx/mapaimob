@@ -519,12 +519,20 @@ const ICONS = {
   car: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM19 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5 17l1.5-5h11L19 17M6.5 12l1-3h9l1 3"/></svg>',
   house: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z"/></svg>',
   building: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 3h16v18H4V3zm3 3v2h2V6H7zm4 0v2h2V6h-2zm4 0v2h2V6h-2zM7 10v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM7 14v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM10 18v3h4v-3h-4z"/></svg>',
-  store: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 4h18l1 5H2l1-5zM4 10v10h6v-6h4v6h6V10H4z"/></svg>'
+  store: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 4h18l1 5H2l1-5zM4 10v10h6v-6h4v6h6V10H4z"/></svg>',
+  sobrado: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 21V11l8-7 8 7v10h-4v-4h-2v4h-4v-4H10v4H4zm4-8h2v-2H8v2zm6 0h2v-2h-2v2z"/></svg>',
+  cobertura: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm2 4h4v2H5v-2zm6 0h4v2h-4v-2zm6 0h2v2h-2v-2zM5 14h4v2H5v-2zm6 0h4v2h-4v-2zm6 0h2v2h-2v-2zM4 20h16v2H4v-2zM6 20v-4h2v4H6zm10 0v-4h2v4h-2z"/></svg>',
+  plot: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 5h18v2H3V5zm0 12h18v2H3v-2zM3 5v14h2V5H3zm16 0v14h2V5h-2zM10 9c0-1.5 1-3 2-3s2 1.5 2 3-1 3-2 3-2-1.5-2-3zm1 5h2v5h-2v-5z"/></svg>'
 };
 const STATUS_LABELS = { disponivel: 'Disponível', reservado: 'Reservado', vendido: 'Vendido', alugado: 'Alugado' };
 const UNIT_TYPES = ['casa','apartamento','comercial','terreno','cobertura','sobrado'];
 const UNIT_TYPE_LABELS = { casa:'Casa', apartamento:'Apartamento', comercial:'Comercial', terreno:'Terreno', cobertura:'Cobertura', sobrado:'Sobrado' };
 const STATUS_OPTIONS = ['disponivel','reservado','vendido','alugado'];
+const TYPE_ICONS = {
+  casa: ICONS.house, sobrado: ICONS.sobrado,
+  apartamento: ICONS.building, cobertura: ICONS.cobertura,
+  comercial: ICONS.store, terreno: ICONS.plot
+};
 
 /* === SECTION: INDEXEDDB === */
 const DB_NAME = 'mapaImoveisDB';
@@ -690,6 +698,9 @@ function matchesFilters(property, condosById, filters) {
   console.assert(matchesFilters(propB, condosById, { ...baseFilters, amenities: ['pool'] }) === true, 'ASSERT FAIL: matchesFilters deveria aceitar amenidade presente');
   console.assert(matchesFilters(propB, condosById, { ...baseFilters, amenities: ['gym'] }) === false, 'ASSERT FAIL: matchesFilters deveria rejeitar amenidade ausente');
 
+  console.assert(UNIT_TYPES.every(t => typeof TYPE_ICONS[t] === 'string' && TYPE_ICONS[t].length > 0), 'ASSERT FAIL: TYPE_ICONS deveria ter ícone para todos os UNIT_TYPES');
+  console.assert(new Set(UNIT_TYPES.map(t => TYPE_ICONS[t])).size === UNIT_TYPES.length, 'ASSERT FAIL: TYPE_ICONS deveria ter ícone distinto por tipo (achou duplicata)');
+
   console.log('[self-check] Lógica de negócio OK');
 })();
 
@@ -727,13 +738,14 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => map.invalidateSize());
 });
 
-function buildMarkerIcon(status) {
+function buildMarkerIcon(status, unitType) {
   const color = STATUS_COLORS[status] || '#8b9bab';
+  const typeIcon = TYPE_ICONS[unitType] || ICONS.house;
   const svg = `<svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 0C6.7 0 0 6.7 0 15c0 11 15 25 15 25s15-14 15-25C30 6.7 23.3 0 15 0z" fill="${color}"/>
       <circle cx="15" cy="15" r="10" fill="#04121f" fill-opacity=".25"/>
       <circle cx="15" cy="15" r="9" fill="#0f1720"/>
-      <g transform="translate(7,7)" fill="${color}">${ICONS.house}</g>
+      <g transform="translate(7,7)" fill="${color}">${typeIcon}</g>
     </svg>`;
   return L.divIcon({
     className: 'property-pin',
@@ -758,7 +770,7 @@ function buildPopupHtml(property) {
   ].join('');
   return `
     <div class="property-popup">
-      ${photoUrl ? `<img src="${photoUrl}" class="property-popup-photo">` : `<div class="property-popup-photo property-popup-photo-empty">${ICONS.house}</div>`}
+      ${photoUrl ? `<img src="${photoUrl}" class="property-popup-photo">` : `<div class="property-popup-photo property-popup-photo-empty">${TYPE_ICONS[property.unitType] || ICONS.house}</div>`}
       <div class="property-popup-body">
         <div class="property-popup-top">
           <strong class="property-popup-price">${priceLabel}</strong>
@@ -778,7 +790,7 @@ function buildPopupHtml(property) {
 function upsertMarker(property) {
   const existing = markersById[property.id];
   if (existing) markersLayer.removeLayer(existing);
-  const marker = L.marker(property.coordinates, { draggable: true, icon: buildMarkerIcon(property.status) });
+  const marker = L.marker(property.coordinates, { draggable: true, icon: buildMarkerIcon(property.status, property.unitType) });
   marker.bindPopup(() => buildPopupHtml(property));
   marker.on('dragend', async () => {
     const pos = marker.getLatLng();
@@ -907,7 +919,7 @@ async function geocodeAddress() {
     $('f_lng').value = lng;
     map.flyTo([lat, lng], 17, { duration: 0.8 });
     clearGeocodePreview();
-    geocodePreviewMarker = L.marker([lat, lng], { icon: buildMarkerIcon('disponivel') }).addTo(markersLayer);
+    geocodePreviewMarker = L.marker([lat, lng], { icon: buildMarkerIcon('disponivel', $('f_unitType').value) }).addTo(markersLayer);
   } catch (err) {
     console.error(err);
     alert('Erro ao buscar endereço. Tente novamente.');
@@ -1117,11 +1129,7 @@ function filterApp() {
     filters: defaultFilters(),
     unitTypeOptions: UNIT_TYPES.map(v => ({ value: v, label: UNIT_TYPE_LABELS[v] })),
     statusOptions: STATUS_OPTIONS.map(v => ({ value: v, label: STATUS_LABELS[v] })),
-    typeIcons: {
-      casa: ICONS.house, sobrado: ICONS.house,
-      apartamento: ICONS.building, cobertura: ICONS.building,
-      comercial: ICONS.store, terreno: ICONS.area
-    },
+    typeIcons: TYPE_ICONS,
     amenityOptions: [
       { value: 'pool', label: 'Piscina' }, { value: 'gym', label: 'Academia' },
       { value: 'partyRoom', label: 'Salão de festas' }, { value: 'playground', label: 'Playground' },
@@ -1169,7 +1177,7 @@ function renderList(properties) {
       p.constructedArea ? `<span>${ICONS.area}${p.constructedArea}m²</span>` : ''
     ].join('');
     return `<div class="list-item" data-id="${p.id}">
-      ${photoUrl ? `<img src="${photoUrl}" class="list-item-photo">` : `<div class="list-item-photo list-item-photo-empty">${ICONS.house}</div>`}
+      ${photoUrl ? `<img src="${photoUrl}" class="list-item-photo">` : `<div class="list-item-photo list-item-photo-empty">${TYPE_ICONS[p.unitType] || ICONS.house}</div>`}
       <div class="list-item-body">
         <div class="list-item-top">
           <strong>${priceLabel}</strong>
