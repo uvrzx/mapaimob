@@ -54,6 +54,16 @@
   .view-tab.active { background: var(--accent); color: #fff; }
   #financingView { flex: 1; min-height: 0; display: none; }
   #financingFrame { width: 100%; height: 100%; border: 0; display: block; }
+  #dashboardView { flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; }
+  .dash-kpis { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .dash-kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; min-width: 120px; box-shadow: var(--shadow-soft); }
+  .dash-kpi strong { display: block; font-size: 24px; }
+  .dash-kpi span { color: var(--muted); font-size: 12px; }
+  .dash-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+  .dash-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; box-shadow: var(--shadow-soft); margin-bottom: 20px; }
+  .dash-card h3 { font-size: 14px; margin: 0 0 12px; }
+  .dash-main button, .dash-side button { background: var(--accent); color: #fff; border: 0; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px; }
+  .dash-main button.ghost, .dash-side button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
   #detailView { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; }
   #detailView > button, .detail-main button { background: var(--accent); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
   #detailView > button.ghost, .detail-main button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
@@ -240,7 +250,8 @@
   <header>
     <h1>🏠 Mapa de Imóveis</h1>
     <div class="view-tabs">
-      <button type="button" id="tabMap" class="view-tab active">Mapa</button>
+      <button type="button" id="tabDashboard" class="view-tab active">Dashboard</button>
+      <button type="button" id="tabMap" class="view-tab">Mapa</button>
       <button type="button" id="tabFinancing" class="view-tab">Financiamento</button>
     </div>
     <input id="quickSearch" class="quick-search" type="text" placeholder="Buscar por endereço, bairro ou apelido..." x-model="filters.query" @input="apply()">
@@ -249,7 +260,20 @@
     <button id="btnImport" class="ghost" type="button">Importar</button>
     <input id="importFileInput" type="file" accept="application/json" style="display:none">
   </header>
-  <div class="layout-body" id="mapView">
+  <div id="dashboardView">
+    <div class="dash-kpis" id="dashKpis"></div>
+    <div class="dash-grid">
+      <div class="dash-main">
+        <div id="dashSalesCard"></div>
+        <div id="dashLaunchCard"></div>
+        <div id="dashTableWrap"></div>
+      </div>
+      <div class="dash-side">
+        <div id="dashFeatured"></div>
+      </div>
+    </div>
+  </div>
+  <div class="layout-body" id="mapView" style="display:none;">
   <aside id="sidebar">
     <div class="sidebar-head">
       <h2>Filtros</h2>
@@ -868,10 +892,25 @@ function buildMarkerIcon(status, unitType) {
   });
 }
 
+function closeDetailView() {
+  $('detailView').style.display = 'none';
+  if ($('detailView').dataset.returnTo === 'dashboard') {
+    $('dashboardView').style.display = '';
+    $('tabDashboard').classList.add('active');
+    $('tabMap').classList.remove('active');
+  } else {
+    $('mapView').style.display = 'flex';
+    $('tabMap').classList.add('active');
+    $('tabDashboard').classList.remove('active');
+    map.invalidateSize();
+  }
+}
+
 function openPropertyDetail(id) {
   const property = appState.properties.find(p => p.id === id);
   if (!property) return;
   $('detailView').dataset.id = id;
+  $('detailView').dataset.returnTo = getComputedStyle($('dashboardView')).display !== 'none' ? 'dashboard' : 'map';
   const addr = property.address || {};
   $('detailTitle').textContent = property.label || `${UNIT_TYPE_LABELS[property.unitType] || property.unitType} em ${addr.neighborhood || addr.city || ''}`;
   $('detailAddress').textContent = `${addr.street || ''} ${addr.number || ''} — ${addr.neighborhood || ''}, ${addr.city || ''}`;
@@ -917,7 +956,8 @@ function openPropertyDetail(id) {
       $('btnDetailDescToggle').textContent = expanded ? 'Mostrar mais' : 'Mostrar menos';
     });
   }
-  $('detailFooter').innerHTML = `<button type="button" class="ghost" onclick="deleteProperty('${property.id}').then(deleted => { if (deleted) { $('detailView').style.display = 'none'; $('mapView').style.display = ''; map.invalidateSize(); } })">Excluir imóvel</button>`;
+  $('detailFooter').innerHTML = `<button type="button" class="ghost" onclick="deleteProperty('${property.id}').then(deleted => { if (deleted) closeDetailView(); })">Excluir imóvel</button>`;
+  $('dashboardView').style.display = 'none';
   $('mapView').style.display = 'none';
   $('financingView').style.display = 'none';
   $('detailView').style.display = 'block';
@@ -926,6 +966,24 @@ function openPropertyDetail(id) {
 window.addEventListener('properties-updated', () => {
   if ($('detailView').style.display === 'block') openPropertyDetail($('detailView').dataset.id);
 });
+
+function renderDashboard() {
+  const props = appState.properties;
+  const countByStatus = (s) => props.filter(p => p.status === s).length;
+  $('dashKpis').innerHTML = [
+    { label: 'Total de imóveis', value: props.length },
+    { label: 'Disponíveis', value: countByStatus('disponivel') },
+    { label: 'Reservados', value: countByStatus('reservado') },
+    { label: 'Vendidos', value: countByStatus('vendido') },
+    { label: 'Alugados', value: countByStatus('alugado') }
+  ].map(k => `<div class="dash-kpi"><strong>${k.value}</strong><span>${k.label}</span></div>`).join('');
+  $('dashSalesCard').innerHTML = '';
+  $('dashLaunchCard').innerHTML = '';
+  $('dashFeatured').innerHTML = '';
+  $('dashTableWrap').innerHTML = '';
+}
+
+window.addEventListener('properties-updated', () => renderDashboard());
 
 function buildPopupHtml(property) {
   const priceLabel = priceLabelFor(property);
@@ -1514,27 +1572,36 @@ window.addEventListener('DOMContentLoaded', () => {
     map.invalidateSize();
   });
 
+  $('tabDashboard').addEventListener('click', () => {
+    $('dashboardView').style.display = '';
+    $('mapView').style.display = 'none';
+    $('financingView').style.display = 'none';
+    $('detailView').style.display = 'none';
+    $('tabDashboard').classList.add('active');
+    $('tabMap').classList.remove('active');
+    $('tabFinancing').classList.remove('active');
+  });
   $('tabMap').addEventListener('click', () => {
-    $('mapView').style.display = '';
+    $('dashboardView').style.display = 'none';
+    $('mapView').style.display = 'flex';
     $('financingView').style.display = 'none';
     $('detailView').style.display = 'none';
     $('tabMap').classList.add('active');
+    $('tabDashboard').classList.remove('active');
     $('tabFinancing').classList.remove('active');
     map.invalidateSize();
   });
   $('tabFinancing').addEventListener('click', () => {
+    $('dashboardView').style.display = 'none';
     $('mapView').style.display = 'none';
     $('financingView').style.display = 'flex';
     $('detailView').style.display = 'none';
     $('tabFinancing').classList.add('active');
+    $('tabDashboard').classList.remove('active');
     $('tabMap').classList.remove('active');
     if (!$('financingFrame').src) $('financingFrame').src = 'financiamento.html';
   });
-  $('btnDetailBack').addEventListener('click', () => {
-    $('detailView').style.display = 'none';
-    $('mapView').style.display = '';
-    map.invalidateSize();
-  });
+  $('btnDetailBack').addEventListener('click', closeDetailView);
 });
 </script>
 </body>
