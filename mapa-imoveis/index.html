@@ -14,7 +14,7 @@
     --text: #14161f; --muted: #8a8f9c; --accent: #4b5fee; --accent-tint: rgba(75,95,238,.12);
     --ok-bg: #e7f9ee; --ok-fg: #1aa34a; --ok-line: #b7ecc8;
     --warn-bg: #fdeaea; --warn-fg: #e5484d; --warn-line: #f5c2c2;
-    --shadow-soft: 0 8px 24px rgba(20,24,50,.08);
+    --shadow-soft: 0 8px 24px rgba(20,24,50,.06);
     --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     --sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -110,6 +110,8 @@
   #formErrors { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-fg); padding: 8px 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; flex-shrink: 0; }
   #formErrors.show { display: block; }
   .btn-row { display: flex; gap: 10px; flex-shrink: 0; padding: 12px 0 18px; border-top: 1px solid var(--line); background: var(--panel); }
+  #propertyForm button { background: var(--accent); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
+  #propertyForm button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
   .btn-row button { flex: 1; }
   #filterPanel label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; text-transform:none; }
   #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] {
@@ -140,7 +142,8 @@
   .property-popup-specs { display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--text); }
   .property-popup-specs span { display: flex; align-items: center; gap: 4px; fill: var(--muted); }
   .property-popup-actions { display: flex; gap: 8px; margin-top: 12px; }
-  .property-popup-actions button { flex: 1; padding: 7px; font-size: 12px; border-radius: 7px; }
+  .property-popup-actions button { flex: 1; padding: 7px; font-size: 12px; border-radius: 7px; background: var(--accent); color: #fff; border: 0; cursor: pointer; font-weight: 700; }
+  .property-popup-actions button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
 
   /* chips / segmented controls (filtros) */
   .chip-group, .stepper-group { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 2px; }
@@ -192,6 +195,7 @@
   }
   #btnCollapseMapFilter:hover { border-color: var(--accent); color: var(--accent); }
   #btnCollapseMapFilter.collapsed { transform: rotate(180deg); }
+  #mapFilterCard > .seg-group:first-of-type { margin-top: 26px; }
   #mapFilterCard.collapsed { width: 40px; height: 40px; padding: 0; overflow: hidden; }
   #mapFilterCard.collapsed > *:not(#btnCollapseMapFilter) { display: none; }
   #mapFilterCard label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
@@ -205,7 +209,7 @@
   .type-btn.active { border-color: var(--accent); background: var(--accent-tint); color: var(--accent); fill: var(--accent); font-weight: 600; }
 
   /* backdrop do formulário */
-  #formBackdrop { position: fixed; inset: 0; background: rgba(4,18,31,.6); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  #formBackdrop { position: fixed; inset: 0; background: rgba(20,24,50,.25); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
   #formBackdrop.show { opacity: 1; pointer-events: auto; }
 </style>
 </head>
@@ -546,6 +550,7 @@ const $ = (id) => document.getElementById(id);
 const MAP_CENTER = [-27.5966, -48.6084];
 const MAP_ZOOM = 13;
 const STATUS_COLORS = { disponivel: '#4ade80', reservado: '#facc15', vendido: '#ff6b6b', alugado: '#3ea6ff' };
+const STATUS_TEXT_COLORS = { disponivel: '#15853c', reservado: '#966e00', vendido: '#d34247', alugado: '#197ac9' };
 const ICONS = {
   bed: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18v2M21 18v2M3 12V8a2 2 0 0 1 2-2h4M3 12h18"/></svg>',
   bath: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2a1 1 0 0 1 1-1z"/><path d="M7 12V6a2 2 0 0 1 2-2c1 0 1.5.5 2 1M4 20v1M18 20v1"/></svg>',
@@ -554,7 +559,7 @@ const ICONS = {
   house: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z"/></svg>',
   building: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 3h16v18H4V3zm3 3v2h2V6H7zm4 0v2h2V6h-2zm4 0v2h2V6h-2zM7 10v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM7 14v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zM10 18v3h4v-3h-4z"/></svg>',
   store: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 4h18l1 5H2l1-5zM4 10v10h6v-6h4v6h6V10H4z"/></svg>',
-  sobrado: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 21V11l8-7 8 7v10h-4v-4h-2v4h-4v-4H10v4H4zm4-8h2v-2H8v2zm6 0h2v-2h-2v2z"/></svg>',
+  sobrado: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 21V11l8-7 8 7v10h-4v-4h-2v4h-4v-4h-2v4H4zm4-8h2v-2H8v2zm6 0h2v-2h-2v2z"/></svg>',
   cobertura: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm2 4h4v2H5v-2zm6 0h4v2h-4v-2zm6 0h2v2h-2v-2zM5 14h4v2H5v-2zm6 0h4v2h-4v-2zm6 0h2v2h-2v-2zM4 20h16v2H4v-2zM6 20v-4h2v4H6zm10 0v-4h2v4h-2z"/></svg>',
   plot: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 5h18v2H3V5zm0 12h18v2H3v-2zM3 5v14h2V5H3zm16 0v14h2V5h-2zM10 9c0-1.5 1-3 2-3s2 1.5 2 3-1 3-2 3-2-1.5-2-3zm1 5h2v5h-2v-5z"/></svg>'
 };
@@ -795,6 +800,7 @@ function buildPopupHtml(property) {
   const priceLabel = property.dealType === 'aluguel' ? formatCurrency(price) + '/mês' : formatCurrency(price);
   const addr = property.address || {};
   const statusColor = STATUS_COLORS[property.status] || '#8b9bab';
+  const statusTextColor = STATUS_TEXT_COLORS[property.status] || '#5a6270';
   const photoUrl = property.photos && property.photos.length ? URL.createObjectURL(property.photos[0]) : null;
   const specs = [
     property.rooms ? `<span>${ICONS.bed}${property.rooms}</span>` : '',
@@ -808,7 +814,7 @@ function buildPopupHtml(property) {
       <div class="property-popup-body">
         <div class="property-popup-top">
           <strong class="property-popup-price">${priceLabel}</strong>
-          <span class="property-popup-status" style="background:${statusColor}22;color:${statusColor};">${STATUS_LABELS[property.status] || property.status}</span>
+          <span class="property-popup-status" style="background:${statusColor}22;color:${statusTextColor};">${STATUS_LABELS[property.status] || property.status}</span>
         </div>
         <div class="property-popup-type">${UNIT_TYPE_LABELS[property.unitType] || property.unitType}</div>
         <div class="property-popup-addr">${addr.street || ''} ${addr.number || ''} — ${addr.neighborhood || ''}</div>
@@ -1204,6 +1210,7 @@ function renderList(properties) {
     const priceLabel = p.dealType === 'aluguel' ? formatCurrency(price) + '/mês' : formatCurrency(price);
     const addr = p.address || {};
     const statusColor = STATUS_COLORS[p.status] || '#8b9bab';
+    const statusTextColor = STATUS_TEXT_COLORS[p.status] || '#5a6270';
     const photoUrl = p.photos && p.photos.length ? URL.createObjectURL(p.photos[0]) : null;
     const specs = [
       p.rooms ? `<span>${ICONS.bed}${p.rooms}</span>` : '',
@@ -1215,7 +1222,7 @@ function renderList(properties) {
       <div class="list-item-body">
         <div class="list-item-top">
           <strong>${priceLabel}</strong>
-          <span class="list-item-status" style="background:${statusColor}22;color:${statusColor};">${STATUS_LABELS[p.status] || p.status}</span>
+          <span class="list-item-status" style="background:${statusColor}22;color:${statusTextColor};">${STATUS_LABELS[p.status] || p.status}</span>
         </div>
         <div class="list-item-addr">${UNIT_TYPE_LABELS[p.unitType] || p.unitType} · ${addr.neighborhood || ''}</div>
         ${specs ? `<div class="list-item-specs">${specs}</div>` : ''}
