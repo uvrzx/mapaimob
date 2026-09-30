@@ -130,6 +130,7 @@
   }
   #map { position: absolute; inset: 0; }
   #map.add-mode, #map.add-mode .leaflet-container { cursor: crosshair; }
+  #map.form-open .leaflet-control-zoom { margin-right: 390px; transition: margin-right .25s cubic-bezier(.16,1,.3,1); }
   .leaflet-marker-draggable { cursor: grab !important; }
   .leaflet-marker-draggable:active, .leaflet-drag-target { cursor: grabbing !important; }
   #propertyForm {
@@ -1261,6 +1262,7 @@ function openPropertyForm(coords, existingProperty) {
   renderPhotoThumbnails();
   $('propertyForm').classList.add('open');
   $('formBackdrop').classList.add('show');
+  $('map').classList.add('form-open');
 }
 
 let geocodePreviewMarker = null;
@@ -1306,6 +1308,7 @@ async function geocodeAddress() {
 function closePropertyForm() {
   $('propertyForm').classList.remove('open');
   $('formBackdrop').classList.remove('show');
+  $('map').classList.remove('form-open');
   appState.addMode = false;
   appState.editingPropertyId = null;
   $('btnAddProperty').classList.remove('active');
