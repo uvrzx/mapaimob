@@ -71,6 +71,13 @@
   .dash-bar-caption { display: block; margin-top: 8px; font-size: 12px; color: var(--muted); }
   .dash-main button, .dash-side button { background: var(--accent); color: #fff; border: 0; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px; }
   .dash-main button.ghost, .dash-side button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
+  .dash-featured-photo { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; background: var(--panel-2); display: flex; align-items: center; justify-content: center; fill: var(--muted); }
+  .dash-featured-price { display: block; font-size: 18px; margin-top: 12px; }
+  .dash-featured-specs { display: flex; gap: 10px; margin: 8px 0 14px; font-size: 12px; color: var(--text); flex-wrap: wrap; }
+  .dash-featured-specs span { display: flex; align-items: center; gap: 4px; fill: var(--muted); }
+  .dash-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dash-table th { text-align: left; color: var(--muted); font-size: 11px; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  .dash-table td { padding: 8px; border-bottom: 1px solid var(--line); }
   #detailView { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; }
   #detailView > button, .detail-main button { background: var(--accent); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
   #detailView > button.ghost, .detail-main button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
@@ -1022,6 +1029,56 @@ function renderLaunchCard() {
     </div>`;
 }
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : String(str);
+  return div.innerHTML;
+}
+
+function renderFeaturedProperty() {
+  const sorted = [...appState.properties].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  const featured = sorted[0];
+  if (!featured) { $('dashFeatured').innerHTML = ''; return; }
+  const photoUrls = (featured.photos || []).map(b => URL.createObjectURL(b));
+  const photoHtml = photoUrls.length
+    ? `<img src="${photoUrls[0]}" class="dash-featured-photo">`
+    : `<div class="dash-featured-photo">${TYPE_ICONS[featured.unitType] || ICONS.house}</div>`;
+  const specs = [
+    featured.rooms ? `<span>${ICONS.bed}${featured.rooms}</span>` : '',
+    featured.bathrooms ? `<span>${ICONS.bath}${featured.bathrooms}</span>` : '',
+    featured.constructedArea ? `<span>${ICONS.area}${featured.constructedArea}m²</span>` : ''
+  ].filter(Boolean).join('');
+  $('dashFeatured').innerHTML = `
+    <div class="dash-card">
+      <h3>Último imóvel adicionado</h3>
+      ${photoHtml}
+      <strong class="dash-featured-price">${priceLabelFor(featured)}</strong>
+      <div class="dash-featured-specs">${specs}</div>
+      <button type="button" onclick="openPropertyDetail('${featured.id}')">Ver detalhes</button>
+    </div>`;
+}
+
+function renderRecentTable() {
+  const recent = [...appState.properties].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0, 10);
+  if (!recent.length) { $('dashTableWrap').innerHTML = ''; return; }
+  $('dashTableWrap').innerHTML = `
+    <div class="dash-card">
+      <h3>Imóveis recentes</h3>
+      <table class="dash-table">
+        <thead><tr><th>Imóvel</th><th>Tipo</th><th>Corretor</th><th>Preço</th><th>Status</th><th></th></tr></thead>
+        <tbody>${recent.map(p => `
+          <tr>
+            <td>${escapeHtml(p.label || (p.address && p.address.street) || '—')}</td>
+            <td>${UNIT_TYPE_LABELS[p.unitType] || p.unitType}</td>
+            <td>${escapeHtml(p.agentResponsible || '—')}</td>
+            <td>${priceLabelFor(p)}</td>
+            <td><span class="list-item-status" style="background:${STATUS_COLORS[p.status] || '#8b9bab'}22;color:${STATUS_TEXT_COLORS[p.status] || '#5a6270'};">${STATUS_LABELS[p.status] || p.status}</span></td>
+            <td><button type="button" class="ghost" onclick="openPropertyDetail('${p.id}')">Ver</button></td>
+          </tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
 function renderDashboard() {
   const props = appState.properties;
   const countByStatus = (s) => props.filter(p => p.status === s).length;
@@ -1034,8 +1091,8 @@ function renderDashboard() {
   ].map(k => `<div class="dash-kpi"><strong>${k.value}</strong><span>${k.label}</span></div>`).join('');
   renderSalesCard(dashSalesPeriodDays);
   renderLaunchCard();
-  $('dashFeatured').innerHTML = '';
-  $('dashTableWrap').innerHTML = '';
+  renderFeaturedProperty();
+  renderRecentTable();
 }
 
 window.addEventListener('properties-updated', () => renderDashboard());
