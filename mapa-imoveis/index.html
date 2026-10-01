@@ -211,6 +211,21 @@
   .condo-popup-body { padding: 12px 14px; }
   .condo-popup-name { font-size: 15px; display: block; }
   .condo-popup-addr { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .condo-popup-gallery { position: relative; }
+  .condo-popup-gallery-prev, .condo-popup-gallery-next { position: absolute; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; background: rgba(20,24,50,.5); color: #fff; border: 0; cursor: pointer; font-size: 14px; line-height: 1; }
+  .condo-popup-gallery-prev { left: 8px; }
+  .condo-popup-gallery-next { right: 8px; }
+  .condo-popup-section { margin-top: 10px; }
+  .condo-popup-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin: 0 0 6px; }
+  .condo-popup-section p { font-size: 12px; color: var(--text); margin: 0; }
+  .condo-popup-amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .condo-popup-amenities span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text); fill: none; stroke: var(--accent); }
+  .condo-popup-units { display: flex; flex-direction: column; gap: 6px; }
+  .condo-popup-unit { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .condo-popup-unit:hover { border-color: var(--accent); }
+  .condo-popup-unit span { color: var(--muted); }
+  .condo-popup-empty { font-size: 12px; color: var(--muted); margin: 0; }
+  .condo-popup-agenciar { width: 100%; margin-top: 12px; background: var(--accent); color: #fff; border: 0; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
 
   /* chips / segmented controls (filtros) */
   .chip-group, .stepper-group { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 2px; }
@@ -982,15 +997,65 @@ function buildCondoMarkerIcon(condo, pct) {
 
 function buildCondoPopupHtml(condo) {
   const addr = condo.address || {};
-  const photoUrl = condo.photos && condo.photos.length ? URL.createObjectURL(condo.photos[0]) : null;
+  const photoUrls = (condo.photos || []).map(b => URL.createObjectURL(b));
+  const activeAmenities = Object.keys(AMENITY_LABELS).filter(k => condo[k]);
+  const units = appState.properties.filter(p => p.condoId === condo.id);
+  const galleryHtml = photoUrls.length
+    ? `<div class="condo-popup-gallery" data-idx="0">
+        <img src="${photoUrls[0]}" class="condo-popup-photo">
+        ${photoUrls.length > 1 ? `
+          <button type="button" class="condo-popup-gallery-prev" onclick="condoGalleryStep(this, -1)">‹</button>
+          <button type="button" class="condo-popup-gallery-next" onclick="condoGalleryStep(this, 1)">›</button>` : ''}
+      </div>`
+    : `<div class="condo-popup-photo condo-popup-photo-empty">${ICONS.building}</div>`;
+  const amenitiesHtml = activeAmenities.length
+    ? `<div class="condo-popup-section"><h4>Condomínio</h4><div class="condo-popup-amenities">${activeAmenities.map(k => `<span>${AMENITY_CHECK_ICON}${AMENITY_LABELS[k]}</span>`).join('')}</div></div>`
+    : '';
+  const unitsHtml = `<div class="condo-popup-section"><h4>Unidades agenciadas</h4>${
+    units.length
+      ? `<div class="condo-popup-units">${units.map(u => `
+          <div class="condo-popup-unit" onclick="openPropertyDetail('${u.id}')">
+            <strong>${priceLabelFor(u)}</strong>
+            <span>${UNIT_TYPE_LABELS[u.unitType] || u.unitType}${u.rooms ? ' · ' + u.rooms + 'q' : ''}</span>
+          </div>`).join('')}</div>`
+      : `<p class="condo-popup-empty">Nenhuma unidade agenciada neste prédio.</p>`
+  }</div>`;
   return `
     <div class="condo-popup" data-condo-id="${condo.id}">
-      ${photoUrl ? `<img src="${photoUrl}" class="condo-popup-photo">` : `<div class="condo-popup-photo condo-popup-photo-empty">${ICONS.building}</div>`}
+      ${galleryHtml}
       <div class="condo-popup-body">
         <strong class="condo-popup-name">${escapeHtml(condo.name)}</strong>
         <div class="condo-popup-addr">${escapeHtml(addr.street || '')} ${escapeHtml(addr.number || '')} — ${escapeHtml(addr.neighborhood || '')}</div>
+        ${condo.description ? `<div class="condo-popup-section"><h4>Sobre o prédio</h4><p>${escapeHtml(condo.description)}</p></div>` : ''}
+        ${amenitiesHtml}
+        ${unitsHtml}
+        <button type="button" class="condo-popup-agenciar" onclick="registerAgencyRequest('${condo.id}')">Agenciar</button>
       </div>
     </div>`;
+}
+
+function condoGalleryStep(btn, delta) {
+  const wrap = btn.closest('.condo-popup-gallery');
+  const popup = btn.closest('.condo-popup');
+  const condo = appState.condosById[popup.dataset.condoId];
+  const photoUrls = (condo.photos || []).map(b => URL.createObjectURL(b));
+  let idx = Number(wrap.dataset.idx);
+  idx = (idx + delta + photoUrls.length) % photoUrls.length;
+  wrap.dataset.idx = idx;
+  wrap.querySelector('img').src = photoUrls[idx];
+}
+
+async function registerAgencyRequest(condoId) {
+  const condo = appState.condosById[condoId];
+  if (!condo) return;
+  condo.agencyRequestedAt = Date.now();
+  try {
+    await dbPut('condos', condo);
+    alert('Agenciamento registrado para ' + condo.name + '.');
+  } catch (err) {
+    console.error(err);
+    alert('Não foi possível registrar o agenciamento.');
+  }
 }
 
 function upsertCondoMarker(condo) {
