@@ -1048,11 +1048,13 @@ function condoGalleryStep(btn, delta) {
 async function registerAgencyRequest(condoId) {
   const condo = appState.condosById[condoId];
   if (!condo) return;
+  const previousAgencyRequestedAt = condo.agencyRequestedAt;
   condo.agencyRequestedAt = Date.now();
   try {
     await dbPut('condos', condo);
     alert('Agenciamento registrado para ' + condo.name + '.');
   } catch (err) {
+    condo.agencyRequestedAt = previousAgencyRequestedAt;
     console.error(err);
     alert('Não foi possível registrar o agenciamento.');
   }
@@ -1483,7 +1485,9 @@ async function geocodeAddress(prefix) {
     const res = await fetch(url, { headers: { 'Accept-Language': 'pt-BR' } });
     const results = await res.json();
     if (!results.length) {
-      alert('Endereço não encontrado. Ajuste manualmente clicando no mapa.');
+      alert(prefix === 'c'
+        ? 'Endereço não encontrado. O condomínio será salvo com a localização do imóvel vinculado.'
+        : 'Endereço não encontrado. Ajuste manualmente clicando no mapa.');
       return;
     }
     const lat = parseFloat(results[0].lat), lng = parseFloat(results[0].lon);
@@ -1501,6 +1505,14 @@ async function geocodeAddress(prefix) {
   }
 }
 
+function resetCondoFields() {
+  ['c_name', 'c_street', 'c_number', 'c_neighborhood', 'c_description', 'c_lat', 'c_lng', 'c_monthlyFee'].forEach(id => { $(id).value = ''; });
+  $('c_city').value = 'Florianópolis';
+  ['c_pool', 'c_gym', 'c_partyRoom', 'c_playground', 'c_petArea', 'c_security24h', 'c_elevator', 'c_gatedCommunity'].forEach(id => { $(id).checked = false; });
+  condoFormPhotos = [];
+  renderCondoPhotoThumbs();
+}
+
 function closePropertyForm() {
   $('propertyForm').classList.remove('open');
   $('formBackdrop').classList.remove('show');
@@ -1509,7 +1521,7 @@ function closePropertyForm() {
   appState.editingPropertyId = null;
   $('btnAddProperty').classList.remove('active');
   clearGeocodePreview();
-  condoFormPhotos = [];
+  resetCondoFields();
   $('newCondoFields').style.display = 'none';
 }
 
@@ -1564,7 +1576,9 @@ async function handleCondoCreateIfNeeded() {
       neighborhood: $('c_neighborhood').value.trim(),
       city: $('c_city').value.trim() || 'Florianópolis'
     },
-    coordinates: ($('c_lat').value && $('c_lng').value) ? [Number($('c_lat').value), Number($('c_lng').value)] : null,
+    coordinates: ($('c_lat').value && $('c_lng').value)
+      ? [Number($('c_lat').value), Number($('c_lng').value)]
+      : (($('f_lat').value && $('f_lng').value) ? [Number($('f_lat').value), Number($('f_lng').value)] : null),
     description: $('c_description').value.trim(),
     photos: condoFormPhotos.slice(),
     pool: $('c_pool').checked,
@@ -1581,7 +1595,7 @@ async function handleCondoCreateIfNeeded() {
   appState.condos.push(condo);
   appState.condosById[condo.id] = condo;
   refreshCondoSelect();
-  condoFormPhotos = [];
+  resetCondoFields();
   return condo.id;
 }
 
@@ -1589,7 +1603,7 @@ function refreshCondoSelect() {
   const select = $('f_condoId');
   const current = select.value;
   select.innerHTML = '<option value="">Nenhum</option>' +
-    appState.condos.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    appState.condos.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
   select.value = current;
 }
 
