@@ -564,6 +564,14 @@
   };
   document.addEventListener('keydown', e => { if (e.key === 'Escape') present.classList.remove('show'); });
 
+  // pré-preenchimento vindo do mapa (?vi=<preço da unidade>) — ver fase 7
+  const viParam = parseFloat(new URLSearchParams(location.search).get('vi'));
+  if (Number.isFinite(viParam) && viParam > 0) {
+    state.VI = viParam;
+    const viInput = document.querySelector('[data-field="VI"]');
+    if (viInput) viInput.value = viParam.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
   // primeira pintura
   render();
 })();

@@ -221,9 +221,11 @@
   .condo-popup-amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .condo-popup-amenities span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text); fill: none; stroke: var(--accent); }
   .condo-popup-units { display: flex; flex-direction: column; gap: 6px; }
-  .condo-popup-unit { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-  .condo-popup-unit:hover { border-color: var(--accent); }
+  .condo-popup-unit { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; }
+  .condo-popup-unit-info { display: flex; flex-direction: column; cursor: pointer; min-width: 0; }
+  .condo-popup-unit-info:hover { color: var(--accent); }
   .condo-popup-unit span { color: var(--muted); }
+  .condo-popup-unit-sim { background: var(--accent-2); color: var(--text); border: 0; border-radius: 6px; width: 24px; height: 24px; flex-shrink: 0; cursor: pointer; font-size: 12px; line-height: 1; }
   .condo-popup-empty { font-size: 12px; color: var(--muted); margin: 0; }
   .condo-popup-agenciar { width: 100%; margin-top: 12px; background: var(--accent); color: #fff; border: 0; padding: 9px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
 
@@ -1014,9 +1016,12 @@ function buildCondoPopupHtml(condo) {
   const unitsHtml = `<div class="condo-popup-section"><h4>Unidades agenciadas</h4>${
     units.length
       ? `<div class="condo-popup-units">${units.map(u => `
-          <div class="condo-popup-unit" onclick="openPropertyDetail('${u.id}')">
-            <strong>${priceLabelFor(u)}</strong>
-            <span>${UNIT_TYPE_LABELS[u.unitType] || u.unitType}${u.rooms ? ' · ' + u.rooms + 'q' : ''}</span>
+          <div class="condo-popup-unit">
+            <div class="condo-popup-unit-info" onclick="openPropertyDetail('${u.id}')">
+              <strong>${priceLabelFor(u)}</strong>
+              <span>${UNIT_TYPE_LABELS[u.unitType] || u.unitType}${u.rooms ? ' · ' + u.rooms + 'q' : ''}</span>
+            </div>
+            <button type="button" class="condo-popup-unit-sim" onclick="event.stopPropagation(); simulateFinancingFor('${u.id}')" title="Simular financiamento">💰</button>
           </div>`).join('')}</div>`
       : `<p class="condo-popup-empty">Nenhuma unidade agenciada neste prédio.</p>`
   }</div>`;
@@ -1045,7 +1050,28 @@ function condoGalleryStep(btn, delta) {
   wrap.querySelector('img').src = photoUrls[idx];
 }
 
-async function registerAgencyRequest(condoId) {
+function showFinancingTab() {
+  $('dashboardView').style.display = 'none';
+  $('mapView').style.display = 'none';
+  $('financingView').style.display = 'flex';
+  $('detailView').style.display = 'none';
+  $('tabFinancing').classList.add('active');
+  $('tabDashboard').classList.remove('active');
+  $('tabMap').classList.remove('active');
+}
+
+function simulateFinancing(property) {
+  const price = property.dealType === 'aluguel' ? property.rentPrice : property.salePrice;
+  $('financingFrame').src = 'financiamento.html' + (price > 0 ? '?vi=' + encodeURIComponent(price) : '');
+  showFinancingTab();
+}
+
+function simulateFinancingFor(id) {
+  const property = appState.properties.find(p => p.id === id);
+  if (property) simulateFinancing(property);
+}
+
+function registerAgencyRequest(condoId) {
   const condo = appState.condosById[condoId];
   if (!condo) return;
   const previousAgencyRequestedAt = condo.agencyRequestedAt;
@@ -1966,13 +1992,7 @@ window.addEventListener('DOMContentLoaded', () => {
     map.invalidateSize();
   });
   $('tabFinancing').addEventListener('click', () => {
-    $('dashboardView').style.display = 'none';
-    $('mapView').style.display = 'none';
-    $('financingView').style.display = 'flex';
-    $('detailView').style.display = 'none';
-    $('tabFinancing').classList.add('active');
-    $('tabDashboard').classList.remove('active');
-    $('tabMap').classList.remove('active');
+    showFinancingTab();
     if (!$('financingFrame').src) $('financingFrame').src = 'financiamento.html';
   });
   $('btnDetailBack').addEventListener('click', closeDetailView);
