@@ -13,13 +13,15 @@ Inter, via Google Fonts:
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 ```
 
-Pesos usados: 400 (texto), 600 (labels/botões ghost), 700 (botões
-primários, títulos pequenos) em `index.html`; 500 e 800 são usados em
-`financiamento.html` (500 em textos, 800 em destaques de apresentação) —
-não remover nenhum peso do `<link>` do Google Fonts achando que está sem uso.
+Pesos usados em todo o app, sem exceção: 400 (texto), 600 (labels/
+botões ghost), 700 (botões primários, títulos pequenos, destaques de
+apresentação). `financiamento.html` usava 500 e 800 numa exceção não
+documentada aqui — normalizado pra 600/700 e o `<link>` enxugado (não
+carrega mais pesos que nada usa). Qualquer peso novo introduzido depois
+tem que ser um desses dois, nunca um terceiro.
 
 `--sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;`
 
