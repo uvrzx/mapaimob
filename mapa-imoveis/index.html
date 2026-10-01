@@ -1071,7 +1071,7 @@ function simulateFinancingFor(id) {
   if (property) simulateFinancing(property);
 }
 
-function registerAgencyRequest(condoId) {
+async function registerAgencyRequest(condoId) {
   const condo = appState.condosById[condoId];
   if (!condo) return;
   const previousAgencyRequestedAt = condo.agencyRequestedAt;
