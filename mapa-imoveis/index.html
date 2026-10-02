@@ -987,7 +987,6 @@ async function fetchAndRenderPois() {
   const bounds = map.getBounds();
   if (lastPoiBounds && lastPoiBounds.contains(bounds)) return;
   const padded = bounds.pad(0.3);
-  lastPoiBounds = padded;
   const bbox = `${padded.getSouth()},${padded.getWest()},${padded.getNorth()},${padded.getEast()}`;
   try {
     const res = await fetch(POI_ENDPOINT, {
@@ -998,6 +997,7 @@ async function fetchAndRenderPois() {
     if (!res.ok) throw new Error('Overpass HTTP ' + res.status);
     const data = await res.json();
     renderPoiElements(data.elements || []);
+    lastPoiBounds = padded;
   } catch (err) {
     console.error('[POI] falha ao buscar amenidades', err);
   }
