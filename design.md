@@ -146,9 +146,15 @@ além destes (e do `@media (max-width: 1000px)` próprio de
   (z-index 1100) aberto por `#btnToggleList` e fecha ao escolher um item.
   O mapa sempre ocupa a largura inteira da área de conteúdo.
   `.dash-grid`/`.detail-grid` empilham em 1 coluna.
-- **< 600px** — header compacto: título só com o emoji, "+ Adicionar"
-  sem "imóvel", Exportar/Importar viram ícones. Header cabe em 2 linhas
-  de 360px a 663px.
+- **< 600px** — header compacto: sem título, abas ocupam a linha toda,
+  Exportar/Importar/Adicionar viram ícones ao lado da busca. Header cabe
+  em 2 linhas de 360px a 1199px.
+
+**Header** (grid, 4 zonas no desktop ≥ 1200px): marca · abas · busca
+centralizada (máx. 640px) · ações à direita (Exportar, Importar e, no
+extremo direito, o CTA "+ Adicionar imóvel"). Abaixo de 1200px vira 2
+linhas: marca + abas, depois busca + ações. Ações sempre alinhadas à
+direita; nada de itens soltos à esquerda com vazio no resto da barra.
 
 Regras fixas: sem scroll horizontal da página de 360px a 1920px; HUD
 (`#mapHud`) e legenda de amenidades ficam dentro de `#mapWrap`; abaixo
