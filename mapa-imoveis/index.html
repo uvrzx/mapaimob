@@ -137,6 +137,11 @@
   #mapHud { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; align-items: center; gap: 8px; background: var(--panel); border-radius: 24px; padding: 4px; box-shadow: var(--shadow-soft); }
   #mapHud .seg-group { margin: 0; }
   #mapHud #btnHudFilter { background: var(--accent); color: #fff; border: 0; padding: 7px 16px; border-radius: 20px; font-weight: 700; font-size: 12px; cursor: pointer; }
+  #amenityLegend { position: absolute; left: 14px; bottom: 14px; z-index: 1000; display: flex; flex-direction: column; gap: 2px; background: var(--panel); border-radius: 12px; padding: 8px; box-shadow: var(--shadow-soft); max-height: 220px; overflow-y: auto; }
+  .amenity-legend-item { display: flex; align-items: center; gap: 6px; background: transparent; border: 0; color: var(--text); font-size: 11px; padding: 4px 6px; border-radius: 6px; cursor: pointer; text-align: left; }
+  .amenity-legend-item:hover { background: var(--panel-2); }
+  .amenity-legend-item.off { color: var(--muted); opacity: .5; }
+  .amenity-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .leaflet-marker-draggable { cursor: grab !important; }
   .leaflet-marker-draggable:active, .leaflet-drag-target { cursor: grabbing !important; }
   #propertyForm {
@@ -428,6 +433,7 @@
       </div>
       <button type="button" id="btnHudFilter">Filtrar</button>
     </div>
+    <div id="amenityLegend"></div>
     </div>
     <div id="listPanel"><div id="listItems"></div></div>
     </div>
@@ -1003,6 +1009,19 @@ async function fetchAndRenderPois() {
   }
 }
 
+function renderAmenityLegend() {
+  $('amenityLegend').innerHTML = AMENITY_POI_CATEGORIES.map(c => `
+    <button type="button" class="amenity-legend-item${poiEnabled[c.key] ? '' : ' off'}" data-key="${c.key}">
+      <span class="amenity-legend-dot" style="background:${c.color};"></span>${c.label}
+    </button>`).join('');
+}
+
+function togglePoiCategory(key) {
+  poiEnabled[key] = !poiEnabled[key];
+  const layer = poiLayersByCategory[key];
+  if (poiEnabled[key]) layer.addTo(map); else layer.remove();
+}
+
 (function selfCheckPoi() {
   console.assert(AMENITY_POI_CATEGORIES.length === 8, 'ASSERT FAIL: deveria ter 8 categorias de amenidade');
   console.assert(new Set(AMENITY_POI_CATEGORIES.map(c => c.key)).size === 8, 'ASSERT FAIL: chaves de categoria deveriam ser únicas');
@@ -1019,6 +1038,13 @@ async function fetchAndRenderPois() {
 window.addEventListener('DOMContentLoaded', () => {
   initMap();
   initPoiLayers();
+  renderAmenityLegend();
+  $('amenityLegend').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-key]');
+    if (!btn) return;
+    togglePoiCategory(btn.dataset.key);
+    btn.classList.toggle('off', !poiEnabled[btn.dataset.key]);
+  });
   map.on('moveend zoomend', () => {
     clearTimeout(poiFetchTimer);
     poiFetchTimer = setTimeout(fetchAndRenderPois, 600);
