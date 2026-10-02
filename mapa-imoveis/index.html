@@ -718,6 +718,20 @@ const AMENITY_LABELS = {
   petArea: 'Área pet', security24h: 'Portaria 24h', elevator: 'Elevador', gatedCommunity: 'Condomínio fechado'
 };
 
+/* categorias de POI (amenidades reais no mapa, via Overpass/OSM) — fase 8 */
+const AMENITY_POI_CATEGORIES = [
+  { key: 'mercados', label: 'Mercados', color: '#4ade80', osmKey: 'shop', osmValue: 'supermarket' },
+  { key: 'padarias', label: 'Padarias', color: '#facc15', osmKey: 'shop', osmValue: 'bakery' },
+  { key: 'escolas', label: 'Escolas', color: '#4b5fee', osmKey: 'amenity', osmValue: 'school' },
+  { key: 'academias', label: 'Academias', color: '#f97316', osmKey: 'leisure', osmValue: 'fitness_centre' },
+  { key: 'hospitais', label: 'Hospitais', color: '#ef4444', osmKey: 'amenity', osmValue: 'hospital' },
+  { key: 'farmacias', label: 'Farmácias', color: '#22c55e', osmKey: 'amenity', osmValue: 'pharmacy' },
+  { key: 'restaurantes', label: 'Restaurantes', color: '#a855f7', osmKey: 'amenity', osmValue: 'restaurant' },
+  { key: 'parques', label: 'Parques', color: '#14b8a6', osmKey: 'leisure', osmValue: 'park' }
+];
+const POI_ENDPOINT = 'https://overpass.kumi.systems/api/interpreter';
+const POI_MIN_ZOOM = 14;
+
 /* === SECTION: INDEXEDDB === */
 const DB_NAME = 'mapaImoveisDB';
 const DB_VERSION = 2;
@@ -930,8 +944,85 @@ function initMap() {
   condoMarkersLayer = L.layerGroup();
 }
 
+const poiLayersByCategory = {};
+const poiEnabled = Object.fromEntries(AMENITY_POI_CATEGORIES.map(c => [c.key, true]));
+let lastPoiBounds = null;
+let poiFetchTimer = null;
+
+function initPoiLayers() {
+  AMENITY_POI_CATEGORIES.forEach(c => { poiLayersByCategory[c.key] = L.layerGroup().addTo(map); });
+}
+
+function buildPoiQuery(bbox) {
+  const clauses = AMENITY_POI_CATEGORIES.map(c =>
+    `node["${c.osmKey}"="${c.osmValue}"](${bbox});way["${c.osmKey}"="${c.osmValue}"](${bbox});`
+  ).join('');
+  return `[out:json][timeout:25];(${clauses});out center tags;`;
+}
+
+function categoryForTags(tags) {
+  return AMENITY_POI_CATEGORIES.find(c => tags && tags[c.osmKey] === c.osmValue) || null;
+}
+
+function clearPoiLayers() {
+  AMENITY_POI_CATEGORIES.forEach(c => poiLayersByCategory[c.key].clearLayers());
+}
+
+function renderPoiElements(elements) {
+  clearPoiLayers();
+  elements.forEach(el => {
+    const cat = categoryForTags(el.tags);
+    if (!cat) return;
+    const lat = el.lat ?? (el.center && el.center.lat);
+    const lon = el.lon ?? (el.center && el.center.lon);
+    if (lat == null || lon == null) return;
+    const marker = L.circleMarker([lat, lon], { radius: 6, color: '#fff', weight: 2, fillColor: cat.color, fillOpacity: 1 });
+    if (el.tags.name) marker.bindTooltip(escapeHtml(el.tags.name));
+    marker.addTo(poiLayersByCategory[cat.key]);
+  });
+}
+
+async function fetchAndRenderPois() {
+  if (map.getZoom() < POI_MIN_ZOOM) { clearPoiLayers(); return; }
+  const bounds = map.getBounds();
+  if (lastPoiBounds && lastPoiBounds.contains(bounds)) return;
+  const padded = bounds.pad(0.3);
+  lastPoiBounds = padded;
+  const bbox = `${padded.getSouth()},${padded.getWest()},${padded.getNorth()},${padded.getEast()}`;
+  try {
+    const res = await fetch(POI_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(buildPoiQuery(bbox))
+    });
+    if (!res.ok) throw new Error('Overpass HTTP ' + res.status);
+    const data = await res.json();
+    renderPoiElements(data.elements || []);
+  } catch (err) {
+    console.error('[POI] falha ao buscar amenidades', err);
+  }
+}
+
+(function selfCheckPoi() {
+  console.assert(AMENITY_POI_CATEGORIES.length === 8, 'ASSERT FAIL: deveria ter 8 categorias de amenidade');
+  console.assert(new Set(AMENITY_POI_CATEGORIES.map(c => c.key)).size === 8, 'ASSERT FAIL: chaves de categoria deveriam ser únicas');
+  const q = buildPoiQuery('1,2,3,4');
+  console.assert(q.includes('node["shop"="supermarket"](1,2,3,4)'), 'ASSERT FAIL: buildPoiQuery deveria montar cláusula de mercado');
+  console.assert(q.includes('way["leisure"="park"](1,2,3,4)'), 'ASSERT FAIL: buildPoiQuery deveria incluir way de parque');
+  console.assert(categoryForTags({ amenity: 'pharmacy' }).key === 'farmacias', 'ASSERT FAIL: categoryForTags deveria achar farmácia');
+  console.assert(categoryForTags({ shop: 'bakery' }).key === 'padarias', 'ASSERT FAIL: categoryForTags deveria achar padaria');
+  console.assert(categoryForTags({ amenity: 'bogus' }) === null, 'ASSERT FAIL: categoryForTags deveria retornar null pra tag desconhecida');
+  console.assert(categoryForTags(null) === null, 'ASSERT FAIL: categoryForTags deveria aceitar tags undefined sem lançar erro');
+  console.log('[self-check] Amenidades (POI) OK');
+})();
+
 window.addEventListener('DOMContentLoaded', () => {
   initMap();
+  initPoiLayers();
+  map.on('moveend zoomend', () => {
+    clearTimeout(poiFetchTimer);
+    poiFetchTimer = setTimeout(fetchAndRenderPois, 600);
+  });
   // ponytail: Leaflet mede o container no momento do L.map(); se o layout
   // flex/vh ainda não assentou nesse instante, o mapa fica com escala/
   // proporção erradas até um resize manual. invalidateSize corrige.
