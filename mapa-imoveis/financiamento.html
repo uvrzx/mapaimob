@@ -8,16 +8,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Paleta alinhada ao mapa-imoveis/index.html (claro + azul + amarelo — fase 2 do redesign). */
+  /* Paleta alinhada ao mapa-imoveis/index.html (marinho + azul Mediterrâneo). */
   :root {
-    --bg: #f5f6fa;
+    --navy: #0b2545;
+    --bg: #f2f6fa;
     --panel: #ffffff;
-    --panel-2: #f0f1f6;
-    --line: #e6e8f0;
-    --text: #14161f;
-    --muted: #4b5563;
-    --accent: #4b5fee;
-    --accent-2: #facc15;
+    --panel-2: #e9f0f6;
+    --line: #d5e1ea;
+    --text: var(--navy);
+    --muted: #4a5f78;
+    --accent: #17708f;
     --ok-bg: #e7f9ee; --ok-fg: #15803d; --ok-line: #b7ecc8;
     --warn-bg: #fdeaea; --warn-fg: #b91c1c; --warn-line: #f5c2c2;
     --radius: 16px;
@@ -52,6 +52,8 @@
   /* ---- Layout principal: inputs à esquerda, resultado vivo à direita ---- */
   .layout { display: grid; grid-template-columns: minmax(0,1fr) 380px; gap: 24px; padding: 24px; align-items: start; }
   @media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } }
+  /* celular: header com 3-4 linhas não pode ficar colado ocupando a tela */
+  @media (max-width: 600px) { header { position: static; } .live { position: static; } }
 
   .blocks { display: flex; flex-direction: column; gap: 18px; }
 
