@@ -2,7 +2,7 @@
 
 Fonte única de verdade pro design system do app `mapa-imoveis`. Valores
 copiados direto do `:root` e das regras de botão de
-`mapa-imoveis/index.html` (tema claro, azul marinho + azul Mediterrâneo).
+`mapa-imoveis/index.html` (tema escuro, azul marinho + azul Mediterrâneo).
 Qualquer outro arquivo do app (`financiamento.html` incluso) deve usar
 esses mesmos valores — nunca aproximar.
 
@@ -28,44 +28,44 @@ tem que ser um desses dois, nunca um terceiro.
 ## Cores (`:root`)
 
 ```css
+color-scheme: dark;
 --navy: #0b2545;
---bg: #f2f6fa;
---panel: #ffffff;
---panel-2: #e9f0f6;
---line: #d5e1ea;
---text: var(--navy);
---muted: #4a5f78;
---accent: #17708f;
---accent-tint: rgba(23,112,143,.12);
---ok-bg: #e7f9ee; --ok-fg: #15803d; --ok-line: #b7ecc8;
---warn-bg: #fdeaea; --warn-fg: #b91c1c; --warn-line: #f5c2c2;
+--bg: #071a33; --panel: #0b2545; --panel-2: #123560; --line: #27507f;
+--text: #f4f8fc; --muted: #a9bfd8;
+--accent: #1b7fa3; --accent-text: #5bc0de; --accent-tint: rgba(91,192,222,.16);
+--ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
+--warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
 --mid-fg: #b45309;
 ```
 
-Paleta: marinho + branco, com azul Mediterrâneo (`--accent`) como único
-acento de marca — ações primárias, seleção/estado ativo, links.
-`--navy` é o texto e o fundo do CTA "+ Adicionar imóvel". Não existe
-segundo acento de marca.
+**Tema escuro (único tema):** fundo azul marinho, texto branco, pra reduzir
+o impacto de luminosidade. O azul Mediterrâneo é o único acento de marca,
+em duas versões: `--accent` (**preenchimento**, sempre com texto branco —
+botões primários, aba/chip ativo) e `--accent-text` (**texto/ícone/traço**
+sobre fundo escuro — links, estados hover, ícones de amenidade). Nunca use
+`--accent` como cor de texto sobre o painel (3.4:1, reprova).
 
-Cores semânticas de status (`--ok-*` verde, `--warn-*` vermelho,
-`--mid-fg` âmbar escuro, usado no tier médio do badge de preenchimento do
-condomínio) não são de marca e não mudam com o tema. As paletas de
-`STATUS_COLORS`/`STATUS_TEXT_COLORS` e de categoria de POI (JS) também são
-semânticas próprias e ficam fora dos tokens.
+Semânticas de status: `--ok-fg`/`--warn-fg`/`--mid-fg` são **fills sólidos**
+(badge, botão ativo, barra) com texto branco; `--ok-text`/`--warn-text` são
+as versões claras pra **texto** sobre `--ok-bg`/`--warn-bg`. As paletas de
+`STATUS_COLORS`/`STATUS_TEXT_COLORS` (texto claro nas pílulas) e de
+categoria de POI (JS) são semânticas próprias, fora dos tokens.
 
-Contraste WCAG AA (≥ 4.5:1) conferido nos pares reais de texto/fundo:
-navy/panel 15.4, navy/bg 14.2, navy/panel-2 13.4, muted/panel 6.6,
-muted/bg 6.0, muted/panel-2 5.7, branco/accent 5.6, accent/panel 5.6,
-accent/bg 5.2, accent/panel-2 4.9, accent sobre accent-tint (chip de tipo
-ativo) 4.7, branco/navy 15.4, branco/ok-fg 5.0, branco/mid-fg 5.0,
-branco/warn-fg 6.5. Recalcular se mexer em qualquer token (`--accent`
-mais claro que `#17708f` ou `--muted` mais claro que `#4a5f78` reprovam).
+Mapa: tiles do OpenStreetMap escurecidos por CSS (`.osm-tiles`, filtro
+invert + hue-rotate) só na camada base — a camada de satélite não é afetada.
+Controles/tooltip/atribuição do Leaflet seguem os tokens.
+
+Contraste WCAG AA (≥ 4.5:1) medido nos pares reais: texto/panel 14.4,
+muted/panel-2 6.5, branco/accent (aba ativa) 4.55, navy/accent-text (CTA)
+7.4, muted/panel 11.1, accent-text/panel-2 5.1, branco/ok-fg 5.0,
+branco/warn-fg 6.5, ok-text/ok-bg 9.0, warn-text/warn-bg 8.3. `--accent`
+mais claro que `#1b7fa3` reprova com texto branco; recalcular ao mexer.
 
 ## Radius / Shadow
 
 ```css
 --radius: 16px;
---shadow-soft: 0 8px 24px rgba(20,24,50,.06);
+--shadow-soft: 0 8px 24px rgba(0,0,0,.4);
 ```
 
 ## Monoespaçada (valores numéricos/técnicos)
@@ -87,7 +87,8 @@ cursor: pointer;
 ```
 
 **CTA adicionar** — só `#btnAddProperty` ("+ Adicionar imóvel" no header):
-`background: var(--navy); color: #fff;`. Estado `.active` (modo "marcar no
+`background: var(--accent-text); color: var(--navy);` (destaca sobre o header
+navy). Estado `.active` (modo "marcar no
 mapa") usa `var(--ok-fg)` + branco, igual ao `header button.active`.
 
 **Ghost** — ação secundária (cancelar, ocultar, excluir):
@@ -136,9 +137,13 @@ Um único breakpoint estrutural por faixa; sem `@media` por componente
 além destes (e do `@media (max-width: 1000px)` próprio de
 `financiamento.html`):
 
-- **≥ 1200px** — sidebar de filtros 320px + lista 320px + mapa.
-- **900–1199px** — sidebar 280px; a lista (`#listPanel`) começa oculta
-  (decidido por JS no load; "Mostrar lista" em `#btnToggleList`).
+- **≥ 1200px** — sidebar de filtros 320px + mapa; a lista de imóveis
+  (`#listPanel`, 320px) **começa oculta em todas as larguras** (JS no load;
+  "Mostrar lista" em `#btnToggleList`).
+- **900–1199px** — sidebar 280px, mesma regra da lista.
+
+**Navegação:** o app abre na aba **Mapa**; ordem das abas: Mapa · Painel de
+vendas (antigo "Dashboard") · Financiamento.
 - **< 900px** — sidebar vira gaveta fixa à esquerda
   (`min(320px, 88vw)`, `translateX`, z-index 1200) com backdrop clicável
   (`#drawerBackdrop`), aberta por "Filtrar" no HUD do mapa; Esc e o "×"

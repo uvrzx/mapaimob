@@ -10,13 +10,15 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1/dist/leaflet.css">
 <style>
   :root {
+    color-scheme: dark;
     --navy: #0b2545;
-    --bg: #f2f6fa; --panel: #ffffff; --panel-2: #e9f0f6; --line: #d5e1ea;
-    --text: var(--navy); --muted: #4a5f78; --accent: #17708f; --accent-tint: rgba(23,112,143,.12);
-    --ok-bg: #e7f9ee; --ok-fg: #15803d; --ok-line: #b7ecc8;
-    --warn-bg: #fdeaea; --warn-fg: #b91c1c; --warn-line: #f5c2c2;
+    --bg: #071a33; --panel: #0b2545; --panel-2: #123560; --line: #27507f;
+    --text: #f4f8fc; --muted: #a9bfd8;
+    --accent: #1b7fa3; --accent-text: #5bc0de; --accent-tint: rgba(91,192,222,.16);
+    --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
+    --warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
     --mid-fg: #b45309;
-    --shadow-soft: 0 8px 24px rgba(11,37,69,.08);
+    --shadow-soft: 0 8px 24px rgba(0,0,0,.4);
     --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     --sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -52,7 +54,7 @@
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
   header button.active { background: var(--ok-fg); color: #fff; }
-  #btnAddProperty { background: var(--navy); color: #fff; }
+  #btnAddProperty { background: var(--accent-text); color: var(--navy); }
   #btnAddProperty.active { background: var(--ok-fg); color: #fff; }
   header button .ico { display: none; }
   .view-tabs { display: flex; gap: 2px; background: var(--panel-2); border-radius: 20px; padding: 3px; }
@@ -102,7 +104,7 @@
   .detail-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
   .detail-thumbs img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; }
   .detail-amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .detail-amenities span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); fill: none; stroke: var(--accent); }
+  .detail-amenities span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); fill: none; stroke: var(--accent-text); }
   .layout-body { flex: 1; display: flex; min-height: 0; }
   #sidebar {
     width: 320px; flex-shrink: 0; display: flex; flex-direction: column;
@@ -122,7 +124,7 @@
   .sidebar-head .reset-link { margin-left: auto; }
   .drawer-close { display: none; background: none; border: 0; color: var(--muted); font-size: 22px; line-height: 1; padding: 0 2px; cursor: pointer; }
   .sidebar-head h2 { font-size: 18px; font-weight: 700; margin: 0; }
-  .reset-link { background: none; border: 0; color: var(--accent); font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; }
+  .reset-link { background: none; border: 0; color: var(--accent-text); font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; }
   #sidebarResizeHandle { width: 12px; flex-shrink: 0; cursor: col-resize; background: transparent; position: relative; }
   #sidebarResizeHandle:hover, #sidebarResizeHandle.dragging { background: linear-gradient(var(--accent), var(--accent)) 0 0 / 2px 100% no-repeat; }
   #btnCollapseSidebar {
@@ -131,7 +133,7 @@
     display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5;
     transition: transform .2s ease;
   }
-  #btnCollapseSidebar:hover { border-color: var(--accent); color: var(--accent); }
+  #btnCollapseSidebar:hover { border-color: var(--accent); color: var(--accent-text); }
   #btnCollapseSidebar.collapsed { transform: rotate(180deg); }
   #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
   .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
@@ -177,7 +179,7 @@
   }
   #propertyForm .row { display: flex; gap: 10px; }
   #propertyForm .row > * { flex: 1; }
-  #formErrors { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-fg); padding: 8px 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; flex-shrink: 0; }
+  #formErrors { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-text); padding: 8px 10px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; flex-shrink: 0; }
   #formErrors.show { display: block; }
   .btn-row { display: flex; gap: 10px; flex-shrink: 0; padding: 12px 0 18px; border-top: 1px solid var(--line); background: var(--panel); }
   #propertyForm button { background: var(--accent); color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
@@ -212,6 +214,15 @@
   .leaflet-popup-content { margin: 0; width: 260px !important; }
   .leaflet-popup-tip { background: var(--panel); }
   .leaflet-popup-close-button { color: var(--muted) !important; }
+  .leaflet-bar a { background: var(--panel); color: var(--text); border-bottom-color: var(--line); }
+  .leaflet-bar a:hover, .leaflet-bar a:focus { background: var(--panel-2); }
+  .leaflet-control-layers, .leaflet-control-layers-expanded { background: var(--panel); color: var(--text); }
+  .leaflet-container .leaflet-control-attribution { background: rgba(11,37,69,.85); color: var(--muted); }
+  .leaflet-control-attribution a { color: var(--accent-text); }
+  .leaflet-tooltip { background: var(--panel); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow-soft); }
+  .leaflet-tooltip::before { display: none; }
+  .leaflet-container { background: var(--bg); }
+  .osm-tiles { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9); }
   .property-popup-photo { width: 100%; height: 130px; object-fit: cover; display: block; background: var(--panel-2); }
   .property-popup-photo-empty { display: flex; align-items: center; justify-content: center; fill: var(--muted); }
   .property-popup-body { padding: 12px 14px; }
@@ -224,7 +235,7 @@
   .property-popup-specs span { display: flex; align-items: center; gap: 4px; fill: var(--muted); }
   .unit-stepper { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; color: var(--text); }
   .unit-stepper button { width: 22px; height: 22px; border-radius: 50%; background: var(--panel-2); border: 1px solid var(--line); color: var(--text); cursor: pointer; font-weight: 700; line-height: 1; padding: 0; flex-shrink: 0; }
-  .unit-stepper button:hover { border-color: var(--accent); color: var(--accent); }
+  .unit-stepper button:hover { border-color: var(--accent); color: var(--accent-text); }
   .property-popup-actions { display: flex; gap: 8px; margin-top: 12px; }
   .property-popup-actions button { flex: 1; padding: 7px 4px; font-size: 11px; border-radius: 7px; background: var(--accent); color: #fff; border: 0; cursor: pointer; font-weight: 700; white-space: nowrap; }
   .property-popup-actions button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
@@ -249,11 +260,11 @@
   .condo-popup-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin: 0 0 6px; }
   .condo-popup-section p { font-size: 12px; color: var(--text); margin: 0; }
   .condo-popup-amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .condo-popup-amenities span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text); fill: none; stroke: var(--accent); }
+  .condo-popup-amenities span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text); fill: none; stroke: var(--accent-text); }
   .condo-popup-units { display: flex; flex-direction: column; gap: 6px; }
   .condo-popup-unit { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; }
   .condo-popup-unit-info { display: flex; flex-direction: column; cursor: pointer; min-width: 0; }
-  .condo-popup-unit-info:hover { color: var(--accent); }
+  .condo-popup-unit-info:hover { color: var(--accent-text); }
   .condo-popup-unit span { color: var(--muted); }
   .condo-popup-unit-sim { background: var(--accent); color: #fff; border: 0; border-radius: 6px; width: 24px; height: 24px; flex-shrink: 0; cursor: pointer; font-size: 12px; line-height: 1; }
   .condo-popup-empty { font-size: 12px; color: var(--muted); margin: 0; }
@@ -302,14 +313,14 @@
     padding: 6px 4px; font-size: 11px; color: var(--text); cursor: pointer; transition: all .15s; fill: var(--muted);
   }
   .type-btn:hover { border-color: var(--accent); }
-  .type-btn.active { border-color: var(--accent); background: var(--accent-tint); color: var(--accent); fill: var(--accent); font-weight: 600; }
+  .type-btn.active { border-color: var(--accent); background: var(--accent-tint); color: var(--accent-text); fill: var(--accent-text); font-weight: 600; }
 
   /* backdrop do formulário */
-  #formBackdrop { position: fixed; inset: 0; background: rgba(11,37,69,.35); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  #formBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(1px); z-index: 35; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
   #formBackdrop.show { opacity: 1; pointer-events: auto; }
 
   /* backdrop da gaveta de filtros (<900px) */
-  #drawerBackdrop { position: fixed; inset: 0; background: rgba(11,37,69,.35); z-index: 1190; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  #drawerBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1190; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
   #drawerBackdrop.show { opacity: 1; pointer-events: auto; }
 
   /* responsivo: ≥1200 layout cheio; 900–1199 sidebar menor e lista oculta (JS); <900 gavetas */
@@ -364,8 +375,8 @@
   <header>
     <h1>🏠<span class="h1-text"> Mapa de Imóveis</span></h1>
     <div class="view-tabs">
-      <button type="button" id="tabDashboard" class="view-tab active">Dashboard</button>
-      <button type="button" id="tabMap" class="view-tab">Mapa</button>
+      <button type="button" id="tabMap" class="view-tab active">Mapa</button>
+      <button type="button" id="tabDashboard" class="view-tab">Painel de vendas</button>
       <button type="button" id="tabFinancing" class="view-tab">Financiamento</button>
     </div>
     <input id="quickSearch" class="quick-search" type="text" placeholder="Buscar por endereço, bairro ou apelido..." x-model="filters.query" @input="apply()">
@@ -376,7 +387,7 @@
     </div>
     <input id="importFileInput" type="file" accept="application/json" style="display:none">
   </header>
-  <div id="dashboardView">
+  <div id="dashboardView" style="display:none;">
     <div class="dash-kpis" id="dashKpis"></div>
     <div class="dash-grid">
       <div class="dash-main">
@@ -389,7 +400,7 @@
       </div>
     </div>
   </div>
-  <div class="layout-body" id="mapView" style="display:none;">
+  <div class="layout-body" id="mapView">
   <aside id="sidebar">
     <div class="sidebar-head">
       <h2>Filtros</h2>
@@ -796,7 +807,7 @@ const $ = (id) => document.getElementById(id);
 const MAP_CENTER = [-27.5966, -48.6084];
 const MAP_ZOOM = 13;
 const STATUS_COLORS = { disponivel: '#4ade80', reservado: '#facc15', vendido: '#ff6b6b', alugado: '#3ea6ff' };
-const STATUS_TEXT_COLORS = { disponivel: '#137836', reservado: '#876300', vendido: '#b3383c', alugado: '#1568ab' };
+const STATUS_TEXT_COLORS = { disponivel: '#86efac', reservado: '#fde68a', vendido: '#fca5a5', alugado: '#7dd3fc' };
 const ICONS = {
   bed: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18v2M21 18v2M3 12V8a2 2 0 0 1 2-2h4M3 12h18"/></svg>',
   bath: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2a1 1 0 0 1 1-1z"/><path d="M7 12V6a2 2 0 0 1 2-2c1 0 1.5.5 2 1M4 20v1M18 20v1"/></svg>',
@@ -1035,7 +1046,8 @@ function initMap() {
   L.control.zoom({ position: 'bottomright' }).addTo(map);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom: 19
+    maxZoom: 19,
+    className: 'osm-tiles'
   }).addTo(map);
   const satelliteLayer = L.tileLayer.wms('https://geofloripa.pmf.sc.gov.br/geoserver/Geoportal/ows', {
     layers: '201601MUN',
@@ -1651,7 +1663,7 @@ window.addEventListener('DOMContentLoaded', () => {
       : 'Este navegador não suporta o armazenamento necessário (IndexedDB). Use um navegador atualizado (Chrome, Firefox, Edge).';
     const banner = document.createElement('div');
     banner.textContent = message;
-    banner.style.cssText = 'background:var(--warn-bg);color:var(--warn-fg);border-bottom:1px solid var(--warn-line);padding:10px 20px;text-align:center;';
+    banner.style.cssText = 'background:var(--warn-bg);color:var(--warn-text);border-bottom:1px solid var(--warn-line);padding:10px 20px;text-align:center;';
     document.body.prepend(banner);
   });
 });
@@ -2173,7 +2185,7 @@ function setListHidden(hidden) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  setListHidden(window.innerWidth < 1200);
+  setListHidden(true);
   narrowMq.addEventListener('change', () => {
     setDrawer(false);
     if (narrowMq.matches) setListHidden(true);
