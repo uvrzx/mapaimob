@@ -1,0 +1,112 @@
+{
+  ".claude/launch.json": {
+    "mtime": 1790978748.1407728,
+    "ast_hash": "314a60984c262857747b207ed26674d8",
+    "semantic_hash": ""
+  },
+  "design.md": {
+    "mtime": 1790978628.871385,
+    "ast_hash": "5d5c3bb75a266fcdd20beb6922b12ffb",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-14-mapa-imoveis.md": {
+    "mtime": 1790978628.8754852,
+    "ast_hash": "080ca491bcfb205fa44cb93cb8903671",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md": {
+    "mtime": 1790978628.8765054,
+    "ast_hash": "3681b426b74b6cbd56fa064c2862ef24",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md": {
+    "mtime": 1790978628.877506,
+    "ast_hash": "6a2a3a5e121b9aead7b168605e070435",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md": {
+    "mtime": 1790978628.877506,
+    "ast_hash": "e606500e49bff6022cac120cdfb30b38",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md": {
+    "mtime": 1790978628.8785846,
+    "ast_hash": "f633e6d200ae9cead2a50ff375fc5bc0",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md": {
+    "mtime": 1790978628.8785846,
+    "ast_hash": "5b2151bd1f6c2f42e35fea80e2e5c5c4",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md": {
+    "mtime": 1790978628.8796103,
+    "ast_hash": "6700bc8c09a81366ccd2c00faf6fe75c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md": {
+    "mtime": 1790978628.8796103,
+    "ast_hash": "b3c255e4dba0e641bcad4e6a783ae11d",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md": {
+    "mtime": 1790978628.880628,
+    "ast_hash": "64d3ca2d048f39d27a6545006b1d8b05",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md": {
+    "mtime": 1790978628.8836877,
+    "ast_hash": "6efc693cae46b189576f7f92bb8954f2",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md": {
+    "mtime": 1790978628.8836877,
+    "ast_hash": "cabf29b217e848c7eb0b98d0e6c4f780",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md": {
+    "mtime": 1790978628.8847048,
+    "ast_hash": "5e1819d8ae2c3e88412caba094a262e9",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md": {
+    "mtime": 1790978628.8847048,
+    "ast_hash": "a43bdd159e9c05e5a0b793a30b1085de",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md": {
+    "mtime": 1790978628.8847048,
+    "ast_hash": "f9a6b923bca7e788e8d5aadcc9c6d469",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md": {
+    "mtime": 1790978628.8857224,
+    "ast_hash": "d1f18e5c6014d81ae84de3e6926e9b72",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md": {
+    "mtime": 1790978628.8857224,
+    "ast_hash": "412d8e4f2002b2f31f6acf097f936055",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md": {
+    "mtime": 1790978628.8867717,
+    "ast_hash": "f2f4a5fc2a4857d7ae876f4e69650d26",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md": {
+    "mtime": 1790978628.8872752,
+    "ast_hash": "6f107c26f6423476be40ba6946ceeb39",
+    "semantic_hash": ""
+  },
+  "mapa-imoveis/financiamento.html": {
+    "mtime": 1790978628.9057775,
+    "ast_hash": "cad48353b32f2f238226c5e22df4e914",
+    "semantic_hash": ""
+  },
+  "mapa-imoveis/index.html": {
+    "mtime": 1790978628.9057775,
+    "ast_hash": "04ba2041aece3b4e6675cc4235a134f6",
+    "semantic_hash": ""
+  }
+}

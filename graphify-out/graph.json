@@ -1,0 +1,3061 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "design.md",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "design",
+      "community": 7,
+      "norm_label": "design.md"
+    },
+    {
+      "label": "Design System \u2014 Mapa de Im\u00f3veis",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "design_design_system_mapa_de_im\u00f3veis",
+      "community": 7,
+      "norm_label": "design system \u2014 mapa de imoveis"
+    },
+    {
+      "label": "Fonte",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "design_fonte",
+      "community": 7,
+      "norm_label": "fonte"
+    },
+    {
+      "label": "Cores (`:root`)",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "design_cores_root",
+      "community": 7,
+      "norm_label": "cores (`:root`)"
+    },
+    {
+      "label": "Radius / Shadow",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "design_radius_shadow",
+      "community": 7,
+      "norm_label": "radius / shadow"
+    },
+    {
+      "label": "Monoespa\u00e7ada (valores num\u00e9ricos/t\u00e9cnicos)",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "design_monoespa\u00e7ada_valores_num\u00e9ricos_t\u00e9cnicos",
+      "community": 7,
+      "norm_label": "monoespacada (valores numericos/tecnicos)"
+    },
+    {
+      "label": "Regra de skin de bot\u00e3o",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "design_regra_de_skin_de_bot\u00e3o",
+      "community": 7,
+      "norm_label": "regra de skin de botao"
+    },
+    {
+      "label": "Estado ativo/toggle (chips, abas, segmented controls)",
+      "file_type": "document",
+      "source_file": "design.md",
+      "source_location": "L119",
+      "_origin": "ast",
+      "id": "design_estado_ativo_toggle_chips_abas_segmented_controls",
+      "community": 7,
+      "norm_label": "estado ativo/toggle (chips, abas, segmented controls)"
+    },
+    {
+      "label": "2026-08-14-mapa-imoveis.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis",
+      "community": 0,
+      "norm_label": "2026-08-14-mapa-imoveis.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis (uso interno) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_mapa_de_im\u00f3veis_uso_interno_implementation_plan",
+      "community": 0,
+      "norm_label": "mapa de imoveis (uso interno) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_global_constraints",
+      "community": 0,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "File Structure",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "community": 0,
+      "norm_label": "file structure"
+    },
+    {
+      "label": "Task 1: Estrutura base \u2014 HTML, CSS e mapa Leaflet vazio",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_1_estrutura_base_html_css_e_mapa_leaflet_vazio",
+      "community": 0,
+      "norm_label": "task 1: estrutura base \u2014 html, css e mapa leaflet vazio"
+    },
+    {
+      "label": "Task 2: Camada de persist\u00eancia IndexedDB",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L196",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_2_camada_de_persist\u00eancia_indexeddb",
+      "community": 0,
+      "norm_label": "task 2: camada de persistencia indexeddb"
+    },
+    {
+      "label": "Task 3: L\u00f3gica pura \u2014 formata\u00e7\u00e3o, valida\u00e7\u00e3o e matching de filtro",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L315",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_3_l\u00f3gica_pura_formata\u00e7\u00e3o_valida\u00e7\u00e3o_e_matching_de_filtro",
+      "community": 0,
+      "norm_label": "task 3: logica pura \u2014 formatacao, validacao e matching de filtro"
+    },
+    {
+      "label": "Task 4: Formul\u00e1rio de cadastro (im\u00f3vel + condom\u00ednio inline)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L421",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_4_formul\u00e1rio_de_cadastro_im\u00f3vel_condom\u00ednio_inline",
+      "community": 0,
+      "norm_label": "task 4: formulario de cadastro (imovel + condominio inline)"
+    },
+    {
+      "label": "Task 5: Pins no mapa (renderizar, editar, excluir, arrastar)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L780",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_5_pins_no_mapa_renderizar_editar_excluir_arrastar",
+      "community": 0,
+      "norm_label": "task 5: pins no mapa (renderizar, editar, excluir, arrastar)"
+    },
+    {
+      "label": "Task 6: Fotos do im\u00f3vel",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L897",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_6_fotos_do_im\u00f3vel",
+      "community": 0,
+      "norm_label": "task 6: fotos do imovel"
+    },
+    {
+      "label": "Task 7: Painel de filtros (Alpine.js) sincronizado com o mapa",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1018",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_7_painel_de_filtros_alpine_js_sincronizado_com_o_mapa",
+      "community": 0,
+      "norm_label": "task 7: painel de filtros (alpine.js) sincronizado com o mapa"
+    },
+    {
+      "label": "Task 8: Lista lateral sincronizada com o filtro",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1188",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_8_lista_lateral_sincronizada_com_o_filtro",
+      "community": 0,
+      "norm_label": "task 8: lista lateral sincronizada com o filtro"
+    },
+    {
+      "label": "Task 9: Backup (exportar/importar) e aviso de navegador incompat\u00edvel",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1244",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_9_backup_exportar_importar_e_aviso_de_navegador_incompat\u00edvel",
+      "community": 0,
+      "norm_label": "task 9: backup (exportar/importar) e aviso de navegador incompativel"
+    },
+    {
+      "label": "Task 10: Verifica\u00e7\u00e3o end-to-end do MVP",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1354",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_10_verifica\u00e7\u00e3o_end_to_end_do_mvp",
+      "community": 0,
+      "norm_label": "task 10: verificacao end-to-end do mvp"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-dashboard.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard",
+      "community": 13,
+      "norm_label": "2026-09-29-mapa-imoveis-dashboard.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Dashboard (Fase 4) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_mapa_de_im\u00f3veis_dashboard_fase_4_implementation_plan",
+      "community": 13,
+      "norm_label": "mapa de imoveis \u2014 dashboard (fase 4) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_global_constraints",
+      "community": 13,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Dashboard como aba padr\u00e3o + KPIs + fix de navega\u00e7\u00e3o do detalhe",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_1_dashboard_como_aba_padr\u00e3o_kpis_fix_de_navega\u00e7\u00e3o_do_detalhe",
+      "community": 13,
+      "norm_label": "task 1: dashboard como aba padrao + kpis + fix de navegacao do detalhe"
+    },
+    {
+      "label": "Task 2: Balan\u00e7o de vendas por per\u00edodo + unidades de lan\u00e7amento",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L311",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_2_balan\u00e7o_de_vendas_por_per\u00edodo_unidades_de_lan\u00e7amento",
+      "community": 13,
+      "norm_label": "task 2: balanco de vendas por periodo + unidades de lancamento"
+    },
+    {
+      "label": "Task 3: Im\u00f3vel em destaque + tabela de recentes",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L448",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_3_im\u00f3vel_em_destaque_tabela_de_recentes",
+      "community": 13,
+      "norm_label": "task 3: imovel em destaque + tabela de recentes"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L586",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_self_review",
+      "community": 13,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-design-system.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system",
+      "community": 8,
+      "norm_label": "2026-09-29-mapa-imoveis-design-system.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Design System Overhaul (Fase 1) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_mapa_de_im\u00f3veis_design_system_overhaul_fase_1_implementation_plan",
+      "community": 8,
+      "norm_label": "mapa de imoveis \u2014 design system overhaul (fase 1) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "community": 8,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Retema (tokens CSS, fonte Inter, remo\u00e7\u00e3o do amarelo)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_1_retema_tokens_css_fonte_inter_remo\u00e7\u00e3o_do_amarelo",
+      "community": 8,
+      "norm_label": "task 1: retema (tokens css, fonte inter, remocao do amarelo)"
+    },
+    {
+      "label": "Task 2: \u00cdcones distintos por tipo de im\u00f3vel no pin/popup/lista",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L201",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_2_\u00edcones_distintos_por_tipo_de_im\u00f3vel_no_pin_popup_lista",
+      "community": 8,
+      "norm_label": "task 2: icones distintos por tipo de imovel no pin/popup/lista"
+    },
+    {
+      "label": "Task 3: Cart\u00e3o flutuante do mapa ganha bot\u00e3o de recolher",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L390",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_3_cart\u00e3o_flutuante_do_mapa_ganha_bot\u00e3o_de_recolher",
+      "community": 8,
+      "norm_label": "task 3: cartao flutuante do mapa ganha botao de recolher"
+    },
+    {
+      "label": "Task 4: Formul\u00e1rio de im\u00f3vel em se\u00e7\u00f5es + rodap\u00e9 fixo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L487",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_4_formul\u00e1rio_de_im\u00f3vel_em_se\u00e7\u00f5es_rodap\u00e9_fixo",
+      "community": 8,
+      "norm_label": "task 4: formulario de imovel em secoes + rodape fixo"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L952",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_self_review",
+      "community": 8,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades",
+      "community": 15,
+      "norm_label": "2026-09-29-mapa-imoveis-lancamento-unidades.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Lan\u00e7amento / Invent\u00e1rio de Unidades (Fase 2) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2_implementation_plan",
+      "community": 15,
+      "norm_label": "mapa de imoveis \u2014 lancamento / inventario de unidades (fase 2) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_global_constraints",
+      "community": 15,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Dado + formul\u00e1rio + valida\u00e7\u00e3o de lan\u00e7amento",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_task_1_dado_formul\u00e1rio_valida\u00e7\u00e3o_de_lan\u00e7amento",
+      "community": 15,
+      "norm_label": "task 1: dado + formulario + validacao de lancamento"
+    },
+    {
+      "label": "Task 2: Ajuste r\u00e1pido (+/-) no popup e no card da lista",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_task_2_ajuste_r\u00e1pido_no_popup_e_no_card_da_lista",
+      "community": 15,
+      "norm_label": "task 2: ajuste rapido (+/-) no popup e no card da lista"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L355",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_self_review",
+      "community": 15,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe",
+      "community": 16,
+      "norm_label": "2026-09-29-mapa-imoveis-pagina-detalhe.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 P\u00e1gina de Detalhe do Im\u00f3vel (Fase 3) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3_implementation_plan",
+      "community": 16,
+      "norm_label": "mapa de imoveis \u2014 pagina de detalhe do imovel (fase 3) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_global_constraints",
+      "community": 16,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Casca naveg\u00e1vel + conte\u00fado essencial",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_task_1_casca_naveg\u00e1vel_conte\u00fado_essencial",
+      "community": 16,
+      "norm_label": "task 1: casca navegavel + conteudo essencial"
+    },
+    {
+      "label": "Task 2: Descri\u00e7\u00e3o, comodidades, unidades de lan\u00e7amento e excluir",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L327",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_task_2_descri\u00e7\u00e3o_comodidades_unidades_de_lan\u00e7amento_e_excluir",
+      "community": 16,
+      "norm_label": "task 2: descricao, comodidades, unidades de lancamento e excluir"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L485",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_self_review",
+      "community": 16,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout",
+      "community": 9,
+      "norm_label": "2026-09-30-mapa-imoveis-design-consistency-layout.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Consist\u00eancia de Design e Layout 3 Colunas \u2014 Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas_implementation_plan",
+      "community": 9,
+      "norm_label": "mapa de imoveis \u2014 consistencia de design e layout 3 colunas \u2014 implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "community": 9,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: `design.md` \u2014 documento de refer\u00eancia do design system",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_1_design_md_documento_de_refer\u00eancia_do_design_system",
+      "community": 9,
+      "norm_label": "task 1: `design.md` \u2014 documento de referencia do design system"
+    },
+    {
+      "label": "Task 2: Retemar `financiamento.html` pro claro/indigo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L187",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_2_retemar_financiamento_html_pro_claro_indigo",
+      "community": 9,
+      "norm_label": "task 2: retemar `financiamento.html` pro claro/indigo"
+    },
+    {
+      "label": "Task 3: Controle de zoom do Leaflet no canto inferior direito",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L340",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_3_controle_de_zoom_do_leaflet_no_canto_inferior_direito",
+      "community": 9,
+      "norm_label": "task 3: controle de zoom do leaflet no canto inferior direito"
+    },
+    {
+      "label": "Task 4: Layout do mapa em 3 colunas (lista vertical \u00e0 esquerda)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L386",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_4_layout_do_mapa_em_3_colunas_lista_vertical_\u00e0_esquerda",
+      "community": 9,
+      "norm_label": "task 4: layout do mapa em 3 colunas (lista vertical a esquerda)"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L526",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_self_review",
+      "community": 9,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-financiamento-link.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link",
+      "community": 18,
+      "norm_label": "2026-10-01-mapa-imoveis-financiamento-link.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Link Financiamento \u2194 Condom\u00ednio (Fase 7) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7_implementation_plan",
+      "community": 18,
+      "norm_label": "mapa de imoveis \u2014 link financiamento \u2194 condominio (fase 7) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_global_constraints",
+      "community": 18,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Bot\u00e3o \"\ud83d\udcb0 Simular financiamento\" na unidade do cart\u00e3o de pr\u00e9dio",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_task_1_bot\u00e3o_simular_financiamento_na_unidade_do_cart\u00e3o_de_pr\u00e9dio",
+      "community": 18,
+      "norm_label": "task 1: botao \"\ud83d\udcb0 simular financiamento\" na unidade do cartao de predio"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_self_review",
+      "community": 18,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio",
+      "community": 14,
+      "norm_label": "2026-10-01-mapa-imoveis-hud-cartao-predio.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 HUD do mapa + Cart\u00e3o de Pr\u00e9dio (Fase 6) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6_implementation_plan",
+      "community": 14,
+      "norm_label": "mapa de imoveis \u2014 hud do mapa + cartao de predio (fase 6) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_global_constraints",
+      "community": 14,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Condom\u00ednio ganha endere\u00e7o, coordenadas, fotos e descri\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_1_condom\u00ednio_ganha_endere\u00e7o_coordenadas_fotos_e_descri\u00e7\u00e3o",
+      "community": 14,
+      "norm_label": "task 1: condominio ganha endereco, coordenadas, fotos e descricao"
+    },
+    {
+      "label": "Task 2: HUD flutuante (toggle Unidade/Condom\u00ednio) + pins de condom\u00ednio",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L469",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_2_hud_flutuante_toggle_unidade_condom\u00ednio_pins_de_condom\u00ednio",
+      "community": 14,
+      "norm_label": "task 2: hud flutuante (toggle unidade/condominio) + pins de condominio"
+    },
+    {
+      "label": "Task 3: Cart\u00e3o de pr\u00e9dio completo (galeria, descri\u00e7\u00e3o, amenidades, unidades agenciadas, Agenciar)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L841",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_3_cart\u00e3o_de_pr\u00e9dio_completo_galeria_descri\u00e7\u00e3o_amenidades_unidades_agenciadas_agenciar",
+      "community": 14,
+      "norm_label": "task 3: cartao de predio completo (galeria, descricao, amenidades, unidades agenciadas, agenciar)"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L1002",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_self_review",
+      "community": 14,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades",
+      "community": 17,
+      "norm_label": "2026-10-01-mapa-imoveis-legenda-amenidades.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Legenda de amenidades no mapa (Fase 8) Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8_implementation_plan",
+      "community": 17,
+      "norm_label": "mapa de imoveis \u2014 legenda de amenidades no mapa (fase 8) implementation plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_global_constraints",
+      "community": 17,
+      "norm_label": "global constraints"
+    },
+    {
+      "label": "Task 1: Busca Overpass + pontos de amenidade no mapa (zoom-gated, com cache)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_task_1_busca_overpass_pontos_de_amenidade_no_mapa_zoom_gated_com_cache",
+      "community": 17,
+      "norm_label": "task 1: busca overpass + pontos de amenidade no mapa (zoom-gated, com cache)"
+    },
+    {
+      "label": "Task 2: Legenda flutuante com toggle por categoria",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L237",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_task_2_legenda_flutuante_com_toggle_por_categoria",
+      "community": 17,
+      "norm_label": "task 2: legenda flutuante com toggle por categoria"
+    },
+    {
+      "label": "Self-Review",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L417",
+      "_origin": "ast",
+      "id": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_self_review",
+      "community": 17,
+      "norm_label": "self-review"
+    },
+    {
+      "label": "2026-08-14-mapa-imoveis-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design",
+      "community": 1,
+      "norm_label": "2026-08-14-mapa-imoveis-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis (uso interno) \u2014 Design",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "community": 1,
+      "norm_label": "mapa de imoveis (uso interno) \u2014 design"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_contexto",
+      "community": 1,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_escopo",
+      "community": 1,
+      "norm_label": "escopo"
+    },
+    {
+      "label": "Dentro do escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_dentro_do_escopo",
+      "community": 1,
+      "norm_label": "dentro do escopo"
+    },
+    {
+      "label": "Fora do escopo (por ora)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_fora_do_escopo_por_ora",
+      "community": 1,
+      "norm_label": "fora do escopo (por ora)"
+    },
+    {
+      "label": "Arquitetura",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_arquitetura",
+      "community": 1,
+      "norm_label": "arquitetura"
+    },
+    {
+      "label": "Modelo de dados",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_modelo_de_dados",
+      "community": 1,
+      "norm_label": "modelo de dados"
+    },
+    {
+      "label": "Filtros (n\u00facleo da UX)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_filtros_n\u00facleo_da_ux",
+      "community": 1,
+      "norm_label": "filtros (nucleo da ux)"
+    },
+    {
+      "label": "Fluxo de intera\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_fluxo_de_intera\u00e7\u00e3o",
+      "community": 1,
+      "norm_label": "fluxo de interacao"
+    },
+    {
+      "label": "Valida\u00e7\u00e3o e erros",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_valida\u00e7\u00e3o_e_erros",
+      "community": 1,
+      "norm_label": "validacao e erros"
+    },
+    {
+      "label": "Entrega",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_entrega",
+      "community": 1,
+      "norm_label": "entrega"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-dashboard-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design",
+      "community": 10,
+      "norm_label": "2026-09-29-mapa-imoveis-dashboard-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Dashboard (Fase 4)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "community": 10,
+      "norm_label": "mapa de imoveis \u2014 dashboard (fase 4)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_contexto",
+      "community": 10,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Dashboard vira a aba padr\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_dashboard_vira_a_aba_padr\u00e3o",
+      "community": 10,
+      "norm_label": "dashboard vira a aba padrao"
+    },
+    {
+      "label": "Conte\u00fado (adaptado da imagem 3 pros nossos dados)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_conte\u00fado_adaptado_da_imagem_3_pros_nossos_dados",
+      "community": 10,
+      "norm_label": "conteudo (adaptado da imagem 3 pros nossos dados)"
+    },
+    {
+      "label": "Seguran\u00e7a: n\u00e3o repetir o XSS da fase 3",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_seguran\u00e7a_n\u00e3o_repetir_o_xss_da_fase_3",
+      "community": 10,
+      "norm_label": "seguranca: nao repetir o xss da fase 3"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_fora_de_escopo",
+      "community": 10,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_teste_manual",
+      "community": 10,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-design-system-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design",
+      "community": 4,
+      "norm_label": "2026-09-29-mapa-imoveis-design-system-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Design System Overhaul (Fase 1)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "community": 4,
+      "norm_label": "mapa de imoveis \u2014 design system overhaul (fase 1)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_contexto",
+      "community": 4,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Refer\u00eancia visual (imagem 1 \u2014 \"uphome\")",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_refer\u00eancia_visual_imagem_1_uphome",
+      "community": 4,
+      "norm_label": "referencia visual (imagem 1 \u2014 \"uphome\")"
+    },
+    {
+      "label": "Tokens de tema",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_tokens_de_tema",
+      "community": 4,
+      "norm_label": "tokens de tema"
+    },
+    {
+      "label": "Sidebar + cart\u00e3o flutuante do mapa",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_sidebar_cart\u00e3o_flutuante_do_mapa",
+      "community": 4,
+      "norm_label": "sidebar + cartao flutuante do mapa"
+    },
+    {
+      "label": "Painel de adicionar/editar im\u00f3vel (`#propertyForm`)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_painel_de_adicionar_editar_im\u00f3vel_propertyform",
+      "community": 4,
+      "norm_label": "painel de adicionar/editar imovel (`#propertyform`)"
+    },
+    {
+      "label": "\u00cdcones do pin por tipo de im\u00f3vel",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_\u00edcones_do_pin_por_tipo_de_im\u00f3vel",
+      "community": 4,
+      "norm_label": "icones do pin por tipo de imovel"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_fora_de_escopo",
+      "community": 4,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_teste_manual",
+      "community": 4,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design",
+      "community": 5,
+      "norm_label": "2026-09-29-mapa-imoveis-lancamento-unidades-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Lan\u00e7amento / Invent\u00e1rio de Unidades (Fase 2)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "community": 5,
+      "norm_label": "mapa de imoveis \u2014 lancamento / inventario de unidades (fase 2)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_contexto",
+      "community": 5,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Dados novos no im\u00f3vel",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_dados_novos_no_im\u00f3vel",
+      "community": 5,
+      "norm_label": "dados novos no imovel"
+    },
+    {
+      "label": "Formul\u00e1rio (se\u00e7\u00e3o \"B\u00e1sico\")",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_formul\u00e1rio_se\u00e7\u00e3o_b\u00e1sico",
+      "community": 5,
+      "norm_label": "formulario (secao \"basico\")"
+    },
+    {
+      "label": "Ajuste r\u00e1pido no popup e no card da lista",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_ajuste_r\u00e1pido_no_popup_e_no_card_da_lista",
+      "community": 5,
+      "norm_label": "ajuste rapido no popup e no card da lista"
+    },
+    {
+      "label": "Valida\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_valida\u00e7\u00e3o",
+      "community": 5,
+      "norm_label": "validacao"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_fora_de_escopo",
+      "community": 5,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_teste_manual",
+      "community": 5,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design",
+      "community": 11,
+      "norm_label": "2026-09-29-mapa-imoveis-pagina-detalhe-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 P\u00e1gina de Detalhe do Im\u00f3vel (Fase 3)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "community": 11,
+      "norm_label": "mapa de imoveis \u2014 pagina de detalhe do imovel (fase 3)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_contexto",
+      "community": 11,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Layout (baseado na imagem 2, adaptado)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_layout_baseado_na_imagem_2_adaptado",
+      "community": 11,
+      "norm_label": "layout (baseado na imagem 2, adaptado)"
+    },
+    {
+      "label": "Navega\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_navega\u00e7\u00e3o",
+      "community": 11,
+      "norm_label": "navegacao"
+    },
+    {
+      "label": "Reuso de c\u00f3digo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_reuso_de_c\u00f3digo",
+      "community": 11,
+      "norm_label": "reuso de codigo"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_fora_de_escopo",
+      "community": 11,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_teste_manual",
+      "community": 11,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design",
+      "community": 6,
+      "norm_label": "2026-09-30-mapa-imoveis-design-consistency-layout-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Consist\u00eancia de Design e Layout 3 Colunas",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "community": 6,
+      "norm_label": "mapa de imoveis \u2014 consistencia de design e layout 3 colunas"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_contexto",
+      "community": 6,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "`design.md` \u2014 documento de refer\u00eancia do design system",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_design_md_documento_de_refer\u00eancia_do_design_system",
+      "community": 6,
+      "norm_label": "`design.md` \u2014 documento de referencia do design system"
+    },
+    {
+      "label": "`financiamento.html` retemado pro claro/indigo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_financiamento_html_retemado_pro_claro_indigo",
+      "community": 6,
+      "norm_label": "`financiamento.html` retemado pro claro/indigo"
+    },
+    {
+      "label": "Layout do mapa em 3 colunas",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_layout_do_mapa_em_3_colunas",
+      "community": 6,
+      "norm_label": "layout do mapa em 3 colunas"
+    },
+    {
+      "label": "Controles do mapa nos cantos",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_controles_do_mapa_nos_cantos",
+      "community": 6,
+      "norm_label": "controles do mapa nos cantos"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_fora_de_escopo",
+      "community": 6,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L136",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_teste_manual",
+      "community": 6,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design",
+      "community": 12,
+      "norm_label": "2026-10-01-mapa-imoveis-financiamento-link-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Link Financiamento \u2194 Condom\u00ednio (Fase 7)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "community": 12,
+      "norm_label": "mapa de imoveis \u2014 link financiamento \u2194 condominio (fase 7)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_contexto",
+      "community": 12,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "O que entra",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_o_que_entra",
+      "community": 12,
+      "norm_label": "o que entra"
+    },
+    {
+      "label": "O que n\u00e3o entra (decis\u00e3o deliberada, n\u00e3o esquecimento)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_o_que_n\u00e3o_entra_decis\u00e3o_deliberada_n\u00e3o_esquecimento",
+      "community": 12,
+      "norm_label": "o que nao entra (decisao deliberada, nao esquecimento)"
+    },
+    {
+      "label": "Como funciona",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_como_funciona",
+      "community": 12,
+      "norm_label": "como funciona"
+    },
+    {
+      "label": "Seguran\u00e7a",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_seguran\u00e7a",
+      "community": 12,
+      "norm_label": "seguranca"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_teste_manual",
+      "community": 12,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design",
+      "community": 3,
+      "norm_label": "2026-10-01-mapa-imoveis-hud-cartao-predio-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 HUD do mapa + Cart\u00e3o de Pr\u00e9dio (Fase 6)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "community": 3,
+      "norm_label": "mapa de imoveis \u2014 hud do mapa + cartao de predio (fase 6)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_contexto",
+      "community": 3,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Decis\u00e3o de escopo: o que entra nesta fase vs. o que fica pra depois",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_decis\u00e3o_de_escopo_o_que_entra_nesta_fase_vs_o_que_fica_pra_depois",
+      "community": 3,
+      "norm_label": "decisao de escopo: o que entra nesta fase vs. o que fica pra depois"
+    },
+    {
+      "label": "Modelo de dados: condom\u00ednio vira \"pr\u00e9dio\" no mapa",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_modelo_de_dados_condom\u00ednio_vira_pr\u00e9dio_no_mapa",
+      "community": 3,
+      "norm_label": "modelo de dados: condominio vira \"predio\" no mapa"
+    },
+    {
+      "label": "HUD flutuante sobre o mapa",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_hud_flutuante_sobre_o_mapa",
+      "community": 3,
+      "norm_label": "hud flutuante sobre o mapa"
+    },
+    {
+      "label": "Pin de condom\u00ednio",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_pin_de_condom\u00ednio",
+      "community": 3,
+      "norm_label": "pin de condominio"
+    },
+    {
+      "label": "Cart\u00e3o de pr\u00e9dio (popup ao clicar o pin)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_cart\u00e3o_de_pr\u00e9dio_popup_ao_clicar_o_pin",
+      "community": 3,
+      "norm_label": "cartao de predio (popup ao clicar o pin)"
+    },
+    {
+      "label": "Seguran\u00e7a",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_seguran\u00e7a",
+      "community": 3,
+      "norm_label": "seguranca"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L119",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_fora_de_escopo",
+      "community": 3,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_teste_manual",
+      "community": 3,
+      "norm_label": "teste manual"
+    },
+    {
+      "label": "2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design",
+      "community": 2,
+      "norm_label": "2026-10-01-mapa-imoveis-legenda-amenidades-design.md"
+    },
+    {
+      "label": "Mapa de Im\u00f3veis \u2014 Legenda de amenidades no mapa (Fase 8)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "community": 2,
+      "norm_label": "mapa de imoveis \u2014 legenda de amenidades no mapa (fase 8)"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_contexto",
+      "community": 2,
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Fonte de dados \u2014 confirmada com o usu\u00e1rio",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_fonte_de_dados_confirmada_com_o_usu\u00e1rio",
+      "community": 2,
+      "norm_label": "fonte de dados \u2014 confirmada com o usuario"
+    },
+    {
+      "label": "Categorias e tags OSM",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_categorias_e_tags_osm",
+      "community": 2,
+      "norm_label": "categorias e tags osm"
+    },
+    {
+      "label": "Zoom m\u00ednimo e cache por \u00e1rea",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_zoom_m\u00ednimo_e_cache_por_\u00e1rea",
+      "community": 2,
+      "norm_label": "zoom minimo e cache por area"
+    },
+    {
+      "label": "Cores \u2014 paleta pr\u00f3pria, fora do design system de UI",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_cores_paleta_pr\u00f3pria_fora_do_design_system_de_ui",
+      "community": 2,
+      "norm_label": "cores \u2014 paleta propria, fora do design system de ui"
+    },
+    {
+      "label": "Renderiza\u00e7\u00e3o",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_renderiza\u00e7\u00e3o",
+      "community": 2,
+      "norm_label": "renderizacao"
+    },
+    {
+      "label": "Legenda",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L84",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_legenda",
+      "community": 2,
+      "norm_label": "legenda"
+    },
+    {
+      "label": "Erro de rede",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_erro_de_rede",
+      "community": 2,
+      "norm_label": "erro de rede"
+    },
+    {
+      "label": "Fora de escopo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L103",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_fora_de_escopo",
+      "community": 2,
+      "norm_label": "fora de escopo"
+    },
+    {
+      "label": "Teste manual",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L114",
+      "_origin": "ast",
+      "id": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_teste_manual",
+      "community": 2,
+      "norm_label": "teste manual"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "design",
+      "target": "design_design_system_mapa_de_im\u00f3veis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_cores_root",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_estado_ativo_toggle_chips_abas_segmented_controls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_fonte",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_monoespa\u00e7ada_valores_num\u00e9ricos_t\u00e9cnicos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_radius_shadow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "design.md",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "design_design_system_mapa_de_im\u00f3veis",
+      "target": "design_regra_de_skin_de_bot\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_mapa_de_im\u00f3veis_uso_interno_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_mapa_de_im\u00f3veis_uso_interno_implementation_plan",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_mapa_de_im\u00f3veis_uso_interno_implementation_plan",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1354",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_10_verifica\u00e7\u00e3o_end_to_end_do_mvp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_1_estrutura_base_html_css_e_mapa_leaflet_vazio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L196",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_2_camada_de_persist\u00eancia_indexeddb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L315",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_3_l\u00f3gica_pura_formata\u00e7\u00e3o_valida\u00e7\u00e3o_e_matching_de_filtro",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L421",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_4_formul\u00e1rio_de_cadastro_im\u00f3vel_condom\u00ednio_inline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L780",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_5_pins_no_mapa_renderizar_editar_excluir_arrastar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L897",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_6_fotos_do_im\u00f3vel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1018",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_7_painel_de_filtros_alpine_js_sincronizado_com_o_mapa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1188",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_8_lista_lateral_sincronizada_com_o_filtro",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-08-14-mapa-imoveis.md",
+      "source_location": "L1244",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_08_14_mapa_imoveis_file_structure",
+      "target": "docs_superpowers_plans_2026_08_14_mapa_imoveis_task_9_backup_exportar_importar_e_aviso_de_navegador_incompat\u00edvel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_mapa_de_im\u00f3veis_dashboard_fase_4_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_mapa_de_im\u00f3veis_dashboard_fase_4_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L586",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_mapa_de_im\u00f3veis_dashboard_fase_4_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_1_dashboard_como_aba_padr\u00e3o_kpis_fix_de_navega\u00e7\u00e3o_do_detalhe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L311",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_2_balan\u00e7o_de_vendas_por_per\u00edodo_unidades_de_lan\u00e7amento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-dashboard.md",
+      "source_location": "L448",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_dashboard_task_3_im\u00f3vel_em_destaque_tabela_de_recentes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_mapa_de_im\u00f3veis_design_system_overhaul_fase_1_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_mapa_de_im\u00f3veis_design_system_overhaul_fase_1_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L952",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_mapa_de_im\u00f3veis_design_system_overhaul_fase_1_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_1_retema_tokens_css_fonte_inter_remo\u00e7\u00e3o_do_amarelo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_2_\u00edcones_distintos_por_tipo_de_im\u00f3vel_no_pin_popup_lista",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L390",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_3_cart\u00e3o_flutuante_do_mapa_ganha_bot\u00e3o_de_recolher",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-design-system.md",
+      "source_location": "L487",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_design_system_task_4_formul\u00e1rio_de_im\u00f3vel_em_se\u00e7\u00f5es_rodap\u00e9_fixo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L355",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_task_1_dado_formul\u00e1rio_valida\u00e7\u00e3o_de_lan\u00e7amento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-lancamento-unidades.md",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_lancamento_unidades_task_2_ajuste_r\u00e1pido_no_popup_e_no_card_da_lista",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L485",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_task_1_casca_naveg\u00e1vel_conte\u00fado_essencial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-29-mapa-imoveis-pagina-detalhe.md",
+      "source_location": "L327",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_29_mapa_imoveis_pagina_detalhe_task_2_descri\u00e7\u00e3o_comodidades_unidades_de_lan\u00e7amento_e_excluir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L526",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas_implementation_plan",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_1_design_md_documento_de_refer\u00eancia_do_design_system",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L187",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_2_retemar_financiamento_html_pro_claro_indigo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L340",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_3_controle_de_zoom_do_leaflet_no_canto_inferior_direito",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-09-30-mapa-imoveis-design-consistency-layout.md",
+      "source_location": "L386",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_global_constraints",
+      "target": "docs_superpowers_plans_2026_09_30_mapa_imoveis_design_consistency_layout_task_4_layout_do_mapa_em_3_colunas_lista_vertical_\u00e0_esquerda",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-financiamento-link.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_financiamento_link_task_1_bot\u00e3o_simular_financiamento_na_unidade_do_cart\u00e3o_de_pr\u00e9dio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L1002",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_1_condom\u00ednio_ganha_endere\u00e7o_coordenadas_fotos_e_descri\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L469",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_2_hud_flutuante_toggle_unidade_condom\u00ednio_pins_de_condom\u00ednio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-hud-cartao-predio.md",
+      "source_location": "L841",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_hud_cartao_predio_task_3_cart\u00e3o_de_pr\u00e9dio_completo_galeria_descri\u00e7\u00e3o_amenidades_unidades_agenciadas_agenciar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8_implementation_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_global_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L417",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8_implementation_plan",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_self_review",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_task_1_busca_overpass_pontos_de_amenidade_no_mapa_zoom_gated_com_cache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/2026-10-01-mapa-imoveis-legenda-amenidades.md",
+      "source_location": "L237",
+      "weight": 1.0,
+      "source": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_global_constraints",
+      "target": "docs_superpowers_plans_2026_10_01_mapa_imoveis_legenda_amenidades_task_2_legenda_flutuante_com_toggle_por_categoria",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_arquitetura",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_entrega",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_filtros_n\u00facleo_da_ux",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_fluxo_de_intera\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_modelo_de_dados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_mapa_de_im\u00f3veis_uso_interno_design",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_valida\u00e7\u00e3o_e_erros",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_escopo",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_dentro_do_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-08-14-mapa-imoveis-design.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_escopo",
+      "target": "docs_superpowers_specs_2026_08_14_mapa_imoveis_design_fora_do_escopo_por_ora",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_conte\u00fado_adaptado_da_imagem_3_pros_nossos_dados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_dashboard_vira_a_aba_padr\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_seguran\u00e7a_n\u00e3o_repetir_o_xss_da_fase_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-dashboard-design.md",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_mapa_de_im\u00f3veis_dashboard_fase_4",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_dashboard_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_painel_de_adicionar_editar_im\u00f3vel_propertyform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_refer\u00eancia_visual_imagem_1_uphome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_sidebar_cart\u00e3o_flutuante_do_mapa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_tokens_de_tema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-design-system-design.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_mapa_de_im\u00f3veis_design_system_overhaul_fase_1",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_design_system_design_\u00edcones_do_pin_por_tipo_de_im\u00f3vel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_ajuste_r\u00e1pido_no_popup_e_no_card_da_lista",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_dados_novos_no_im\u00f3vel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_formul\u00e1rio_se\u00e7\u00e3o_b\u00e1sico",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-lancamento-unidades-design.md",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_mapa_de_im\u00f3veis_lan\u00e7amento_invent\u00e1rio_de_unidades_fase_2",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_lancamento_unidades_design_valida\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_layout_baseado_na_imagem_2_adaptado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_navega\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_reuso_de_c\u00f3digo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-29-mapa-imoveis-pagina-detalhe-design.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_mapa_de_im\u00f3veis_p\u00e1gina_de_detalhe_do_im\u00f3vel_fase_3",
+      "target": "docs_superpowers_specs_2026_09_29_mapa_imoveis_pagina_detalhe_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_controles_do_mapa_nos_cantos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_design_md_documento_de_refer\u00eancia_do_design_system",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_financiamento_html_retemado_pro_claro_indigo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_layout_do_mapa_em_3_colunas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-09-30-mapa-imoveis-design-consistency-layout-design.md",
+      "source_location": "L136",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_mapa_de_im\u00f3veis_consist\u00eancia_de_design_e_layout_3_colunas",
+      "target": "docs_superpowers_specs_2026_09_30_mapa_imoveis_design_consistency_layout_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_como_funciona",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_o_que_entra",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_o_que_n\u00e3o_entra_decis\u00e3o_deliberada_n\u00e3o_esquecimento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_seguran\u00e7a",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-financiamento-link-design.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_mapa_de_im\u00f3veis_link_financiamento_condom\u00ednio_fase_7",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_financiamento_link_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_cart\u00e3o_de_pr\u00e9dio_popup_ao_clicar_o_pin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_decis\u00e3o_de_escopo_o_que_entra_nesta_fase_vs_o_que_fica_pra_depois",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_hud_flutuante_sobre_o_mapa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_modelo_de_dados_condom\u00ednio_vira_pr\u00e9dio_no_mapa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_pin_de_condom\u00ednio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_seguran\u00e7a",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-hud-cartao-predio-design.md",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_mapa_de_im\u00f3veis_hud_do_mapa_cart\u00e3o_de_pr\u00e9dio_fase_6",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_hud_cartao_predio_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_categorias_e_tags_osm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_cores_paleta_pr\u00f3pria_fora_do_design_system_de_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_erro_de_rede",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_fonte_de_dados_confirmada_com_o_usu\u00e1rio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_fora_de_escopo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_legenda",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_renderiza\u00e7\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_teste_manual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-10-01-mapa-imoveis-legenda-amenidades-design.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_mapa_de_im\u00f3veis_legenda_de_amenidades_no_mapa_fase_8",
+      "target": "docs_superpowers_specs_2026_10_01_mapa_imoveis_legenda_amenidades_design_zoom_m\u00ednimo_e_cache_por_\u00e1rea",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "3e0da3efc1dd6136814a873385b777f27ea219ec"
+}
