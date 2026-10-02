@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mapa-imoveis",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", "mapa-imoveis", "-c-1"],
+      "port": 8081,
+      "autoPort": true
+    }
+  ]
+}
