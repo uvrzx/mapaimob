@@ -2244,6 +2244,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const sidebar = $('sidebar');
   let dragging = false;
   handle.addEventListener('mousedown', (e) => {
+    if (e.target.closest('#btnCollapseSidebar')) return; // clique no botão não é arrasto
     dragging = true;
     handle.classList.add('dragging');
     e.preventDefault();
@@ -2261,11 +2262,16 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   $('btnCollapseSidebar').addEventListener('click', () => {
-    const collapsed = $('sidebar').classList.toggle('collapsed');
+    // largura arrastada vai pra inline e venceria o .collapsed; guarda e restaura
+    const sb = $('sidebar');
+    const collapsed = !sb.classList.contains('collapsed');
+    if (collapsed) { sb.dataset.w = sb.style.width; sb.style.width = ''; } else { sb.style.width = sb.dataset.w || ''; }
+    sb.classList.toggle('collapsed', collapsed);
     $('btnCollapseSidebar').classList.toggle('collapsed', collapsed);
     $('btnCollapseSidebar').title = collapsed ? 'Mostrar filtros' : 'Ocultar filtros';
-    setTimeout(() => map.invalidateSize(), 210);
   });
+  // o mapa reajusta sempre que a área muda (ocultar filtros, lista, gaveta, resize)
+  new ResizeObserver(() => map.invalidateSize()).observe($('map'));
 
   $('btnToggleList').addEventListener('click', () => setListHidden(!$('listPanel').classList.contains('hidden')));
 
