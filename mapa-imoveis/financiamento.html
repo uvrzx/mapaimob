@@ -6,7 +6,7 @@
 <title>Calculadora de Proposta - Corretor GV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /* Paleta alinhada ao mapa-imoveis/index.html (midnight + dourado). */
   :root {
@@ -21,36 +21,37 @@
     --accent: #B9302A; --on-accent: #FFF8F6; --accent-text: #F59A92;
     --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
     --warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
-    --radius: 16px;
+    --radius: 20px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-    --display: 'Unbounded', 'Geist', system-ui, sans-serif;
-    --sans: 'Geist', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --display: var(--sans);
+    --sans: 'Unbounded', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
+  button, input, select, textarea { font-family: inherit; }
   ::placeholder { color: var(--muted); opacity: .85; }
   body {
     margin: 0; padding: 0 0 12px; font-family: var(--sans); background: var(--bg); color: var(--text);
-    font-size: 15px; line-height: 1.4;
+    font-size: 13px; line-height: 1.4;
   }
   header {
     display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-    padding: 14px 24px; background: var(--panel); border-radius: 16px;
+    padding: 14px 24px; background: var(--panel); border-radius: 20px;
     position: sticky; top: 0; z-index: 20;
   }
   header h1 { font-family: var(--display); font-size: 15px; margin: 0; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; }
   header .cliente { flex: 1; min-width: 200px; }
   header input {
     width: 100%; max-width: 320px; background: var(--panel-2); border: 0;
-    color: var(--text); padding: 9px 16px; border-radius: 999px; font-size: 15px;
+    color: var(--text); padding: 9px 16px; border-radius: 12px; font-size: 13px;
   }
   header .vi-top { text-align: right; }
-  header .vi-top .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-  header .vi-top .val { font-size: 22px; font-weight: 700; color: var(--accent-text); font-family: var(--sans); font-variant-numeric: tabular-nums; }
+  header .vi-top .lbl { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  header .vi-top .val { font-size: 18.5px; font-weight: 700; color: var(--accent-text); font-family: var(--sans); font-variant-numeric: normal; }
   header button {
     background: var(--accent); color: var(--on-accent); border: 0; padding: 9px 16px;
-    border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 14px;
+    border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 12px;
   }
-  header button.ghost { background: var(--panel-2); color: var(--text); border: 0; border-radius: 999px; font-weight: 600; }
+  header button.ghost { background: var(--panel-2); color: var(--text); border: 0; border-radius: 12px; font-weight: 600; }
 
   /* ---- Layout principal: inputs à esquerda, resultado vivo à direita ---- */
   .layout { display: grid; grid-template-columns: minmax(0,1fr) 380px; gap: 24px; padding: 24px 0 8px; align-items: start; }
@@ -67,49 +68,49 @@
     display: flex; align-items: center; gap: 8px;
   }
   .block > h2 .step { background: var(--accent); color:var(--on-accent); width:20px;height:20px;border-radius:50%;
-    display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700; }
+    display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700; }
   .block-body { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .block-body.one { grid-template-columns: 1fr; }
 
   .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: 12px; color: var(--muted); }
-  .field .hint { font-size: 11px; color: var(--muted); opacity: .8; }
+  .field label { font-size: 10px; color: var(--muted); }
+  .field .hint { font-size: 9.5px; color: var(--muted); opacity: .8; }
   .field input {
     background: var(--panel-2); border: 0; color: var(--text);
-    padding: 9px 11px; border-radius: 8px; font-size: 15px; font-family: var(--sans); font-variant-numeric: tabular-nums; width: 100%;
+    padding: 9px 11px; border-radius: 12px; font-size: 13px; font-family: var(--sans); font-variant-numeric: normal; width: 100%;
   }
   .field input:focus { outline: none; border-color: var(--accent); }
   .field .prefix-wrap { position: relative; }
   .field .prefix-wrap input { padding-left: 34px; }
   .field .prefix-wrap::before {
     content: attr(data-prefix); position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
-    color: var(--muted); font-size: 13px; font-family: var(--sans); font-variant-numeric: tabular-nums; pointer-events: none;
+    color: var(--muted); font-size: 11px; font-family: var(--sans); font-variant-numeric: normal; pointer-events: none;
   }
 
   /* inline partial result inside a block */
   .partial { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 2px;
     display: flex; flex-wrap: wrap; gap: 16px; }
   .partial .p { display: flex; flex-direction: column; }
-  .partial .p .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
-  .partial .p .v { font-size: 16px; font-weight: 600; font-family: var(--sans); font-variant-numeric: tabular-nums; }
+  .partial .p .k { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .partial .p .v { font-size: 13.5px; font-weight: 600; font-family: var(--sans); font-variant-numeric: normal; }
 
   /* ---- Painel de resultado vivo (sticky) ---- */
   .live { position: sticky; top: 84px; background: var(--panel); border: 0;
     border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
-  .live h3 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+  .live h3 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
   .live .row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); }
   .live .row:last-child { border-bottom: 0; }
-  .live .row .k { font-size: 13px; color: var(--muted); }
-  .live .row .v { font-size: 16px; font-weight: 600; font-family: var(--sans); font-variant-numeric: tabular-nums; }
-  .live .row.big .v { font-size: 20px; color: var(--accent-text); }
+  .live .row .k { font-size: 11px; color: var(--muted); }
+  .live .row .v { font-size: 13.5px; font-weight: 600; font-family: var(--sans); font-variant-numeric: normal; }
+  .live .row.big .v { font-size: 17px; color: var(--accent-text); }
 
-  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 8px;
-    font-weight: 600; font-size: 13px; border: 1px solid; width: 100%; justify-content: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px;
+    font-weight: 600; font-size: 11px; border: 1px solid; width: 100%; justify-content: center; }
   .badge.ok   { background: var(--ok-bg);   color: var(--ok-text);   border-color: var(--ok-line); }
   .badge.warn { background: var(--warn-bg); color: var(--warn-text); border-color: var(--warn-line); }
-  .badge .margem { font-family: var(--sans); font-variant-numeric: tabular-nums; }
+  .badge .margem { font-family: var(--sans); font-variant-numeric: normal; }
 
-  .rule { font-size: 12px; color: var(--muted); }
+  .rule { font-size: 10px; color: var(--muted); }
   .rule strong { color: var(--text); }
 
   /* ============================================================
@@ -120,22 +121,22 @@
   .present.show { display: block; }
   .present .close { position: fixed; top: 20px; right: 24px; }
   .present-head { text-align: center; margin-bottom: 32px; }
-  .present-head .cli { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
-  .present-head .vi { font-size: clamp(40px, 6vw, 72px); font-weight: 700; color: var(--accent-text); font-family: var(--sans); font-variant-numeric: tabular-nums; line-height: 1.1; }
-  .present-head .vi-lbl { font-size: 14px; color: var(--muted); }
+  .present-head .cli { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+  .present-head .vi { font-size: clamp(40px, 6vw, 72px); font-weight: 700; color: var(--accent-text); font-family: var(--sans); font-variant-numeric: normal; line-height: 1.1; }
+  .present-head .vi-lbl { font-size: 12px; color: var(--muted); }
   .present-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
-  .pcard { background: var(--panel); border: 0; border-radius: 14px; padding: 24px; }
-  .pcard h4 { margin: 0 0 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .pcard { background: var(--panel); border: 0; border-radius: 20px; padding: 24px; }
+  .pcard h4 { margin: 0 0 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
   .pcard .line { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--line); }
   .pcard .line:last-child { border-bottom: 0; }
-  .pcard .line .k { color: var(--muted); font-size: 15px; }
-  .pcard .line .v { font-size: 20px; font-weight: 700; font-family: var(--sans); font-variant-numeric: tabular-nums; }
-  .pcard .headline { font-size: clamp(28px, 4vw, 44px); font-weight: 700; font-family: var(--sans); font-variant-numeric: tabular-nums; text-align: center; margin: 8px 0; }
-  .pcard .headline small { display:block; font-size: 14px; color: var(--muted); font-weight: 600; font-family: var(--sans); letter-spacing: 1px; text-transform: uppercase; }
+  .pcard .line .k { color: var(--muted); font-size: 13px; }
+  .pcard .line .v { font-size: 17px; font-weight: 700; font-family: var(--sans); font-variant-numeric: normal; }
+  .pcard .headline { font-size: clamp(28px, 4vw, 44px); font-weight: 700; font-family: var(--sans); font-variant-numeric: normal; text-align: center; margin: 8px 0; }
+  .pcard .headline small { display:block; font-size: 12px; color: var(--muted); font-weight: 600; font-family: var(--sans); letter-spacing: 1px; text-transform: uppercase; }
   .present-foot { max-width: 1100px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 24px; background: var(--panel-2); border: 0; border-radius: 14px; }
-  .present-foot .k { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-  .present-foot .v { font-size: clamp(28px, 4vw, 40px); font-weight: 700; font-family: var(--sans); font-variant-numeric: tabular-nums; color: var(--accent-text); }
+    padding: 20px 24px; background: var(--panel-2); border: 0; border-radius: 16px; }
+  .present-foot .k { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .present-foot .v { font-size: clamp(28px, 4vw, 40px); font-weight: 700; font-family: var(--sans); font-variant-numeric: normal; color: var(--accent-text); }
 
   @media print {
     header, .layout, .present .close { display: none !important; }

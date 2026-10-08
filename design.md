@@ -8,12 +8,12 @@ esses mesmos valores — nunca aproximar.
 
 ## Fonte
 
-Unbounded (exibição: títulos, filtros, botões do mapa) + Geist (UI e números), via Google Fonts (Inter banido):
+Unbounded em **todo** o app (UI, títulos, filtros, botões, campos, números), via Google Fonts (Inter e Geist fora):
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
 Pesos usados em todo o app, sem exceção: 400 (texto), 600 (labels/
@@ -23,7 +23,7 @@ documentada aqui — normalizado pra 600/700 e o `<link>` enxugado (não
 carrega mais pesos que nada usa). Qualquer peso novo introduzido depois
 tem que ser um desses dois, nunca um terceiro.
 
-`--sans: 'Geist', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;`
+`--sans: 'Unbounded', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;` e `--display: var(--sans);`
 
 ## Cores (`:root`)
 
@@ -50,12 +50,12 @@ Referência visual: estética arquitetônica escura (títulos largos em caixa al
 popups, tooltip) herda. Tiles OSM sem filtro. Popup usa
 `STATUS_TEXT_COLORS_MAP` (texto escuro nas pílulas). Popup/legenda seguem claros, mas todos os **botões do mapa** (HUD, zoom, camadas, "Amenidades", ações do popup) são midnight/vermelho: re-declaram os tokens escuros no próprio elemento, sem branco.
 
-HUD (`#mapHud`): pílula clara com borda `--line`; seletor
+HUD (`#mapHud`): bloco escuro de 18px (sem borda); seletor
 Unidade/Condomínio sem trilho (ativo = navy, inativo = `--muted`), "Filtrar"
 em contorno. <600px alinha à esquerda pra não colidir com o controle de
 camadas.
 
-**Tema escuro (app todo, exceto o mapa):** midnight com texto bege-claro, pra reduzir luminosidade. Tipografia: títulos de tela/cartão/seção em **Unbounded** (`--display`, 500, caixa alta, tracking .08em, 13-16px; fonte larga, não passar de 600). Filtros (rótulos 10px caixa alta, chips 11px) e botões do mapa também em Unbounded. Todo o resto (tabelas, botões comuns, corpo, números do financiamento) em Geist.
+**Tema escuro (app todo, exceto o mapa):** midnight com texto bege-claro, pra reduzir luminosidade. Tipografia: **Unbounded em tudo** (`--sans` = `--display`); fonte larga, por isso o corpo é 10 a 13px e títulos em caixa alta com tracking .08em, peso máx. 600. Botões, inputs e selects herdam (`font-family: inherit`) e o `.leaflet-container` também.
 
 Semânticas de status: `--ok-fg`/`--warn-fg`/`--mid-fg` são **fills sólidos**
 (badge, botão ativo, barra) com texto branco; `--ok-text`/`--warn-text` são
@@ -74,7 +74,7 @@ Contraste WCAG AA (≥ 4.5:1) medido: texto/panel 16.1, texto/panel-2 14.6, mute
 
 ## Números
 
-Valores do financiamento usam Geist com `tabular-nums` (mesma fonte do mapa), não monoespaçada.
+Valores do financiamento seguem a fonte do app (Unbounded), não monoespaçada.
 
 ## Monoespaçada (legado, sem uso)
 
@@ -94,7 +94,7 @@ font-weight: 700;
 cursor: pointer;
 ```
 
-**CTA adicionar**: `#btnAddProperty` segue o primário (pílula vermelha). `.active` (modo "marcar no mapa") usa `var(--ok-fg)` + branco.
+**CTA adicionar**: `#btnAddProperty` segue o primário (vermelho sólido, raio 12px). `.active` (modo "marcar no mapa") usa `var(--ok-fg)` + branco.
 
 **Ghost** — ação secundária (cancelar, ocultar, excluir):
 
@@ -181,8 +181,7 @@ topo da sidebar.
 
 ## Forma e microcopy
 
-Raio: **interativos em pílula** (`999px`: botões, chips, abas, busca, seletor
-do HUD), **cartões 16px**, **inputs de formulário 12px**. Sem emoji na UI
+Raios **concêntricos**: seção/bloco 20px (header, lateral, painel do mapa, cartões do painel e do financiamento), cartão interno 16px, botão/chip/campo 10-12px, trilho de seletor segmentado 14-16px com padding 4px e botão interno 10-12px (raio externo = interno + padding). HUD do mapa: 18px com botões de 14px. Círculo (`50%`) só em ícone/badge redondo. Sem emoji na UI
 (ícones de ação usam texto, ex. "R$" no botão de simular). Sem travessão (—)
 em texto visível; vazio de dado usa "-".
 
@@ -196,9 +195,9 @@ tonal: `--bg` (página) < `--panel` (sidebar, header, cartões, formulário) <
 tabela e lista de dados (`border-bottom` de linha). Foco de teclado segue
 com `outline` vermelho.
 
-"Limpar" (filtros) é pílula sólida e só aparece quando há filtro ativo
+"Limpar" (filtros) é botão sólido (raio 10px) e só aparece quando há filtro ativo
 (`hasFilters()`); ao clicar zera os filtros e some.
 
 ## Separação de seções
 
-`.shell` tem `padding: 12px; gap: 12px`: header, lateral de filtros, painel do mapa (cabeçalho + mapa) e telas (painel de vendas, financiamento) são **blocos arredondados (16px) separados por espaço**, nunca coladas. No financiamento (iframe) o cabeçalho "Proposta de Financiamento" é um bloco próprio e os blocos numerados têm 24px de intervalo.
+`.shell` tem `padding: 12px; gap: 12px`: header, lateral de filtros, painel do mapa (cabeçalho + mapa) e telas (painel de vendas, financiamento) são **blocos arredondados (20px) separados por espaço**, nunca coladas. No financiamento (iframe) o cabeçalho "Proposta de Financiamento" é um bloco próprio e os blocos numerados têm 24px de intervalo.
