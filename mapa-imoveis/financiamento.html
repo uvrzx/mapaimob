@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Proposta — Corretor GV</title>
+<title>Calculadora de Proposta - Corretor GV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Paleta alinhada ao mapa-imoveis/index.html (navy #2F4156 + teal/sky/bege). */
+  /* Paleta alinhada ao mapa-imoveis/index.html (midnight + dourado). */
   :root {
     color-scheme: dark;
-    --navy: #2F4156;
-    --bg: #243345;
-    --panel: #2F4156;
-    --panel-2: #3A5068;
-    --line: #4F6A80;
-    --text: #F5EFEB;
-    --muted: #C8D9E6;
-    --accent: #567C8D; --accent-text: #C8D9E6;
+    --navy: #0C1527;
+    --bg: #060D1C;
+    --panel: #0C1527;
+    --panel-2: #131E36;
+    --line: #26324D;
+    --text: #F4F0E9;
+    --muted: #A3AEC4;
+    --accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92;
     --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
     --warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
     --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
     --sans: 'Geist', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -36,18 +37,18 @@
     padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--line);
     position: sticky; top: 0; z-index: 20;
   }
-  header h1 { font-size: 17px; margin: 0; font-weight: 700; letter-spacing: .2px; }
+  header h1 { font-family: var(--serif); font-size: 26px; margin: 0; font-weight: 600; letter-spacing: .01em; line-height: 1; }
   header .cliente { flex: 1; min-width: 200px; }
   header input {
     width: 100%; max-width: 320px; background: var(--panel-2); border: 1px solid var(--line);
-    color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 15px;
+    color: var(--text); padding: 9px 16px; border-radius: 999px; font-size: 15px;
   }
   header .vi-top { text-align: right; }
   header .vi-top .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
   header .vi-top .val { font-size: 22px; font-weight: 700; color: var(--accent-text); font-family: var(--mono); }
   header button {
-    background: var(--accent); color: #fff; border: 0; padding: 9px 16px;
-    border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 14px;
+    background: var(--accent); color: var(--on-accent); border: 0; padding: 9px 16px;
+    border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 14px;
   }
   header button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; font-weight: 600; }
 
@@ -65,7 +66,7 @@
     text-transform: uppercase; color: var(--muted); background: var(--panel-2); border-bottom: 1px solid var(--line);
     display: flex; align-items: center; gap: 8px;
   }
-  .block > h2 .step { background: var(--accent); color:#fff; width:20px;height:20px;border-radius:50%;
+  .block > h2 .step { background: var(--accent); color:var(--on-accent); width:20px;height:20px;border-radius:50%;
     display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700; }
   .block-body { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .block-body.one { grid-template-columns: 1fr; }
@@ -150,7 +151,7 @@
 <body>
 
 <header>
-  <h1>🏢 Proposta de Financiamento</h1>
+  <h1>Proposta de Financiamento</h1>
   <div class="cliente">
     <input id="cliente-nome" placeholder="Nome do cliente (opcional)" autocomplete="off">
   </div>
@@ -348,7 +349,7 @@
     <span class="v" data-out="total_pago">—</span>
   </div>
   <div style="text-align:center; margin-top:24px;">
-    <button id="btn-print">🖨 Imprimir</button>
+    <button id="btn-print">Imprimir</button>
   </div>
 </div>
 
@@ -515,8 +516,8 @@
       else {
         const diff = r.total_pago - state.VI;
         note.innerHTML = Math.abs(diff) < 0.01
-          ? '✅ Fecha exatamente com o valor do imóvel.'
-          : `⚠️ Diferença de ${fmtMoney(diff)} — revisar.`;
+          ? 'Fecha exatamente com o valor do imóvel.'
+          : `Diferença de ${fmtMoney(diff)}: revisar.`;
       }
     }
   }

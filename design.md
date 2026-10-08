@@ -2,18 +2,18 @@
 
 Fonte única de verdade pro design system do app `mapa-imoveis`. Valores
 copiados direto do `:root` e das regras de botão de
-`mapa-imoveis/index.html` (tema escuro navy + mapa claro; paleta Navy/Teal/Sky/Beige/White).
+`mapa-imoveis/index.html` (tema midnight + dourado, mapa claro; linguagem de alto padrão).
 Qualquer outro arquivo do app (`financiamento.html` incluso) deve usar
 esses mesmos valores — nunca aproximar.
 
 ## Fonte
 
-Geist, via Google Fonts (Inter banido):
+Geist (UI) + Cormorant Garamond (títulos), via Google Fonts (Inter banido):
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
 ```
 
 Pesos usados em todo o app, sem exceção: 400 (texto), 600 (labels/
@@ -29,38 +29,38 @@ tem que ser um desses dois, nunca um terceiro.
 
 ```css
 color-scheme: dark;
---navy: #2F4156;
---bg: #243345; --panel: #2F4156; --panel-2: #3A5068; --line: #4F6A80;
---text: #F5EFEB; --muted: #C8D9E6;
---accent: #567C8D; --accent-text: #C8D9E6; --accent-tint: rgba(200,217,230,.14);
+--navy: #0C1527;
+--bg: #060D1C; --panel: #0C1527; --panel-2: #131E36; --line: #26324D;
+--text: #F4F0E9; --muted: #A3AEC4;
+--accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92; --accent-tint: rgba(194,163,117,.14);
 --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
 --warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
 --mid-fg: #b45309;
 ```
 
-Paleta de marca (cinco cores, **Navy é a principal**): Navy `#2F4156`
-(painéis, header), Teal `#567C8D` (`--accent`, preenchimento), Sky Blue
-`#C8D9E6` (`--muted`, `--accent-text`, CTA), Beige `#F5EFEB` (`--text`),
-White `#FFFFFF`. `--bg` `#243345` e `--panel-2` `#3A5068` são tons do navy.
+Referência visual: site de imobiliária de alto padrão (midnight quase preto,
+ouro/areia, serifa nos títulos, botões em pílula dourada, cartões escuros com
+borda fina). Ouro é o **único acento** e vale no app inteiro. Fundo da
+página: `--bg` com dois brilhos radiais discretos nos cantos inferiores (ouro
+à esquerda, azul à direita) em `.shell`.
+
+**Preenchimento dourado usa `--on-accent` (texto escuro), nunca `#fff`.**
+`--accent-text` (ouro claro) é a versão pra texto/ícone/traço sobre escuro.
 
 **Mapa em tema claro (única exceção):** `#mapWrap` redefine os tokens
-(`--bg #F5EFEB; --panel #FFF; --panel-2 #F5EFEB; --line #C8D9E6; --text
-#2F4156; --muted #3F6272; --accent #2F4156; --accent-text #3F6272`) e tudo
-dentro dele — HUD, legenda, controles Leaflet, popups, tooltip — herda sem
-regra extra. Tiles OSM sem filtro. Popup usa `STATUS_TEXT_COLORS_MAP`
-(texto escuro nas pílulas de status). O resto do app segue escuro.
+(`--bg #F1EDE6; --panel #FBF9F5; --panel-2 #F1EDE6; --line #E0D8CA; --text
+#0C1527; --muted #55607A; --accent #0C1527; --on-accent #F4F0E9;
+--accent-text #765B2B`) e tudo dentro (HUD, legenda, controles Leaflet,
+popups, tooltip) herda. Tiles OSM sem filtro. Popup usa
+`STATUS_TEXT_COLORS_MAP` (texto escuro nas pílulas). Dentro do mapa o
+preenchimento é navy com texto bege; o ouro escuro só aparece como texto.
 
-HUD (`#mapHud`): painel branco, borda `--line`, raio 12px; seletor
-Unidade/Condomínio sem trilho (ativo = navy + branco, inativo = texto
-`--muted`), "Filtrar" em contorno. <600px alinha à esquerda pra não
-colidir com o controle de camadas.
+HUD (`#mapHud`): pílula clara com borda `--line`; seletor
+Unidade/Condomínio sem trilho (ativo = navy, inativo = `--muted`), "Filtrar"
+em contorno. <600px alinha à esquerda pra não colidir com o controle de
+camadas.
 
-**Tema escuro (app todo, exceto o mapa):** fundo navy, texto bege, pra reduzir
-o impacto de luminosidade. O teal é o único acento de marca,
-em duas versões: `--accent` (**preenchimento**, sempre com texto branco —
-botões primários, aba/chip ativo) e `--accent-text` (**texto/ícone/traço**
-sobre fundo escuro — links, estados hover, ícones de amenidade). Nunca use
-`--accent` como cor de texto sobre o painel.
+**Tema escuro (app todo, exceto o mapa):** midnight com texto bege-claro, pra reduzir luminosidade. Tipografia: títulos de tela/cartão em Cormorant Garamond 600 (`--serif`, numerais `lining-nums`), todo o resto em Geist; rótulos de campo em caixa alta com tracking. Nunca serifa em tabela, botão ou input.
 
 Semânticas de status: `--ok-fg`/`--warn-fg`/`--mid-fg` são **fills sólidos**
 (badge, botão ativo, barra) com texto branco; `--ok-text`/`--warn-text` são
@@ -68,13 +68,13 @@ as versões claras pra **texto** sobre `--ok-bg`/`--warn-bg`. As paletas de
 `STATUS_COLORS`/`STATUS_TEXT_COLORS` (texto claro nas pílulas) e de
 categoria de POI (JS) são semânticas próprias, fora dos tokens.
 
-Contraste WCAG AA (≥ 4.5:1) medido: bege/panel 9.2, bege/panel-2 7.3, muted/panel 7.2, muted/panel-2 5.8, branco/accent 4.50, navy/sky (CTA) 7.2, mapa: navy/branco 10.4, muted/bege 5.8, navy/bege 9.2, ok-text/ok-bg 9.0. Branco sobre `--accent` (teal) está no limite: não clarear o teal; recalcular ao mexer.
+Contraste WCAG AA (≥ 4.5:1) medido: texto/panel 16.1, texto/panel-2 14.6, muted/panel 8.2, muted/panel-2 7.4, on-accent/ouro 7.9, accent-text/panel 9.9; mapa: texto/panel 17.3, muted/panel-2 5.4, accent-text/panel-2 5.5, ok-text/ok-bg 9.0.
 
 ## Radius / Shadow
 
 ```css
 --radius: 16px;
---shadow-soft: 0 8px 24px rgba(0,0,0,.4); /* no mapa: 0 1px 2px + 0 6px 20px navy a .06/.10 */
+--shadow-soft: 0 12px 32px rgba(0,0,0,.45); /* no mapa: 0 1px 2px + 0 6px 20px navy a .06/.10 */
 ```
 
 ## Monoespaçada (valores numéricos/técnicos)
@@ -89,16 +89,13 @@ Contraste WCAG AA (≥ 4.5:1) medido: bege/panel 9.2, bege/panel-2 7.3, muted/pa
 
 ```css
 background: var(--accent);
-color: #fff;
+color: var(--on-accent);
 border: 0;
 font-weight: 700;
 cursor: pointer;
 ```
 
-**CTA adicionar** — só `#btnAddProperty` ("+ Adicionar imóvel" no header):
-`background: var(--accent-text); color: var(--navy);` (sky sobre o header
-navy, hover branco). Estado `.active` (modo "marcar no
-mapa") usa `var(--ok-fg)` + branco, igual ao `header button.active`.
+**CTA adicionar**: `#btnAddProperty` segue o primário (pílula dourada). `.active` (modo "marcar no mapa") usa `var(--ok-fg)` + branco.
 
 **Ghost** — ação secundária (cancelar, ocultar, excluir):
 
@@ -133,9 +130,9 @@ ghost-only, se fizer sentido pro contexto) — nunca cor hardcoded.
 ## Estado ativo/toggle (chips, abas, segmented controls)
 
 Controles de seleção (não são "botões de ação", são toggle) usam fundo
-sólido `var(--accent)` + texto branco quando ativos: `.chip.active`,
+sólido `var(--accent)` + `var(--on-accent)` quando ativos: `.chip.active`,
 `.seg-group button.active`, `.view-tab.active` (`.type-btn.active` usa
-`--accent-tint` + texto/ícone `--accent`). Exceção:
+`--accent-tint` + texto/ícone `--accent-text`). Exceção:
 `header button.active` (usado só no botão "+ Adicionar imóvel" em modo
 de marcar no mapa) usa `var(--ok-fg)` (verde) em vez de `var(--accent)` —
 de propósito, sinaliza "ação em andamento", não seleção normal.
@@ -183,3 +180,10 @@ fica num `<details>` "Mais filtros", fechado por padrão, com badge no
 `<summary>` contando filtros avançados ativos
 (`advancedFiltersActiveCount`). Cabeçalho "Filtros / Limpar" é sticky no
 topo da sidebar.
+
+## Forma e microcopy
+
+Raio: **interativos em pílula** (`999px`: botões, chips, abas, busca, seletor
+do HUD), **cartões 16px**, **inputs de formulário 12px**. Sem emoji na UI
+(ícones de ação usam texto, ex. "R$" no botão de simular). Sem travessão (—)
+em texto visível; vazio de dado usa "-".
