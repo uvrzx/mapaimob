@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mapa de Imóveis - Uso Interno</title>
+<title>Bailiot MDI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Geist:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1/dist/leaflet.css">
 <style>
   :root {
@@ -14,14 +14,14 @@
     --navy: #0C1527;
     --bg: #060D1C; --panel: #0E1830; --panel-2: #1B2A4A; --line: #26324D;
     --text: #F4F0E9; --muted: #A3AEC4;
-    --accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92; --accent-tint: rgba(194,163,117,.14);
+    --accent: #B9302A; --on-accent: #FFF8F6; --accent-text: #F59A92; --accent-tint: rgba(185,48,42,.18);
     --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
     --warn-bg: #3d1521; --warn-fg: #b91c1c; --warn-text: #fca5a5; --warn-line: #7a2a3a;
     --mid-fg: #b45309;
     --shadow-soft: 0 12px 32px rgba(0,0,0,.45);
     --radius: 16px;
     --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-    --serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --display: 'Unbounded', 'Geist', system-ui, sans-serif;
     --sans: 'Geist', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -37,16 +37,16 @@
     display: flex;
   }
   .shell {
-    width: 100vw; height: 100vh;
-    background: radial-gradient(60% 45% at 0% 100%, rgba(194,163,117,.10), transparent 70%), radial-gradient(55% 45% at 100% 100%, rgba(32,72,140,.20), transparent 70%), var(--bg);
+    width: 100vw; height: 100vh; padding: 12px; gap: 12px;
+    background: radial-gradient(60% 45% at 0% 100%, rgba(185,48,42,.14), transparent 70%), radial-gradient(55% 45% at 100% 100%, rgba(32,72,140,.20), transparent 70%), var(--bg);
     display: flex; flex-direction: column; overflow: hidden;
   }
   header {
     display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 12px 20px;
-    padding: 12px 24px; background: var(--panel); flex-shrink: 0;
+    padding: 12px 24px; background: var(--panel); border-radius: 16px; flex-shrink: 0;
   }
-  header h1 { font-family: var(--serif); font-size: 24px; margin: 0; font-weight: 600; letter-spacing: .01em; white-space: nowrap; display: flex; align-items: center; gap: 10px; line-height: 1; }
-  .brand-mark { width: 28px; height: 28px; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent-text); display: inline-flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; flex-shrink: 0; }
+  header h1 { font-family: var(--display); font-size: 15px; margin: 0; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; display: flex; align-items: center; gap: 12px; line-height: 1; }
+  .brand-mark { width: 30px; height: 30px; background: var(--accent); color: var(--on-accent); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: 0; flex-shrink: 0; }
   .hdr-actions { display: flex; align-items: center; gap: 8px; }
   .quick-search {
     width: 100%; max-width: 640px; min-width: 0; justify-self: center; background: var(--panel-2); border: 0; color: var(--text);
@@ -69,11 +69,11 @@
   #dashboardView { flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; }
   .dash-kpis { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
   .dash-kpi { background: var(--panel); border: 0; border-radius: 16px; padding: 16px 20px; min-width: 120px; box-shadow: var(--shadow-soft); }
-  .dash-kpi strong { display: block; font-family: var(--serif); font-size: 34px; font-weight: 600; line-height: 1.1; font-variant-numeric: lining-nums; }
+  .dash-kpi strong { display: block; font-family: var(--display); font-size: 26px; font-weight: 500; line-height: 1.2; }
   .dash-kpi span { color: var(--muted); font-size: 12px; }
   .dash-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
   .dash-card { background: var(--panel); border: 0; border-radius: 16px; padding: 22px; box-shadow: var(--shadow-soft); margin-bottom: 20px; }
-  .dash-card h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: .01em; margin: 0 0 14px; }
+  .dash-card h3 { font-family: var(--display); font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
   .dash-period { background: var(--panel-2); border: 0; color: var(--text); padding: 6px 10px; border-radius: 8px; font-size: 12px; margin-bottom: 14px; }
   .dash-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
   .dash-bar-row span { width: 110px; flex-shrink: 0; color: var(--muted); }
@@ -95,14 +95,14 @@
   #detailView > button.ghost, .detail-main button.ghost { background: var(--panel-2); color: var(--text); border: 0; font-weight: 600; }
   #btnDetailBack { margin-bottom: 20px; }
   .detail-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: start; }
-  .detail-title { font-family: var(--serif); font-size: 38px; font-weight: 600; line-height: 1.1; margin: 0 0 6px; }
+  .detail-title { font-family: var(--display); font-size: 24px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; line-height: 1.2; margin: 0 0 8px; }
   .detail-address { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
   .detail-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
   .detail-price { font-size: 22px; font-weight: 700; }
   .detail-specs { display: flex; gap: 20px; margin-bottom: 20px; font-size: 14px; color: var(--text); flex-wrap: wrap; }
   .detail-specs span { display: flex; align-items: center; gap: 6px; fill: var(--muted); }
   .detail-section { margin-top: 24px; }
-  .detail-section h3 { font-family: var(--serif); font-size: 22px; font-weight: 600; margin: 0 0 10px; }
+  .detail-section h3 { font-family: var(--display); font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 12px; }
   #detailDescText { white-space: pre-line; }
   .detail-hero { width: 100%; height: 320px; object-fit: cover; border-radius: 16px; background: var(--panel-2); display: flex; align-items: center; justify-content: center; fill: var(--muted); }
   .detail-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
@@ -112,7 +112,7 @@
   .layout-body { flex: 1; display: flex; min-height: 0; }
   #sidebar {
     width: 320px; flex-shrink: 0; display: flex; flex-direction: column;
-    overflow-y: auto; padding: 20px; background: var(--panel);
+    overflow-y: auto; padding: 20px; background: var(--panel); border-radius: 16px;
     scrollbar-width: thin;
     transition: width .2s ease, padding .2s ease;
   }
@@ -127,7 +127,7 @@
   }
   .sidebar-head .reset-link { margin-left: auto; }
   .drawer-close { display: none; background: none; border: 0; color: var(--muted); font-size: 22px; line-height: 1; padding: 0 2px; cursor: pointer; }
-  .sidebar-head h2 { font-family: var(--serif); font-size: 26px; font-weight: 600; letter-spacing: .01em; margin: 0; line-height: 1; }
+  .sidebar-head h2 { font-family: var(--display); font-size: 16px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; margin: 0; line-height: 1; }
   .reset-link { background: var(--panel-2); border: 0; color: var(--accent-text); font-size: 12px; font-weight: 700; cursor: pointer; padding: 6px 14px; border-radius: 999px; }
   .reset-link:hover { filter: brightness(1.2); }
   #sidebarResizeHandle { width: 12px; flex-shrink: 0; cursor: col-resize; background: transparent; position: relative; }
@@ -140,22 +140,22 @@
   }
   #btnCollapseSidebar:hover { filter: brightness(1.2); }
   #btnCollapseSidebar.collapsed { transform: rotate(180deg); }
-  #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-  .content-head { padding: 16px 20px 0; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+  #contentPanel { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--panel); border-radius: 16px; overflow: hidden; }
+  .content-head { padding: 14px 16px; font-size: 13px; color: var(--muted); font-weight: 700; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
   .content-head button { background: var(--panel-2); color: var(--text); border: 0; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; }
   .content-head button:hover { filter: brightness(1.2); }
   .content-row { flex: 1; min-height: 0; display: flex; }
   #listPanel.hidden { display: none; }
   #mapWrap {
     flex: 1; min-height: 0; position: relative; isolation: isolate;
-    margin: 14px 20px 14px 14px; border-radius: 16px; overflow: hidden; border: 0;
+    margin: 0 14px 14px; border-radius: 16px; overflow: hidden; border: 0;
   }
   /* único trecho claro do app: mapa, HUD, legenda e popups herdam estes tokens */
   #mapWrap {
     color-scheme: light;
     --bg: #F1EDE6; --panel: #FBF9F5; --panel-2: #ECE5D8; --line: #E0D8CA;
     --text: #0C1527; --muted: #55607A;
-    --accent: #0C1527; --on-accent: #F4F0E9; --accent-text: #765B2B; --accent-tint: rgba(118,91,43,.10);
+    --accent: #0C1527; --on-accent: #F4F0E9; --accent-text: #A3231C; --accent-tint: rgba(163,35,28,.10);
     --shadow-soft: 0 1px 2px rgba(12,21,39,.06), 0 8px 24px rgba(12,21,39,.12);
   }
   #map { position: absolute; inset: 0; }
@@ -183,7 +183,7 @@
     display: flex; flex-direction: column; padding: 18px 18px 0;
   }
   #propertyForm.open { transform: translateX(0); }
-  #propertyForm h2 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin: 0 0 14px; flex-shrink: 0; }
+  #propertyForm h2 { font-family: var(--display); font-size: 15px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 14px; flex-shrink: 0; }
   #propertyFormEl { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 4px; }
   .form-section { padding: 12px 0; }
     .form-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin: 0 0 4px; }
@@ -265,7 +265,7 @@
   .condo-popup-photo { width: 100%; height: 130px; object-fit: cover; display: block; background: var(--panel-2); }
   .condo-popup-photo-empty { display: flex; align-items: center; justify-content: center; fill: var(--muted); }
   .condo-popup-body { padding: 12px 14px; }
-  .condo-popup-name { font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.15; display: block; }
+  .condo-popup-name { font-family: var(--display); font-size: 14px; font-weight: 500; line-height: 1.3; display: block; }
   .condo-popup-addr { font-size: 12px; color: var(--muted); margin-top: 4px; }
   .condo-popup-gallery { position: relative; }
   .condo-popup-gallery-prev, .condo-popup-gallery-next { position: absolute; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; background: rgba(12,21,39,.7); color: #F4F0E9; border: 0; cursor: pointer; font-size: 14px; line-height: 1; }
@@ -302,7 +302,7 @@
   .seg-group button.active { background: var(--accent); color: var(--on-accent); }
 
   /* lista de imóveis (coluna vertical rolável à esquerda do mapa) */
-  #listPanel { flex-shrink: 0; width: 320px; order: -1; padding: 14px 0 18px 20px; overflow-y: auto; }
+  #listPanel { flex-shrink: 0; width: 320px; order: -1; padding: 0 0 14px 14px; overflow-y: auto; }
   #listItems { display: flex; flex-direction: column; gap: 14px; }
   .list-item {
     display: flex; flex-direction: column; width: 100%;
@@ -360,7 +360,7 @@
     .drawer-close { display: block; }
     #sidebarResizeHandle { display: none; }
     .content-row { position: relative; }
-    #mapWrap { margin: 8px; }
+    #mapWrap { margin: 0 8px 8px; }
     #listPanel {
       position: absolute; top: 0; bottom: 0; left: 0; z-index: 1100; width: min(320px, 88vw);
       padding: 12px; background: var(--panel); box-shadow: var(--shadow-soft);
@@ -376,6 +376,9 @@
   @media (min-width: 900px) { #drawerBackdrop { display: none; } }
   @media (max-width: 599px) {
     #mapHud { left: 14px; right: auto; margin-inline: 0; max-width: calc(100% - 76px); }
+    #mapHud { gap: 2px; flex-wrap: nowrap; }
+    #mapHud .seg-group button { padding: 7px 9px; font-size: 9px; }
+    #mapHud #btnHudFilter { padding: 6px 10px; font-size: 9px; }
     header { grid-template-areas: "tabs tabs" "search actions"; }
     header h1, header .lbl, .lbl-add, .lbl-long { display: none; }
     header .view-tabs { justify-self: stretch; }
@@ -383,41 +386,41 @@
     header button .ico { display: inline; }
     header button.ghost { padding: 7px 10px; }
   }
-  /* controles do mapa: botões em midnight/dourado (mapa segue claro), fonte dos títulos */
+  /* controles do mapa: botões em midnight/vermelho (mapa segue claro), fonte de exibição */
   #mapHud, #amenityBox, .leaflet-bar, .leaflet-control-layers, .property-popup-actions, .condo-popup-agenciar, .condo-popup-unit-sim, .unit-stepper button {
     --panel: #0E1830; --panel-2: #1B2A4A; --text: #F4F0E9; --muted: #A3AEC4;
-    --accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92; --accent-tint: rgba(194,163,117,.14);
+    --accent: #B9302A; --on-accent: #FFF8F6; --accent-text: #F59A92; --accent-tint: rgba(185,48,42,.18);
   }
   #mapHud button, #btnAmenityToggle, .amenity-legend-item, .leaflet-bar a, .leaflet-control-layers,
   .property-popup-actions button, .condo-popup-agenciar, .condo-popup-unit-sim, .unit-stepper button {
-    font-family: var(--serif); font-weight: 600; font-variant-numeric: lining-nums; letter-spacing: .01em;
+    font-family: var(--display); font-weight: 500; letter-spacing: .03em;
   }
-  #mapHud button { font-size: 15px; }
-  #btnAmenityToggle { font-size: 14px; }
-  .amenity-legend-item { font-size: 13px; }
-  .leaflet-bar a { font-size: 22px; }
-  .property-popup-actions button { font-size: 14px; }
-  .condo-popup-agenciar { font-size: 15px; }
-  .condo-popup-unit-sim { font-size: 12px; }
+  #mapHud button { font-size: 11px; }
+  #btnAmenityToggle { font-size: 11px; }
+  .amenity-legend-item { font-size: 10px; }
+  .leaflet-bar a { font-size: 18px; }
+  .property-popup-actions button { font-size: 10px; padding: 9px 4px; }
+  .condo-popup-agenciar { font-size: 11px; }
+  .condo-popup-unit-sim { font-size: 9px; }
   #amenityLegend { background: var(--panel); max-height: min(300px, 50vh); }
   .amenity-legend-item:hover { background: var(--panel-2); }
 
-  /* filtros: fonte dos títulos */
-  #filterPanel label { font-family: var(--serif); font-size: 17px; font-weight: 600; letter-spacing: .01em; text-transform: none; color: var(--accent-text); }
+  /* filtros: fonte de exibição, rótulos em caixa alta */
+  #filterPanel label { font-family: var(--display); font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); }
   #filterPanel .chip, #filterPanel .seg-group button, .type-btn, #filterPanel select, #filterPanel input, details.adv > summary, .reset-link {
-    font-family: var(--serif); font-weight: 600; font-variant-numeric: lining-nums; letter-spacing: .01em;
+    font-family: var(--display); font-weight: 500; letter-spacing: .02em;
   }
-  #filterPanel .chip, #filterPanel .seg-group button { font-size: 15px; }
-  .type-btn { font-size: 14px; }
-  #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] { font-size: 15px; }
-  details.adv > summary { font-size: 16px; background: var(--panel-2); border-radius: 999px; padding: 10px 16px; margin-top: 8px; }
-  .reset-link { font-size: 14px; }
+  #filterPanel .chip, #filterPanel .seg-group button { font-size: 11px; }
+  .type-btn { font-size: 9px; }
+  #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] { font-size: 11px; }
+  details.adv > summary { font-size: 11px; background: var(--panel-2); border-radius: 999px; padding: 11px 16px; margin-top: 8px; }
+  .reset-link { font-size: 10px; }
 </style>
 </head>
 <body>
 <div class="shell" x-data="filterApp()" x-init="init()">
   <header>
-    <h1><span class="brand-mark" aria-hidden="true">M</span><span class="h1-text">Mapa de Imóveis</span></h1>
+    <h1><span class="brand-mark" aria-hidden="true">B</span><span class="h1-text">Bailiot MDI</span></h1>
     <div class="view-tabs">
       <button type="button" id="tabMap" class="view-tab active">Mapa</button>
       <button type="button" id="tabDashboard" class="view-tab">Painel de vendas</button>
