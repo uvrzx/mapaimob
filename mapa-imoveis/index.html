@@ -383,6 +383,35 @@
     header button .ico { display: inline; }
     header button.ghost { padding: 7px 10px; }
   }
+  /* controles do mapa: botões em midnight/dourado (mapa segue claro), fonte dos títulos */
+  #mapHud, #amenityBox, .leaflet-bar, .leaflet-control-layers, .property-popup-actions, .condo-popup-agenciar, .condo-popup-unit-sim, .unit-stepper button {
+    --panel: #0E1830; --panel-2: #1B2A4A; --text: #F4F0E9; --muted: #A3AEC4;
+    --accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92; --accent-tint: rgba(194,163,117,.14);
+  }
+  #mapHud button, #btnAmenityToggle, .amenity-legend-item, .leaflet-bar a, .leaflet-control-layers,
+  .property-popup-actions button, .condo-popup-agenciar, .condo-popup-unit-sim, .unit-stepper button {
+    font-family: var(--serif); font-weight: 600; font-variant-numeric: lining-nums; letter-spacing: .01em;
+  }
+  #mapHud button { font-size: 15px; }
+  #btnAmenityToggle { font-size: 14px; }
+  .amenity-legend-item { font-size: 13px; }
+  .leaflet-bar a { font-size: 22px; }
+  .property-popup-actions button { font-size: 14px; }
+  .condo-popup-agenciar { font-size: 15px; }
+  .condo-popup-unit-sim { font-size: 12px; }
+  #amenityLegend { background: var(--panel); max-height: min(300px, 50vh); }
+  .amenity-legend-item:hover { background: var(--panel-2); }
+
+  /* filtros: fonte dos títulos */
+  #filterPanel label { font-family: var(--serif); font-size: 17px; font-weight: 600; letter-spacing: .01em; text-transform: none; color: var(--accent-text); }
+  #filterPanel .chip, #filterPanel .seg-group button, .type-btn, #filterPanel select, #filterPanel input, details.adv > summary, .reset-link {
+    font-family: var(--serif); font-weight: 600; font-variant-numeric: lining-nums; letter-spacing: .01em;
+  }
+  #filterPanel .chip, #filterPanel .seg-group button { font-size: 15px; }
+  .type-btn { font-size: 14px; }
+  #filterPanel select, #filterPanel input[type=text], #filterPanel input[type=number] { font-size: 15px; }
+  details.adv > summary { font-size: 16px; background: var(--panel-2); border-radius: 999px; padding: 10px 16px; margin-top: 8px; }
+  .reset-link { font-size: 14px; }
 </style>
 </head>
 <body>

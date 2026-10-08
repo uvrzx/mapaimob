@@ -52,15 +52,14 @@ página: `--bg` com dois brilhos radiais discretos nos cantos inferiores (ouro
 #0C1527; --muted #55607A; --accent #0C1527; --on-accent #F4F0E9;
 --accent-text #765B2B`) e tudo dentro (HUD, legenda, controles Leaflet,
 popups, tooltip) herda. Tiles OSM sem filtro. Popup usa
-`STATUS_TEXT_COLORS_MAP` (texto escuro nas pílulas). Dentro do mapa o
-preenchimento é navy com texto bege; o ouro escuro só aparece como texto.
+`STATUS_TEXT_COLORS_MAP` (texto escuro nas pílulas). Popup/legenda seguem claros, mas todos os **botões do mapa** (HUD, zoom, camadas, "Amenidades", ações do popup) são midnight/dourado: re-declaram os tokens escuros no próprio elemento, sem branco.
 
 HUD (`#mapHud`): pílula clara com borda `--line`; seletor
 Unidade/Condomínio sem trilho (ativo = navy, inativo = `--muted`), "Filtrar"
 em contorno. <600px alinha à esquerda pra não colidir com o controle de
 camadas.
 
-**Tema escuro (app todo, exceto o mapa):** midnight com texto bege-claro, pra reduzir luminosidade. Tipografia: títulos de tela/cartão em Cormorant Garamond 600 (`--serif`, numerais `lining-nums`), todo o resto em Geist; rótulos de campo em caixa alta com tracking. Nunca serifa em tabela, botão ou input.
+**Tema escuro (app todo, exceto o mapa):** midnight com texto bege-claro, pra reduzir luminosidade. Tipografia: títulos de tela/cartão em Cormorant Garamond 600 (`--serif`, numerais `lining-nums`), todo o resto em Geist; rótulos de campo em caixa alta com tracking (nos filtros, em Cormorant sem caixa alta). Exceções pedidas: rótulos e controles dos **filtros** e os **botões do mapa** também usam Cormorant (15px, 600, `lining-nums`). Tabelas e demais botões ficam em Geist.
 
 Semânticas de status: `--ok-fg`/`--warn-fg`/`--mid-fg` são **fills sólidos**
 (badge, botão ativo, barra) com texto branco; `--ok-text`/`--warn-text` são
@@ -77,7 +76,11 @@ Contraste WCAG AA (≥ 4.5:1) medido: texto/panel 16.1, texto/panel-2 14.6, mute
 --shadow-soft: 0 12px 32px rgba(0,0,0,.45); /* no mapa: 0 1px 2px + 0 6px 20px navy a .06/.10 */
 ```
 
-## Monoespaçada (valores numéricos/técnicos)
+## Números
+
+Valores do financiamento usam Geist com `tabular-nums` (mesma fonte do mapa), não monoespaçada.
+
+## Monoespaçada (legado, sem uso)
 
 ```css
 --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
@@ -131,8 +134,7 @@ ghost-only, se fizer sentido pro contexto) — nunca cor hardcoded.
 
 Controles de seleção (não são "botões de ação", são toggle) usam fundo
 sólido `var(--accent)` + `var(--on-accent)` quando ativos: `.chip.active`,
-`.seg-group button.active`, `.view-tab.active` (`.type-btn.active` usa
-`--accent-tint` + texto/ícone `--accent-text`). Exceção:
+`.seg-group button.active`, `.view-tab.active` (`.type-btn.active` também é dourado sólido). Exceção:
 `header button.active` (usado só no botão "+ Adicionar imóvel" em modo
 de marcar no mapa) usa `var(--ok-fg)` (verde) em vez de `var(--accent)` —
 de propósito, sinaliza "ação em andamento", não seleção normal.
