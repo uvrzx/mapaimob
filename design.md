@@ -30,7 +30,7 @@ tem que ser um desses dois, nunca um terceiro.
 ```css
 color-scheme: dark;
 --navy: #0C1527;
---bg: #060D1C; --panel: #0C1527; --panel-2: #131E36; --line: #26324D;
+--bg: #060D1C; --panel: #0E1830; --panel-2: #1B2A4A; --line: #26324D;
 --text: #F4F0E9; --muted: #A3AEC4;
 --accent: #C2A375; --on-accent: #0A1020; --accent-text: #D4BC92; --accent-tint: rgba(194,163,117,.14);
 --ok-bg: #0e3a2a; --ok-fg: #15803d; --ok-text: #86efac; --ok-line: #1f6b4a;
@@ -48,7 +48,7 @@ página: `--bg` com dois brilhos radiais discretos nos cantos inferiores (ouro
 `--accent-text` (ouro claro) é a versão pra texto/ícone/traço sobre escuro.
 
 **Mapa em tema claro (única exceção):** `#mapWrap` redefine os tokens
-(`--bg #F1EDE6; --panel #FBF9F5; --panel-2 #F1EDE6; --line #E0D8CA; --text
+(`--bg #F1EDE6; --panel #FBF9F5; --panel-2 #ECE5D8; --line #E0D8CA; --text
 #0C1527; --muted #55607A; --accent #0C1527; --on-accent #F4F0E9;
 --accent-text #765B2B`) e tudo dentro (HUD, legenda, controles Leaflet,
 popups, tooltip) herda. Tiles OSM sem filtro. Popup usa
@@ -187,3 +187,16 @@ Raio: **interativos em pílula** (`999px`: botões, chips, abas, busca, seletor
 do HUD), **cartões 16px**, **inputs de formulário 12px**. Sem emoji na UI
 (ícones de ação usam texto, ex. "R$" no botão de simular). Sem travessão (—)
 em texto visível; vazio de dado usa "-".
+
+## Superfícies sólidas, sem contorno
+
+Botão, chip, campo e cartão **não usam borda** pra se definir. A hierarquia é
+tonal: `--bg` (página) < `--panel` (sidebar, header, cartões, formulário) <
+`--panel-2` (botão secundário, chip, campo, aba). O contraste vem do texto
+(`--text` sobre `--panel-2`), nunca de uma linha. Botão secundário ("ghost")
+é preenchido com `--panel-2`, não transparente com contorno. Linhas só em
+tabela e lista de dados (`border-bottom` de linha). Foco de teclado segue
+com `outline` dourado.
+
+"Limpar" (filtros) é pílula sólida e só aparece quando há filtro ativo
+(`hasFilters()`); ao clicar zera os filtros e some.
